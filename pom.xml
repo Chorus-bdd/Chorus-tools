@@ -5,7 +5,7 @@
     <artifactId>chorustools-project</artifactId>
     <packaging>pom</packaging>
 	<version>1.0.0</version>
-	<name>Chorus Tools/name>
+	<name>Chorus Tools</name>
 	<modules>
 	  <module>chorus-swingrunner</module>
 	  <module>chorus-xml</module>

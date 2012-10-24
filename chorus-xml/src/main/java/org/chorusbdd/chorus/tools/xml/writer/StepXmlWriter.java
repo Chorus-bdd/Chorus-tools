@@ -1,7 +1,6 @@
 package org.chorusbdd.chorus.tools.xml.writer;
 
 import org.chorusbdd.chorus.core.interpreter.results.StepToken;
-import org.chorusbdd.chorus.tools.xml.writer.TestSuiteElementWriter;
 
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;

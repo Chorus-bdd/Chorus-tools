@@ -1,7 +1,6 @@
 package org.chorusbdd.chorus.tools.xml.writer;
 
 import org.chorusbdd.chorus.core.interpreter.results.ExecutionToken;
-import org.chorusbdd.chorus.tools.xml.writer.TestSuiteElementWriter;
 
 import javax.xml.stream.XMLStreamWriter;
 
