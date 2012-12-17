@@ -17,7 +17,7 @@ import java.util.Collections;
  * Time: 08:55
  * To change this template use File | Settings | File Templates.
  */
-public class SuitePersistenceTest {
+public class SuiteXmlWriterTest {
 
     @Test
     public void testWriteSuite() throws XMLStreamException, IOException {
