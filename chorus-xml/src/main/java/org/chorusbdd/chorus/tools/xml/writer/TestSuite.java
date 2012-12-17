@@ -19,6 +19,11 @@ public class TestSuite {
     private ExecutionToken executionToken;
     private List<FeatureToken> featureTokens;
 
+    public TestSuite(ExecutionToken executionToken, List<FeatureToken> featureTokens) {
+        this.executionToken = executionToken;
+        this.featureTokens = featureTokens;
+    }
+
     public ExecutionToken getExecutionToken() {
         return executionToken;
     }
