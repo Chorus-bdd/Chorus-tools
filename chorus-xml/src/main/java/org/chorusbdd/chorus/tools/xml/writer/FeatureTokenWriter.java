@@ -14,10 +14,10 @@ import javax.xml.stream.XMLStreamWriter;
  */
 public class FeatureTokenWriter implements TestSuiteElementWriter<FeatureToken> {
 
-    private XmlElementWriterFactory xmlElementWriterFactory;
+    private ChorusXmlWriterFactory chorusXmlWriterFactory;
 
-    public FeatureTokenWriter(XmlElementWriterFactory xmlElementWriterFactory) {
-        this.xmlElementWriterFactory = xmlElementWriterFactory;
+    public FeatureTokenWriter(ChorusXmlWriterFactory chorusXmlWriterFactory) {
+        this.chorusXmlWriterFactory = chorusXmlWriterFactory;
     }
 
     public void write(XMLStreamWriter writer, FeatureToken token) {

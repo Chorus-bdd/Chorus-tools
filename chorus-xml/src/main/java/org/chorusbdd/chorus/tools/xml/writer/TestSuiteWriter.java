@@ -16,10 +16,10 @@ import java.io.IOException;
  */
 public class TestSuiteWriter implements TestSuiteElementWriter<TestSuite> {
 
-    private XmlElementWriterFactory xmlElementWriterFactory;
+    private ChorusXmlWriterFactory chorusXmlWriterFactory;
 
-    public TestSuiteWriter(XmlElementWriterFactory xmlElementWriterFactory) {
-        this.xmlElementWriterFactory = xmlElementWriterFactory;
+    public TestSuiteWriter(ChorusXmlWriterFactory chorusXmlWriterFactory) {
+        this.chorusXmlWriterFactory = chorusXmlWriterFactory;
     }
 
     public void write(XMLStreamWriter writer, TestSuite token) throws XMLStreamException, IOException {
@@ -29,10 +29,10 @@ public class TestSuiteWriter implements TestSuiteElementWriter<TestSuite> {
         writer.writeEndElement();
 
         ExecutionToken e = token.getExecutionToken();
-        xmlElementWriterFactory.createXmlWriter(e).write(writer, e);
+        chorusXmlWriterFactory.createXmlWriter(e).write(writer, e);
 
         for (FeatureToken f : token.getFeatureTokens()) {
-            xmlElementWriterFactory.createXmlWriter(f).write(writer, f);
+            chorusXmlWriterFactory.createXmlWriter(f).write(writer, f);
         }
         writer.writeEndDocument();
         writer.flush();

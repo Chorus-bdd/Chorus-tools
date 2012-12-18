@@ -7,6 +7,6 @@ package org.chorusbdd.chorus.tools.xml.writer;
  * Time: 17:43
  * To change this template use File | Settings | File Templates.
  */
-public interface XmlElementWriterFactory {
+public interface ChorusXmlWriterFactory {
     <E> TestSuiteElementWriter<E> createXmlWriter(E token);
 }

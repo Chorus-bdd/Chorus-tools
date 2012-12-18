@@ -9,7 +9,7 @@ import org.chorusbdd.chorus.core.interpreter.results.*;
  * Time: 17:31
  * To change this template use File | Settings | File Templates.
  */
-public class DefaultXmlWriterFactory implements XmlElementWriterFactory {
+public class DefaultChorusXmlWriterFactory implements ChorusXmlWriterFactory {
 
     public <E> TestSuiteElementWriter<E> createXmlWriter(E token) {
         if ( token instanceof StepToken ) {

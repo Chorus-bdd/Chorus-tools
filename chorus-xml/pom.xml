@@ -32,16 +32,7 @@
         is still supported -->
         <testResources>
              <testResource>
-               <directory>src/test/handlers</directory>
-                 <includes>
-                   <include>**/*.xml</include>
-                   <include>**/*.properties</include>
-                   <include>**/*.feature</include>
-                 </includes>
-             </testResource>
-
-            <testResource>
-               <directory>src/test/junit</directory>
+               <directory>src/test/java</directory>
                  <includes>
                    <include>**/*.xml</include>
                    <include>**/*.properties</include>
@@ -104,8 +95,7 @@
                    </goals>
                    <configuration>
                      <sources>
-                       <source>src/test/junit</source>
-                       <source>src/test/handlers</source>
+                       <source>src/test/java</source>
                      </sources>
                    </configuration>
                  </execution>
@@ -146,7 +136,7 @@
         <dependency>
             <groupId>org.chorusbdd</groupId>
             <artifactId>chorus</artifactId>
-            <version>1.4.15</version>
+            <version>1.4.16</version>
         </dependency>
         <dependency>
             <groupId>junit</groupId>

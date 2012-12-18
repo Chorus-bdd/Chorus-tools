@@ -14,10 +14,10 @@ import javax.xml.stream.XMLStreamWriter;
  */
 public class ScenarioTokenWriter implements TestSuiteElementWriter<ScenarioToken> {
 
-    private XmlElementWriterFactory xmlElementWriterFactory;
+    private ChorusXmlWriterFactory chorusXmlWriterFactory;
 
-    public ScenarioTokenWriter(XmlElementWriterFactory xmlElementWriterFactory) {
-        this.xmlElementWriterFactory = xmlElementWriterFactory;
+    public ScenarioTokenWriter(ChorusXmlWriterFactory chorusXmlWriterFactory) {
+        this.chorusXmlWriterFactory = chorusXmlWriterFactory;
     }
 
     public void write(XMLStreamWriter writer, ScenarioToken token) {

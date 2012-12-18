@@ -14,10 +14,10 @@ import javax.xml.stream.XMLStreamWriter;
  */
 public class ExecutionTokenWriter implements TestSuiteElementWriter<ExecutionToken> {
 
-    private XmlElementWriterFactory xmlElementWriterFactory;
+    private ChorusXmlWriterFactory chorusXmlWriterFactory;
 
-    public ExecutionTokenWriter(XmlElementWriterFactory xmlElementWriterFactory) {
-        this.xmlElementWriterFactory = xmlElementWriterFactory;
+    public ExecutionTokenWriter(ChorusXmlWriterFactory chorusXmlWriterFactory) {
+        this.chorusXmlWriterFactory = chorusXmlWriterFactory;
     }
 
     public void write(XMLStreamWriter writer, ExecutionToken token) {
