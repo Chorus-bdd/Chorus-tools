@@ -35,5 +35,6 @@ public class TestSuiteWriter implements TestSuiteElementWriter<TestSuite> {
             xmlElementWriterFactory.createXmlWriter(f).write(writer, f);
         }
         writer.writeEndDocument();
+        writer.flush();
     }
 }
