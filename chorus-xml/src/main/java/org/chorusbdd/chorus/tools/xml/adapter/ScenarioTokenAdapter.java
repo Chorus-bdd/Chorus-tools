@@ -1,6 +1,7 @@
 package org.chorusbdd.chorus.tools.xml.adapter;
 
 import java.util.Arrays;
+import java.util.List;
 
 import javax.xml.bind.annotation.adapters.XmlAdapter;
 
@@ -14,7 +15,8 @@ public class ScenarioTokenAdapter extends XmlAdapter<ScenarioTokenBean, Scenario
 		ScenarioTokenBean toRet = new ScenarioTokenBean();
 		toRet.setName(v.getName());
 		toRet.setSteps(v.getSteps());
-		toRet.setTags(Arrays.toString(v.getTags().toArray()));
+        List<String> tags = v.getTags();
+        toRet.setTags(tags.size() == 0 ? null : Arrays.toString(tags.toArray()));
 		return toRet;
 	}
 

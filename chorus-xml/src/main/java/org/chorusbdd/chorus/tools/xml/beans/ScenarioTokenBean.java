@@ -37,7 +37,7 @@ public class ScenarioTokenBean {
 		this.steps = steps;
 	}
 
-	@XmlAttribute
+	@XmlAttribute()
 	public String getTags() {
 		return tags;
 	}

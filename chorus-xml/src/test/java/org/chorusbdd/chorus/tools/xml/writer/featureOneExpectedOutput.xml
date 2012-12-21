@@ -11,7 +11,7 @@
 Here we are simply using the chorus interpreter to run the feature and then we can get
 hold of the ExecutionToken and Feature tokens to convert with our xml writer</description>
             <scenarios>
-                <scenario name="Convert A Simple Scenario to xml" tags="[]">
+                <scenario name="Convert A Simple Scenario to xml">
                     <steps>
                         <step type="Given" action="I have a simple scenario" endState="UNDEFINED" message=""/>
                         <step type="And" action="this contains some steps" endState="SKIPPED" message=""/>
