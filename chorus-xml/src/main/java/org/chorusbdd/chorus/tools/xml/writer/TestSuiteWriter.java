@@ -1,40 +1,25 @@
 package org.chorusbdd.chorus.tools.xml.writer;
 
-import org.chorusbdd.chorus.core.interpreter.results.ExecutionToken;
-import org.chorusbdd.chorus.core.interpreter.results.FeatureToken;
 
+import java.io.StringWriter;
+
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
 import javax.xml.stream.XMLStreamException;
-import javax.xml.stream.XMLStreamWriter;
-import java.io.IOException;
 
-/**
- * Created with IntelliJ IDEA.
- * User: Nick
- * Date: 19/10/12
- * Time: 08:54
- * To change this template use File | Settings | File Templates.
- */
-public class TestSuiteWriter implements TestSuiteElementWriter<TestSuite> {
 
-    private ChorusXmlWriterFactory chorusXmlWriterFactory;
+public class TestSuiteWriter {
 
-    public TestSuiteWriter(ChorusXmlWriterFactory chorusXmlWriterFactory) {
-        this.chorusXmlWriterFactory = chorusXmlWriterFactory;
-    }
+	public TestSuiteWriter() {
+		
+	}
 
-    public void write(XMLStreamWriter writer, TestSuite token) throws XMLStreamException, IOException {
-        writer.writeStartDocument();
-        writer.writeStartElement("suite");
-        writer.writeAttribute("suiteName", token.getSuiteName());
-        writer.writeEndElement();
+	public void write(StringWriter writer, TestSuite suite) throws JAXBException, XMLStreamException {
+			final JAXBContext context = JAXBContext.newInstance(TestSuite.class);
+			final Marshaller marshaller = context.createMarshaller();
+			marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+			marshaller.marshal(suite, writer);
+	}
 
-        ExecutionToken e = token.getExecutionToken();
-        chorusXmlWriterFactory.createXmlWriter(e).write(writer, e);
-
-        for (FeatureToken f : token.getFeatureTokens()) {
-            chorusXmlWriterFactory.createXmlWriter(f).write(writer, f);
-        }
-        writer.writeEndDocument();
-        writer.flush();
-    }
 }

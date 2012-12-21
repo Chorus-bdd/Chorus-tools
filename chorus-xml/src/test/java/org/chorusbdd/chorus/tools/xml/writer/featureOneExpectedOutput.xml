@@ -1,1 +1,24 @@
-<?xml version="1.0" ?><suite suiteName="Test Suite"></suite>
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<testSuite suiteName="Test Suite">
+    <execution>
+        <resultsSummary featuresFailed="1" featuresPassed="0" featuresPending="0" scenariosFailed="1" scenariosPassed="0" scenariosPending="0" stepsFailed="0" stepsPassed="0" stepsPending="0" stepsSkipped="2" stepsUndefined="1" tokenId="2" unavailableHandlers="0"/>
+        <testSuiteName>Test Suite</testSuiteName>
+    </execution>
+    <features>
+        <feature name="Feature One">
+            <configurationName>base</configurationName>
+            <description>Test XML generation for a very simple feature with a single scenario
+Here we are simply using the chorus interpreter to run the feature and then we can get
+hold of the ExecutionToken and Feature tokens to convert with our xml writer</description>
+            <scenarios>
+                <scenario name="Convert A Simple Scenario to xml" tags="[]">
+                    <steps>
+                        <step type="Given" action="I have a simple scenario" endState="UNDEFINED" message=""/>
+                        <step type="And" action="this contains some steps" endState="SKIPPED" message=""/>
+                        <step type="Then" action="I can use this to generate tokens which I can access in my junit xml writers" endState="SKIPPED" message=""/>
+                    </steps>
+                </scenario>
+            </scenarios>
+        </feature>
+    </features>
+</testSuite>
