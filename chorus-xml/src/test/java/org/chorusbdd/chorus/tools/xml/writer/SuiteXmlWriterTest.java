@@ -10,8 +10,16 @@ import org.chorusbdd.chorus.core.interpreter.results.StepToken;
 import org.chorusbdd.chorus.tools.xml.util.FileUtil;
 import org.junit.Test;
 
+import com.sun.xml.internal.txw2.output.IndentingXMLStreamWriter;
+
 import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamWriter;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.stream.StreamResult;
+import javax.xml.transform.stream.StreamSource;
+
 import java.io.*;
 import java.net.URL;
 import java.util.List;
@@ -27,32 +35,31 @@ public class SuiteXmlWriterTest extends Assert {
 
     @Test
     public void testWriteSuite() throws Exception {
-        TestSuite suite = getTestSuite();
-
-        XMLOutputFactory xmlOutputFactory = XMLOutputFactory.newInstance();
-        CharArrayWriter charArrayWriter = new CharArrayWriter();
-        XMLStreamWriter writer = xmlOutputFactory.createXMLStreamWriter(charArrayWriter);
-
-        ChorusXmlWriterFactory c = new DefaultChorusXmlWriterFactory();
-        TestSuiteWriter w = new TestSuiteWriter(c);
-        w.write(writer, suite);
-
+        StringWriter out = new StringWriter();
+        TestSuiteWriter w = new TestSuiteWriter();
+        w.write(out, getTestSuite());
+        out.flush();
+        out.close();
+        
         System.out.println();
         System.out.println("This is the output as XML --->");
-        System.out.println(charArrayWriter.toString());
+        System.out.println(out.toString());
+        
 
         URL expectedOutputResource = getClass().getResource("featureOneExpectedOutput.xml");
         String expectedXml = FileUtil.readToString(expectedOutputResource.openStream());
-        assertEquals("Check Expected XML", expectedXml.trim(), charArrayWriter.toString().trim());
+        assertEquals("Check Expected XML", expectedXml.trim(), out.toString().trim());
     }
 
     private TestSuite getTestSuite() throws Exception {
         String baseDir = findChorusXmlModuleRoot();
         String featureDirPath = baseDir + File.separator + "src" + File.separator + "test";
-        Chorus chorus = new Chorus(new String[] {"-f", featureDirPath, "-h", "org.chorusbdd.chorus.tools.xml"});
+        Chorus chorus = new Chorus(new String[] {"-f", featureDirPath, "-h", "org.chorusbdd.chorus.tools.xml","-l", "debug"});
         MockExecutionListener l = new MockExecutionListener();
         chorus.addExecutionListener(l);
         chorus.run();
+        TestSuite t = new TestSuite();
+        
         return new TestSuite(l.testExecutionToken, l.featureTokens);
     }
 
