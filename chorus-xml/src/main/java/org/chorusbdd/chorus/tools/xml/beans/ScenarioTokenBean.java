@@ -3,11 +3,10 @@ package org.chorusbdd.chorus.tools.xml.beans;
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
-import org.chorusbdd.chorus.core.interpreter.results.StepToken;
+import org.chorusbdd.chorus.results.StepToken;
 import org.chorusbdd.chorus.tools.xml.adapter.StepTokenAdapter;
 
 public class ScenarioTokenBean {

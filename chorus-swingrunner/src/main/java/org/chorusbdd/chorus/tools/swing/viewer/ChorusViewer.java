@@ -30,7 +30,7 @@
 package org.chorusbdd.chorus.tools.swing.viewer;
 
 import org.chorusbdd.chorus.Chorus;
-import org.chorusbdd.chorus.core.interpreter.ExecutionListener;
+import org.chorusbdd.chorus.executionlistener.ExecutionListener;
 import org.chorusbdd.chorus.remoting.jmx.RemoteExecutionListener;
 import org.chorusbdd.chorus.remoting.jmx.RemoteExecutionListenerMBean;
 import org.chorusbdd.chorus.tools.util.AwtSafeListener;

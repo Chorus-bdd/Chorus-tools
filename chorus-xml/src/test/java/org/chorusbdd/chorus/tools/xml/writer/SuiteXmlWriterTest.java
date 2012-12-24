@@ -2,11 +2,11 @@ package org.chorusbdd.chorus.tools.xml.writer;
 
 import junit.framework.Assert;
 import org.chorusbdd.chorus.Chorus;
-import org.chorusbdd.chorus.core.interpreter.ExecutionListener;
-import org.chorusbdd.chorus.core.interpreter.results.ExecutionToken;
-import org.chorusbdd.chorus.core.interpreter.results.FeatureToken;
-import org.chorusbdd.chorus.core.interpreter.results.ScenarioToken;
-import org.chorusbdd.chorus.core.interpreter.results.StepToken;
+import org.chorusbdd.chorus.executionlistener.ExecutionListener;
+import org.chorusbdd.chorus.results.ExecutionToken;
+import org.chorusbdd.chorus.results.FeatureToken;
+import org.chorusbdd.chorus.results.ScenarioToken;
+import org.chorusbdd.chorus.results.StepToken;
 import org.chorusbdd.chorus.tools.xml.util.FileUtil;
 import org.junit.Test;
 import java.io.*;

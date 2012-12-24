@@ -3,7 +3,7 @@ package org.chorusbdd.chorus.tools.xml.beans;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
-import org.chorusbdd.chorus.core.interpreter.results.ResultsSummary;
+import org.chorusbdd.chorus.results.ResultsSummary;
 import org.chorusbdd.chorus.tools.xml.adapter.ResultSummaryAdapter;
 
 public class ExecutionTokenBean {

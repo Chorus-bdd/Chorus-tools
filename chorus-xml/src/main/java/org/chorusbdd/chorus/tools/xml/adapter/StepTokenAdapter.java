@@ -2,7 +2,7 @@ package org.chorusbdd.chorus.tools.xml.adapter;
 
 import javax.xml.bind.annotation.adapters.XmlAdapter;
 
-import org.chorusbdd.chorus.core.interpreter.results.StepToken;
+import org.chorusbdd.chorus.results.StepToken;
 import org.chorusbdd.chorus.tools.xml.beans.StepTokenBean;
 
 public class StepTokenAdapter extends XmlAdapter<StepTokenBean, StepToken>{

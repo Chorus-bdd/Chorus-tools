@@ -29,10 +29,10 @@
  */
 package org.chorusbdd.chorus.tools.swing.viewer;
 
-import org.chorusbdd.chorus.core.interpreter.results.ExecutionToken;
-import org.chorusbdd.chorus.core.interpreter.results.FeatureToken;
-import org.chorusbdd.chorus.core.interpreter.results.ScenarioToken;
-import org.chorusbdd.chorus.core.interpreter.results.StepToken;
+import org.chorusbdd.chorus.results.ExecutionToken;
+import org.chorusbdd.chorus.results.FeatureToken;
+import org.chorusbdd.chorus.results.ScenarioToken;
+import org.chorusbdd.chorus.results.StepToken;
 import org.chorusbdd.chorus.executionlistener.PlainResultsFormatter;
 
 import javax.swing.text.*;

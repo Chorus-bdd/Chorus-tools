@@ -2,7 +2,7 @@ package org.chorusbdd.chorus.tools.xml.adapter;
 
 import javax.xml.bind.annotation.adapters.XmlAdapter;
 
-import org.chorusbdd.chorus.core.interpreter.results.ExecutionToken;
+import org.chorusbdd.chorus.results.ExecutionToken;
 import org.chorusbdd.chorus.tools.xml.beans.ExecutionTokenBean;
 
 public class ExecutionTokenAdapter extends XmlAdapter<ExecutionTokenBean, ExecutionToken>{

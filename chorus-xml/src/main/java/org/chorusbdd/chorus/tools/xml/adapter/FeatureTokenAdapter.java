@@ -2,7 +2,7 @@ package org.chorusbdd.chorus.tools.xml.adapter;
 
 import java.util.Arrays;
 import javax.xml.bind.annotation.adapters.XmlAdapter;
-import org.chorusbdd.chorus.core.interpreter.results.FeatureToken;
+import org.chorusbdd.chorus.results.FeatureToken;
 import org.chorusbdd.chorus.tools.xml.beans.FeatureTokenBean;
 
 public class FeatureTokenAdapter  extends XmlAdapter<FeatureTokenBean, FeatureToken>{

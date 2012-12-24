@@ -1,7 +1,7 @@
 package org.chorusbdd.chorus.tools.xml.writer;
 
-import org.chorusbdd.chorus.core.interpreter.results.ExecutionToken;
-import org.chorusbdd.chorus.core.interpreter.results.FeatureToken;
+import org.chorusbdd.chorus.results.ExecutionToken;
+import org.chorusbdd.chorus.results.FeatureToken;
 import org.chorusbdd.chorus.tools.xml.adapter.ExecutionTokenAdapter;
 import org.chorusbdd.chorus.tools.xml.adapter.FeatureTokenAdapter;
 import java.util.List;

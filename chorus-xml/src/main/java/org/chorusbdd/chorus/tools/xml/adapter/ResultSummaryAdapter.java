@@ -2,7 +2,7 @@ package org.chorusbdd.chorus.tools.xml.adapter;
 
 import javax.xml.bind.annotation.adapters.XmlAdapter;
 
-import org.chorusbdd.chorus.core.interpreter.results.ResultsSummary;
+import org.chorusbdd.chorus.results.ResultsSummary;
 import org.chorusbdd.chorus.tools.xml.beans.ResultSummaryBean;
 
 public class ResultSummaryAdapter extends XmlAdapter<ResultSummaryBean, ResultsSummary> {
