@@ -7,7 +7,8 @@
 	<version>1.0.0</version>
 	<name>Chorus Tools</name>
 	<modules>
+      <module>chorus-xml</module>
 	  <module>chorus-swingrunner</module>
-	  <module>chorus-xml</module>
-	</modules>
+	  <module>chorus-webagent</module>
+    </modules>
 </project>
