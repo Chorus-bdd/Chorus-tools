@@ -9,17 +9,6 @@ import org.chorusbdd.chorus.core.interpreter.results.ScenarioToken;
 import org.chorusbdd.chorus.core.interpreter.results.StepToken;
 import org.chorusbdd.chorus.tools.xml.util.FileUtil;
 import org.junit.Test;
-
-import com.sun.xml.internal.txw2.output.IndentingXMLStreamWriter;
-
-import javax.xml.stream.XMLOutputFactory;
-import javax.xml.stream.XMLStreamWriter;
-import javax.xml.transform.OutputKeys;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.stream.StreamResult;
-import javax.xml.transform.stream.StreamSource;
-
 import java.io.*;
 import java.net.URL;
 import java.util.List;
