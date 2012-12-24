@@ -23,16 +23,11 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 @XmlRootElement
 public class TestSuite {
 
-	
 	private ExecutionToken executionToken;
 	private List<FeatureToken> featureTokens;
     
-    public TestSuite() {};
+    public TestSuite() {}
     
-    
-    
-    
-
     public TestSuite(ExecutionToken executionToken, List<FeatureToken> featureTokens) {
         this.executionToken = executionToken;
         this.featureTokens = featureTokens;
@@ -53,9 +48,7 @@ public class TestSuite {
     public String getSuiteName() {
         return executionToken.getTestSuiteName();
     }
-    
-    
-    
+
     public String toString() {
     	return executionToken!=null? executionToken.getTestSuiteName(): super.toString();
     }

@@ -11,9 +11,7 @@ import javax.xml.stream.XMLStreamException;
 
 public class TestSuiteWriter {
 
-	public TestSuiteWriter() {
-		
-	}
+	public TestSuiteWriter() {}
 
 	public void write(StringWriter writer, TestSuite suite) throws JAXBException, XMLStreamException {
 			final JAXBContext context = JAXBContext.newInstance(TestSuite.class);

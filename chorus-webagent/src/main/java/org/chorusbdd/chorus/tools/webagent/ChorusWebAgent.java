@@ -1,6 +1,7 @@
 package org.chorusbdd.chorus.tools.webagent;
 
-import org.chorusbdd.chorus.tools.webagent.util.JmxManagementServerExporter;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
  * Created with IntelliJ IDEA.
@@ -18,8 +19,7 @@ import org.chorusbdd.chorus.tools.webagent.util.JmxManagementServerExporter;
 public class ChorusWebAgent {
 
     public ChorusWebAgent() throws Exception {
-        JmxManagementServerExporter server = new JmxManagementServerExporter(9999, false);
-        server.startServer();
+        ApplicationContext context = new ClassPathXmlApplicationContext("/applicationContext.xml");
     }
 
     public static void main(String[] args) throws Exception {

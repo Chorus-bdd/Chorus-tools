@@ -1,4 +1,4 @@
-package org.chorusbdd.chorus.tools.webagent.util;
+package org.chorusbdd.chorus.tools.webagent;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
