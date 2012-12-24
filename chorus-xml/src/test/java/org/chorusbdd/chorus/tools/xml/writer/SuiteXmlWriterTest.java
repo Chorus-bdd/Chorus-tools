@@ -18,7 +18,13 @@ import java.util.List;
  * User: nick
  * Date: 29/10/12
  * Time: 08:55
- * To change this template use File | Settings | File Templates.
+ *
+ * Test that we can serialize chorus interpreter tokens to xml
+ *
+ * Here we run a feature by executing the interpreter
+ * and add a local observer for execution events, which allow us to pick
+ * up the interpreter tokens which give feature/scenario state during and
+ * after execution
  */
 public class SuiteXmlWriterTest extends Assert {
 
