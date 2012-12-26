@@ -1,9 +1,10 @@
-package org.chorusbdd.chorus.tools.webagent;
+package org.chorusbdd.chorus.tools.webagent.cache;
 
 import junit.framework.Assert;
 import org.chorusbdd.chorus.annotations.Handler;
 import org.chorusbdd.chorus.annotations.Step;
 import org.chorusbdd.chorus.handlers.util.PolledAssertion;
+import org.chorusbdd.chorus.tools.webagent.WebAgentFeatureCache;
 import org.springframework.test.context.ContextConfiguration;
 
 import javax.annotation.Resource;

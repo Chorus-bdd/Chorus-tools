@@ -1,4 +1,4 @@
-package org.chorusbdd.chorus.tools.webagent;
+package org.chorusbdd.chorus.tools.webagent.cache;
 
 import junit.framework.TestSuite;
 import org.chorusbdd.chorus.ChorusJUnitRunner;
@@ -12,7 +12,7 @@ public class TestSuiteCaching {
 
     public static TestSuite suite() {
         return ChorusJUnitRunner.suite("" +
-            "-f src/test/java/org/chorusbdd/chorus/tools/webagent/SuiteCaching.feature " +
+            "-f src/test/java/org/chorusbdd/chorus/tools/webagent/cache/SuiteCaching.feature " +
             "-h org.chorusbdd.chorus.tools.webagent" +
             " -l warn"
         );

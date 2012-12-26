@@ -5,12 +5,12 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
 
     <bean id="properties" class="org.springframework.core.io.ClassPathResource">
-        <constructor-arg value="./chorus-webagent-suitecachingtest.properties"/>
+        <constructor-arg value="org/chorusbdd/chorus/tools/webagent/cache/chorus-webagent-suitecachingtest.properties"/>
     </bean>
 
     <!-- Configurer that replaces ${...} placeholders with values from properties files or from sys props -->
     <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-        <property name="location" value="chorus-webagent.properties"/>
+        <property name="location" ref="properties"/>
     </bean>
 
     <bean id="mainTestSuiteListener" class="org.chorusbdd.chorus.tools.webagent.WebAgentSuiteListener" init-method="start" destroy-method="stop">
