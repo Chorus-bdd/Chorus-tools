@@ -13,7 +13,7 @@
         <property name="location" value="chorus-webagent.properties"/>
     </bean>
 
-    <bean id="mainTestSuiteListener" class="org.chorusbdd.chorus.tools.webagent.WebAgentSuiteListener" init-method="start">
+    <bean id="mainTestSuiteListener" class="org.chorusbdd.chorus.tools.webagent.WebAgentSuiteListener" init-method="start" destroy-method="stop">
         <constructor-arg value="${webagent.mainTestSuiteListener.listenPort}"/>
         <constructor-arg value="true"/>
     </bean>

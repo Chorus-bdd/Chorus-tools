@@ -14,7 +14,7 @@ public class TestSuiteCaching {
         return ChorusJUnitRunner.suite("" +
             "-f src/test/java/org/chorusbdd/chorus/tools/webagent/SuiteCaching.feature " +
             "-h org.chorusbdd.chorus.tools.webagent" +
-            " -l info"
+            " -l warn"
         );
     }
 }

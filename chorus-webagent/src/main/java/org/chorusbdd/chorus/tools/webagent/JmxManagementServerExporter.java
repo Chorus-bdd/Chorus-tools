@@ -8,9 +8,14 @@ import javax.management.MBeanServerFactory;
 import javax.management.remote.JMXConnectorServer;
 import javax.management.remote.JMXConnectorServerFactory;
 import javax.management.remote.JMXServiceURL;
+import java.io.IOException;
 import java.lang.management.ManagementFactory;
 import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * User: nick
@@ -25,6 +30,7 @@ public class JmxManagementServerExporter {
 
     private static final Log log = LogFactory.getLog(JmxManagementServerExporter.class);
 
+    private static Set<Integer> registriesCreated = Collections.synchronizedSet(new HashSet<Integer>());
     private int port;
     private boolean usePlatformMBeanServer;
     private JMXConnectorServer jmxConnectorServer;
@@ -44,8 +50,15 @@ public class JmxManagementServerExporter {
 
         // Start an RMI registry on port 3000.
         //
-        log.info("Creating RMI registry on port " + port);
-        LocateRegistry.createRegistry(port);
+        if ( ! registriesCreated.contains(port)) {
+            log.info("Creating RMI registry on port " + port);
+            LocateRegistry.createRegistry(port);
+            registriesCreated.add(port);
+        } else {
+            //there's no way to shut it dnwn? So if we run a sequence of tests we clean up by unexporting the
+            //listener object, and have to reuse the registry instance
+            log.info("RMI registry was already running on port " + port);
+        }
 
         // Retrieve the PlatformMBeanServer.
         //
@@ -98,8 +111,13 @@ public class JmxManagementServerExporter {
 
         // Start the RMI connector server.
         //
-        log.info("Start the RMI connector server on port " + port);
+        log.info("Start the JMX connector server on port " + port);
         jmxConnectorServer.start();
+    }
+
+    public void stopServer() throws IOException {
+        log.info("Stopping the JMX connector server on port " + port);
+       jmxConnectorServer.stop();
     }
 
     public MBeanServer getmBeanServer() {

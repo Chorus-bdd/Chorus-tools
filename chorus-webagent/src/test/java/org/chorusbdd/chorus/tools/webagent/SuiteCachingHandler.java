@@ -22,18 +22,32 @@ public class SuiteCachingHandler extends Assert {
     @Resource
     private WebAgentFeatureCache mainFeatureCache;
 
-    @Step("the web agent cache is empty")
+    @Step(".*the web agent cache is empty")
     public void testCacheIsEmpty() {
         assertEquals("Expect web agent cache is empty", 0, mainFeatureCache.size());
     }
 
-    @Step("the web agent cache contains (\\d) test suite")
+    @Step(".*the web agent cache contains (\\d) test suites?")
     public void testSuiteCount(final int count) {
         new PolledAssertion() {
             protected void validate() {
                 assertEquals("Expect " + count + " items in cache", count, mainFeatureCache.size());
             }
         }.await();
+    }
+
+    @Step(".*the web agent cache received (\\d) test suites?")
+    public void testNumberOfSuitesReceived(final int count) {
+        new PolledAssertion() {
+            protected void validate() {
+                assertEquals("Expect " + count + " suites received", count, mainFeatureCache.getSuitesReceived());
+            }
+        }.await();
+    }
+
+    @Step(".*I set the web agent cache to a max history of (\\d)")
+    public void setMaxCacheHistory(int suiteCount) {
+        mainFeatureCache.setMaxHistory(suiteCount);
     }
 
 }

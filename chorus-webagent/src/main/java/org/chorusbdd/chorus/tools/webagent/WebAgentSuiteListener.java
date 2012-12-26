@@ -14,6 +14,7 @@ import org.chorusbdd.chorus.tools.webagent.JmxManagementServerExporter;
 
 import javax.management.MBeanServer;
 import javax.management.ObjectName;
+import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.Executor;
@@ -42,6 +43,7 @@ public class WebAgentSuiteListener implements ExecutionListener {
     }
 
     public void start() throws Exception {
+        log.info(this + " starting MBean server");
         jmxManagementServerExporter.startServer();
         RemoteExecutionListener r = new RemoteExecutionListener(this);
         MBeanServer mBeanServer = jmxManagementServerExporter.getmBeanServer();
@@ -50,6 +52,17 @@ public class WebAgentSuiteListener implements ExecutionListener {
         } catch (Exception e) {
             log.error("Failed to register jmx execution listener", e);
         }
+    }
+
+    public void stop() throws IOException {
+        log.info(this + " stopping MBean server");
+        MBeanServer mBeanServer = jmxManagementServerExporter.getmBeanServer();
+        try {
+            mBeanServer.unregisterMBean(new ObjectName(RemoteExecutionListenerMBean.JMX_EXECUTION_LISTENER_NAME));
+        } catch (Exception e) {
+            log.error("Failed to unregister jmx execution listener", e);
+        }
+        jmxManagementServerExporter.stopServer();
     }
 
     public String toString() {

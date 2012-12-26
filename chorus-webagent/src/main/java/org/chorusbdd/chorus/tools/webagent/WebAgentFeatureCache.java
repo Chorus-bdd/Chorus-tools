@@ -7,6 +7,7 @@ import org.chorusbdd.chorus.tools.xml.writer.TestSuite;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * User: nick
@@ -19,8 +20,9 @@ import java.util.List;
 public class WebAgentFeatureCache extends ExecutionListenerAdapter {
 
     private final LinkedList<TestSuite> cachedSuites = new LinkedList<TestSuite>();
-    private String cacheName;
-    private int maxSuiteHistory;
+    private final AtomicLong suitesReceived = new AtomicLong();
+    private final String cacheName;
+    private volatile int maxSuiteHistory;
 
     public WebAgentFeatureCache(String cacheName, int maxSuiteHistory) {
         this.cacheName = cacheName;
@@ -35,6 +37,7 @@ public class WebAgentFeatureCache extends ExecutionListenerAdapter {
     private void addToCachedSuites(TestSuite testSuite) {
         synchronized ( cachedSuites ) {
             cachedSuites.add(testSuite);
+            suitesReceived.incrementAndGet();
             if ( cachedSuites.size() > maxSuiteHistory) {
                 cachedSuites.removeLast();
             }
@@ -50,6 +53,21 @@ public class WebAgentFeatureCache extends ExecutionListenerAdapter {
     }
 
     public int size() {
-        return cachedSuites.size();
+        synchronized (cachedSuites) {
+            return cachedSuites.size();
+        }
+    }
+
+    public void setMaxHistory(int maxHistory) {
+        this.maxSuiteHistory = maxHistory;
+        synchronized (cachedSuites) {
+            while ( cachedSuites.size() > 0 && cachedSuites.size() > maxHistory) {
+                cachedSuites.removeLast();
+            }
+        }
+    }
+
+    public int getSuitesReceived() {
+        return suitesReceived.intValue();
     }
 }
