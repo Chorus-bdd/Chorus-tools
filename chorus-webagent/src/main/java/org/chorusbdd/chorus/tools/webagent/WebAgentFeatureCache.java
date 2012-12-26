@@ -48,4 +48,8 @@ public class WebAgentFeatureCache extends ExecutionListenerAdapter {
                 ", maxSuiteHistory=" + maxSuiteHistory +
                 '}';
     }
+
+    public int size() {
+        return cachedSuites.size();
+    }
 }
