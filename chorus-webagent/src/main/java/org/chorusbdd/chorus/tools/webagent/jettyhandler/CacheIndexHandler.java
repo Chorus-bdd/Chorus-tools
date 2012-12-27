@@ -35,12 +35,13 @@ public class CacheIndexHandler extends AbstractWebAgentHandler {
         try {
             XMLStreamWriter writer = f.createXMLStreamWriter(response.getWriter());
             writer.writeStartDocument();
-            //writer.writeProcessingInstruction("xml-stylesheet", "type='text/xsl' href='cacheIndex.xsl'");
+            writer.writeProcessingInstruction("xml-stylesheet", "type='text/xsl' href='cacheIndexResponse.xsl'");
             writer.writeStartElement("cache");
+            writer.writeAttribute("name", cache.getName());
             writer.writeEmptyElement("resource");
             writer.writeAttribute("name", "allTestSuites");
-            writer.writeAttribute("rssFeed", "allTestSuites.rss");
-            writer.writeAttribute("html", "allTestSuites.html");
+            writer.writeAttribute("rssFeedLink", "allTestSuites.rss");
+            writer.writeAttribute("htmlLink", "allTestSuites.html");
             writer.writeEndElement();
             writer.writeEndDocument();
         } catch (XMLStreamException e) {

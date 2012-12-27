@@ -5,11 +5,11 @@
         <html>
             <head>
                 <META HTTP-EQUIV="Pragma" CONTENT="no-cache"/>
-                <title>Chorus Web Agent - Index of Feature Cache</title>
+                <title>Chorus Web Agent - Main Index</title>
                 <style type="text/css"/>
             </head>
             <body>
-                <h2>Index of Feature Cache</h2>
+                <h2>Chorus WebAgent Index</h2>
                 <xsl:apply-templates select="featureCache"/>
             </body>
         </html>
