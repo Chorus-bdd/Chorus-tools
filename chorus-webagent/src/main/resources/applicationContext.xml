@@ -32,4 +32,9 @@
         </constructor-arg>
     </bean>
 
+    <bean id="httpConnector" class="org.chorusbdd.chorus.tools.webagent.WebAgentHttpConnector" init-method="start" destroy-method="stop">
+        <constructor-arg value="9080"/>
+        <constructor-arg><list><ref bean="mainFeatureCache"/></list></constructor-arg>
+    </bean>
+
 </beans>
