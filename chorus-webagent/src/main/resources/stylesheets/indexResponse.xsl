@@ -19,7 +19,7 @@
         <div>
         <xsl:element name="a">
             <xsl:attribute name="href">
-                <xsl:value-of select="@link"/>
+                <xsl:value-of select="@indexLink"/>
             </xsl:attribute>
             <xsl:value-of select="@name"/>
         </xsl:element>

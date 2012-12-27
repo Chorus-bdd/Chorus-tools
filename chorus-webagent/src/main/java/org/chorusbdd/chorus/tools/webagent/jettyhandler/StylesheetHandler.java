@@ -18,6 +18,8 @@ import java.util.Map;
  * User: nick
  * Date: 27/12/12
  * Time: 10:50
+ *
+ * Serve an xsl stylesheet from a classpath resouce
  */
 public class StyleSheetHandler extends AbstractWebAgentHandler {
 
@@ -71,7 +73,7 @@ public class StyleSheetHandler extends AbstractWebAgentHandler {
     }
 
     protected boolean shouldHandle(String target) {
-        return target.toUpperCase().endsWith("XSL");
+        return target.endsWith("xsl");
     }
 
     protected String getContentType() {

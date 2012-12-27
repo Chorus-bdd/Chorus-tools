@@ -4,6 +4,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.chorusbdd.chorus.tools.webagent.jettyhandler.CacheIndexHandler;
 import org.chorusbdd.chorus.tools.webagent.jettyhandler.IndexHandler;
+import org.chorusbdd.chorus.tools.webagent.jettyhandler.Rss2SuiteListHandler;
 import org.chorusbdd.chorus.tools.webagent.jettyhandler.StyleSheetHandler;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.handler.HandlerList;
@@ -46,6 +47,15 @@ public class WebAgentHttpConnector {
         l.addHandler(new StyleSheetHandler());
         for ( WebAgentFeatureCache c : cacheList) {
             l.addHandler(new CacheIndexHandler(c));
+            l.addHandler(new Rss2SuiteListHandler(
+                c,
+                TestSuiteFilter.ALL_SUITES,
+                "/" + c.getHttpName() + "/allTestSuites",
+                ".rss",
+                "All Test Suites in " + c.getName(),
+                "All the test suites which are available from ChorusWebAgent " + c.getName() + " cache",
+                localPort)
+            );
         }
         server.setHandler(l);
     }

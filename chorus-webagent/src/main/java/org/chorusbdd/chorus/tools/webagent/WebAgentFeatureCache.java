@@ -7,8 +7,6 @@ import org.chorusbdd.chorus.results.ExecutionToken;
 import org.chorusbdd.chorus.results.FeatureToken;
 import org.chorusbdd.chorus.tools.xml.writer.TestSuite;
 
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.net.URLEncoder;
 import java.util.LinkedList;
 import java.util.List;
@@ -99,5 +97,21 @@ public class WebAgentFeatureCache extends ExecutionListenerAdapter {
 
     public String getHttpName() {
         return httpName;
+    }
+
+    public List<TestSuite> getSuites() {
+        return getSuites(TestSuiteFilter.ALL_SUITES);
+    }
+
+    public List<TestSuite> getSuites(TestSuiteFilter testSuiteFilter) {
+        List<TestSuite> l = new LinkedList<TestSuite>();
+        synchronized (cachedSuites) {
+            for ( TestSuite s : cachedSuites) {
+                if ( testSuiteFilter.accept(s)) {
+                    l.add(s);
+                }
+            }
+        }
+        return l;
     }
 }

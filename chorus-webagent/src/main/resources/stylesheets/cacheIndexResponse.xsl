@@ -18,9 +18,9 @@
         <div>
             <xsl:element name="a">
                 <xsl:attribute name="href">
-                    <xsl:value-of select="@htmlLink"/>
+                    <xsl:value-of select="@xmlLink"/>
                 </xsl:attribute>
-                <xsl:value-of select="@name"/> HTML </xsl:element>
+                <xsl:value-of select="@name"/> XML/HTML </xsl:element>
             <span/>&#160;
             <xsl:element name="a">
                 <xsl:attribute name="href">

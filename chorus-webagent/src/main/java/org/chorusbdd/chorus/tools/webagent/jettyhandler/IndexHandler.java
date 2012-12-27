@@ -38,7 +38,7 @@ public class IndexHandler extends AbstractWebAgentHandler {
                 writer.writeAttribute("numberOfTestSuites", String.valueOf(cache.getNumberOfTestSuites()));
                 writer.writeAttribute("maxHistory", String.valueOf(cache.getMaxHistory()));
                 writer.writeAttribute("suitesReceived", String.valueOf(cache.getSuitesReceived()));
-                writer.writeAttribute("link", target + cache.getHttpName() );
+                writer.writeAttribute("indexLink", "/" + cache.getHttpName() + "/index.xml" );
             }
             writer.writeEndElement();
             writer.writeEndDocument();

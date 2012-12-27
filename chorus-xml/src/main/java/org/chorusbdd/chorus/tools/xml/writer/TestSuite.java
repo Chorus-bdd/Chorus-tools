@@ -4,6 +4,8 @@ import org.chorusbdd.chorus.results.ExecutionToken;
 import org.chorusbdd.chorus.results.FeatureToken;
 import org.chorusbdd.chorus.tools.xml.adapter.ExecutionTokenAdapter;
 import org.chorusbdd.chorus.tools.xml.adapter.FeatureTokenAdapter;
+
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlAttribute;
@@ -23,14 +25,22 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 @XmlRootElement
 public class TestSuite {
 
+    private static final ThreadLocal<SimpleDateFormat> startTimeFormatter = new ThreadLocal<SimpleDateFormat>() {
+        public SimpleDateFormat initialValue() {
+            return new SimpleDateFormat("yyyyMMdd HH:mm:ss zzz");
+        }
+    };
+
 	private ExecutionToken executionToken;
 	private List<FeatureToken> featureTokens;
-    
+    private String suiteTime;
+
     public TestSuite() {}
     
     public TestSuite(ExecutionToken executionToken, List<FeatureToken> featureTokens) {
         this.executionToken = executionToken;
         this.featureTokens = featureTokens;
+        this.suiteTime = startTimeFormatter.get().format(executionToken.getExecutionStartTime());
     }
 
     @XmlJavaTypeAdapter(ExecutionTokenAdapter.class)
@@ -51,5 +61,32 @@ public class TestSuite {
 
     public String toString() {
     	return executionToken!=null? executionToken.getTestSuiteName(): super.toString();
+    }
+
+    public String getSuiteNameWithTime() {
+        return getSuiteName() + " " + suiteTime;
+    }
+
+    public String getSuiteStartTime() {
+        return suiteTime;
+    }
+
+    /**
+     * @return Suite name with human readable start time
+     */
+    public long getExecutionStartTime() {
+        return executionToken.getExecutionStartTime();
+    }
+
+    /**
+     * @return Suite name with timestamp which together identify this TestSuite instance
+     */
+    public String getSuiteNameWithTimestamp() {
+        return getSuiteName() + "-" + getExecutionStartTime();
+    }
+
+    public String getFinalStatusAsString() {
+        return executionToken.isPassed() ? "Passed" :
+               executionToken.isPending() ? "Pending" : "Failed";
     }
 }

@@ -6,6 +6,8 @@ import org.eclipse.jetty.server.handler.AbstractHandler;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.xml.stream.XMLStreamException;
+import javax.xml.stream.XMLStreamWriter;
 import java.io.IOException;
 
 /**
@@ -32,4 +34,10 @@ public abstract class AbstractWebAgentHandler extends AbstractHandler {
     protected abstract void doHandle(String target, Request baseRequest, HttpServletRequest request, HttpServletResponse response) throws IOException;
 
     protected abstract boolean shouldHandle(String target);
+
+    protected void writeSimpleTextElement(XMLStreamWriter writer, String element, String elementText) throws XMLStreamException {
+        writer.writeStartElement(element);
+        writer.writeCharacters(elementText);
+        writer.writeEndElement();
+    }
 }
