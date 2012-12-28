@@ -31,7 +31,6 @@ public class WebAgentHttpConnector {
         log.info("Starting Jetty HTTPD on port " + localPort + " for feature caches " + cacheList);
         addHandlers(server);
         server.start();
-        server.join();
     }
 
     public void stop() throws Exception {

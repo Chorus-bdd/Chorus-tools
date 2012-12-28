@@ -41,7 +41,7 @@ public class CacheIndexHandler extends AbstractWebAgentHandler {
             writer.writeAttribute("name", cache.getName());
             writer.writeEmptyElement("resource");
             writer.writeAttribute("name", "allTestSuites");
-            writer.writeAttribute("rssFeedLink", "./allTestSuites.rss");
+            writer.writeAttribute("rssLink", "./allTestSuites.rss");
             writer.writeAttribute("xmlLink", "./allTestSuites.xml");
             writer.writeEndElement();
             writer.writeEndDocument();

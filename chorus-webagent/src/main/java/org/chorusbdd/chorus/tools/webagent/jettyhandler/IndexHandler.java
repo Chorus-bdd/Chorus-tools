@@ -50,6 +50,6 @@ public class IndexHandler extends AbstractWebAgentHandler {
 
     @Override
     protected boolean shouldHandle(String target) {
-        return "/".equals(target);
+        return "/".equals(target) || "/index.xml".equals(target);
     }
 }

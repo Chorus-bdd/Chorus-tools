@@ -24,7 +24,7 @@
             <span/><br/>
             <xsl:element name="a">
                 <xsl:attribute name="href">
-                    <xsl:value-of select="@rssFeedLink"/>
+                    <xsl:value-of select="@rssLink"/>
                 </xsl:attribute>
                 <xsl:value-of select="@name"/> RSS </xsl:element>
 
