@@ -8,7 +8,7 @@
                 <style type="text/css"/>
             </head>
             <body>
-                <h2>Index of Feature Cache <xsl:value-of select="@name"/></h2>
+                <h2>Index of <xsl:value-of select="@name"/></h2>
                 <xsl:apply-templates select="resource"/>
             </body>
         </html>
@@ -21,7 +21,7 @@
                     <xsl:value-of select="@xmlLink"/>
                 </xsl:attribute>
                 <xsl:value-of select="@name"/> XML/HTML </xsl:element>
-            <span/>&#160;
+            <span/><br/>
             <xsl:element name="a">
                 <xsl:attribute name="href">
                     <xsl:value-of select="@rssFeedLink"/>

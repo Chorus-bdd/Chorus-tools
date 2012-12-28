@@ -2,10 +2,7 @@ package org.chorusbdd.chorus.tools.webagent;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.chorusbdd.chorus.tools.webagent.jettyhandler.CacheIndexHandler;
-import org.chorusbdd.chorus.tools.webagent.jettyhandler.IndexHandler;
-import org.chorusbdd.chorus.tools.webagent.jettyhandler.Rss2SuiteListHandler;
-import org.chorusbdd.chorus.tools.webagent.jettyhandler.StyleSheetHandler;
+import org.chorusbdd.chorus.tools.webagent.jettyhandler.*;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.handler.HandlerList;
 
@@ -54,6 +51,15 @@ public class WebAgentHttpConnector {
                 ".rss",
                 "All Test Suites in " + c.getName(),
                 "All the test suites which are available from ChorusWebAgent " + c.getName() + " cache",
+                localPort)
+            );
+
+            l.addHandler(new XmlSuiteListHandler(
+                c,
+                TestSuiteFilter.ALL_SUITES,
+                "/" + c.getHttpName() + "/allTestSuites",
+                ".xml",
+                "All Test Suites in " + c.getName(),
                 localPort)
             );
         }

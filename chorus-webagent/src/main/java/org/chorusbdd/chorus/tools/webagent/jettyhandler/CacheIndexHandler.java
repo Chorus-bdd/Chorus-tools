@@ -1,6 +1,8 @@
 package org.chorusbdd.chorus.tools.webagent.jettyhandler;
 
+import com.sun.xml.internal.txw2.output.IndentingXMLStreamWriter;
 import org.chorusbdd.chorus.tools.webagent.WebAgentFeatureCache;
+import org.chorusbdd.chorus.tools.webagent.util.WebAgentUtil;
 import org.eclipse.jetty.server.Request;
 
 import javax.servlet.http.HttpServletRequest;
@@ -31,11 +33,10 @@ public class CacheIndexHandler extends AbstractWebAgentHandler {
 
     @Override
     protected void doHandle(String target, Request baseRequest, HttpServletRequest request, HttpServletResponse response) throws IOException {
-        XMLOutputFactory f = XMLOutputFactory.newInstance();
         try {
-            XMLStreamWriter writer = f.createXMLStreamWriter(response.getWriter());
+            XMLStreamWriter writer = WebAgentUtil.getIndentingXmlStreamWriter(response);
             writer.writeStartDocument();
-            writer.writeProcessingInstruction("xml-stylesheet", "type='text/xsl' href='/cacheIndexResponse.xsl'");
+            addStylesheetInstruction(writer, "cacheIndexResponse.xsl");
             writer.writeStartElement("cache");
             writer.writeAttribute("name", cache.getName());
             writer.writeEmptyElement("resource");

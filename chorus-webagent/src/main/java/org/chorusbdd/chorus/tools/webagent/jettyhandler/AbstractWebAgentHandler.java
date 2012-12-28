@@ -40,4 +40,8 @@ public abstract class AbstractWebAgentHandler extends AbstractHandler {
         writer.writeCharacters(elementText);
         writer.writeEndElement();
     }
+
+    protected void addStylesheetInstruction(XMLStreamWriter writer, String stylesheetName) throws XMLStreamException {
+        writer.writeProcessingInstruction("xml-stylesheet", "type='text/xsl' href='/" + stylesheetName + "'");
+    }
 }

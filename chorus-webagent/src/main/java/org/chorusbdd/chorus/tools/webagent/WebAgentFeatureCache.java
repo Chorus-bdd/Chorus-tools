@@ -5,9 +5,9 @@ import org.apache.commons.logging.LogFactory;
 import org.chorusbdd.chorus.executionlistener.ExecutionListenerAdapter;
 import org.chorusbdd.chorus.results.ExecutionToken;
 import org.chorusbdd.chorus.results.FeatureToken;
+import org.chorusbdd.chorus.tools.webagent.util.WebAgentUtil;
 import org.chorusbdd.chorus.tools.xml.writer.TestSuite;
 
-import java.net.URLEncoder;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
@@ -87,12 +87,7 @@ public class WebAgentFeatureCache extends ExecutionListenerAdapter {
     }
 
     public void setHttpName() {
-        httpName = cacheName;
-        try {
-            httpName = URLEncoder.encode(cacheName, "utf-8");
-        } catch (Exception e) {
-            log.error("Failed to create http cache name from " + cacheName + " will use vanilla cache name for URL but this may not work", e);
-        }
+        httpName = WebAgentUtil.urlEncode(cacheName);
     }
 
     public String getHttpName() {
