@@ -40,12 +40,21 @@ public class HttpConnectorHandler extends Assert {
                     URL u = new URL(url);
                     InputStream urlStream = u.openStream();
                     String actual = FileUtil.readToString(urlStream);
-                    assertEquals("Check http results", expected, actual);
+
+                    String e = replaceAllTimesAndDates(expected);
+                    String a = replaceAllTimesAndDates(actual);
+                    assertEquals("Check http results", e, a);
                 } catch (IOException e) {
                     fail("Could not connect");
                 }
             }
         }.await();
+    }
+
+    public String replaceAllTimesAndDates(String content) {
+        content = content.replaceAll("\\d{8} \\d\\d:\\d\\d:\\d\\d \\w\\w\\w", "DATETIME");
+        content = content.replaceAll("-\\d{13}.xml", "TIMESTAMP.xml");
+        return content;
     }
 
 }

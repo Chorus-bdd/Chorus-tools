@@ -16,3 +16,10 @@ Feature: Http Connector
     Then http://localhost:9080/Main+Cache/ matches cacheIndex.xml
     Then http://localhost:9080/Main+Cache/index.xml matches cacheIndex.xml
 
+  Scenario: Check list all test suites from main cache
+    And I start a chorusInterpreter process named sessionOne
+    And I start a chorusInterpreter process named sessionTwo
+    And I start a chorusInterpreter process named sessionThree
+    Then http://localhost:9080/Main+Cache/allTestSuites.xml matches allTestSuites.xml
+    Then http://localhost:9080/Main+Cache/allTestSuites.rss matches allTestSuitesRSS.xml
+
