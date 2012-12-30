@@ -1,6 +1,7 @@
 <?xml version="1.0" ?>
-<?xml-stylesheet type='text/xsl' href='/suiteListResponse.xsl'?><suiteList title="All Test Suites in Main Cache">
-  <item title="Test Suite 20121228 23:59:09 GMT" link="http://localhost:9080/Main+Cache/Test+Suite-1356739149338.xml"></item>
-  <item title="Test Suite 20121228 23:59:09 GMT" link="http://localhost:9080/Main+Cache/Test+Suite-1356739149271.xml"></item>
-  <item title="Test Suite 20121228 23:59:09 GMT" link="http://localhost:9080/Main+Cache/Test+Suite-1356739149214.xml"></item>
+<?xml-stylesheet type='text/xsl' href='/suiteListResponse.xsl'?>
+<suiteList title="All Test Suites in Main Cache">
+  <item title="Test Suite 20121228 23:59:09 GMT" link="http://localhost:9080/Main+Cache/testSuite.xml?suiteName=Test+Suite-1356739149338.xml"></item>
+  <item title="Test Suite 20121228 23:59:09 GMT" link="http://localhost:9080/Main+Cache/testSuite.xml?suiteName=Test+Suite-1356739149271.xml"></item>
+  <item title="Test Suite 20121228 23:59:09 GMT" link="http://localhost:9080/Main+Cache/testSuite.xml?suiteName=Test+Suite-1356739149214.xml"></item>
 </suiteList>

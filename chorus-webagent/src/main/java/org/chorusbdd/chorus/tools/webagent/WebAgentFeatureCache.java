@@ -6,7 +6,6 @@ import org.chorusbdd.chorus.executionlistener.ExecutionListenerAdapter;
 import org.chorusbdd.chorus.results.ExecutionToken;
 import org.chorusbdd.chorus.results.FeatureToken;
 import org.chorusbdd.chorus.tools.webagent.util.WebAgentUtil;
-import org.chorusbdd.chorus.tools.xml.writer.TestSuite;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -24,7 +23,7 @@ public class WebAgentFeatureCache extends ExecutionListenerAdapter {
 
     private static final Log log = LogFactory.getLog(JmxManagementServerExporter.class);
 
-    private final LinkedList<TestSuite> cachedSuites = new LinkedList<TestSuite>();
+    private final LinkedList<WebAgentTestSuite> cachedSuites = new LinkedList<WebAgentTestSuite>();
     private final AtomicLong suitesReceived = new AtomicLong();
     private final String cacheName;
     private String httpName;
@@ -37,11 +36,11 @@ public class WebAgentFeatureCache extends ExecutionListenerAdapter {
     }
 
     public void testsCompleted(ExecutionToken testExecutionToken, List<FeatureToken> features) {
-        TestSuite testSuite = new TestSuite(testExecutionToken, features);
+        WebAgentTestSuite testSuite = new WebAgentTestSuite(testExecutionToken, features);
         addToCachedSuites(testSuite);
     }
 
-    private void addToCachedSuites(TestSuite testSuite) {
+    private void addToCachedSuites(WebAgentTestSuite testSuite) {
         synchronized ( cachedSuites ) {
             cachedSuites.add(testSuite);
             suitesReceived.incrementAndGet();
@@ -94,14 +93,14 @@ public class WebAgentFeatureCache extends ExecutionListenerAdapter {
         return httpName;
     }
 
-    public List<TestSuite> getSuites() {
+    public List<WebAgentTestSuite> getSuites() {
         return getSuites(TestSuiteFilter.ALL_SUITES);
     }
 
-    public List<TestSuite> getSuites(TestSuiteFilter testSuiteFilter) {
-        List<TestSuite> l = new LinkedList<TestSuite>();
+    public List<WebAgentTestSuite> getSuites(TestSuiteFilter testSuiteFilter) {
+        List<WebAgentTestSuite> l = new LinkedList<WebAgentTestSuite>();
         synchronized (cachedSuites) {
-            for ( TestSuite s : cachedSuites) {
+            for ( WebAgentTestSuite s : cachedSuites) {
                 if ( testSuiteFilter.accept(s)) {
                     l.add(s);
                 }

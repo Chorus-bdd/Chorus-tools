@@ -2,8 +2,8 @@ package org.chorusbdd.chorus.tools.webagent.jettyhandler;
 
 import org.chorusbdd.chorus.tools.webagent.TestSuiteFilter;
 import org.chorusbdd.chorus.tools.webagent.WebAgentFeatureCache;
+import org.chorusbdd.chorus.tools.webagent.WebAgentTestSuite;
 import org.chorusbdd.chorus.tools.webagent.util.WebAgentUtil;
-import org.chorusbdd.chorus.tools.xml.writer.TestSuite;
 import org.eclipse.jetty.server.Request;
 
 import javax.servlet.http.HttpServletRequest;
@@ -36,11 +36,11 @@ public abstract class AbstractSuiteListHandler extends AbstractWebAgentHandler {
 
     @Override
     protected void doHandle(String target, Request baseRequest, HttpServletRequest request, HttpServletResponse response) throws IOException {
-        List<TestSuite> suites = cache.getSuites(testSuiteFilter);
+        List<WebAgentTestSuite> suites = cache.getSuites(testSuiteFilter);
         doHandle(suites, target, baseRequest, request, response);
     }
 
-    protected abstract void doHandle(List<TestSuite> suites, String target, Request baseRequest, HttpServletRequest request, HttpServletResponse response) throws IOException;
+    protected abstract void doHandle(List<WebAgentTestSuite> suites, String target, Request baseRequest, HttpServletRequest request, HttpServletResponse response) throws IOException;
 
     @Override
     protected boolean shouldHandle(String target) {
@@ -59,8 +59,8 @@ public abstract class AbstractSuiteListHandler extends AbstractWebAgentHandler {
         return localPort;
     }
 
-    protected String getLinkToSuite(TestSuite s) {
+    protected String getLinkToSuite(WebAgentTestSuite s) {
         String suiteHttpName = WebAgentUtil.urlEncode(s.getSuiteNameWithTimestamp());
-        return "http://localhost:" + getLocalPort() + "/" + getCache().getHttpName() + "/" + suiteHttpName + ".xml";
+        return "http://localhost:" + getLocalPort() + "/" + getCache().getHttpName() + "/testSuite.xml?suiteName=" + suiteHttpName + ".xml";
     }
 }

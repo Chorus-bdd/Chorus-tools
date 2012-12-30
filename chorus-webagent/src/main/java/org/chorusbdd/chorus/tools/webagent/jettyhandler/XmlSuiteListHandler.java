@@ -2,13 +2,12 @@ package org.chorusbdd.chorus.tools.webagent.jettyhandler;
 
 import org.chorusbdd.chorus.tools.webagent.TestSuiteFilter;
 import org.chorusbdd.chorus.tools.webagent.WebAgentFeatureCache;
+import org.chorusbdd.chorus.tools.webagent.WebAgentTestSuite;
 import org.chorusbdd.chorus.tools.webagent.util.WebAgentUtil;
-import org.chorusbdd.chorus.tools.xml.writer.TestSuite;
 import org.eclipse.jetty.server.Request;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
 import java.io.IOException;
@@ -28,14 +27,14 @@ public class XmlSuiteListHandler extends AbstractSuiteListHandler {
         this.title = title;
     }
 
-    protected void doHandle(List<TestSuite> suites, String target, Request baseRequest, HttpServletRequest request, HttpServletResponse response) throws IOException {
+    protected void doHandle(List<WebAgentTestSuite> suites, String target, Request baseRequest, HttpServletRequest request, HttpServletResponse response) throws IOException {
         try {
             XMLStreamWriter writer = WebAgentUtil.getIndentingXmlStreamWriter(response);
             writer.writeStartDocument();
             addStylesheetInstruction(writer, "suiteListResponse.xsl");
             writer.writeStartElement("suiteList");
             writer.writeAttribute("title", title);
-            for (TestSuite s : suites) {
+            for (WebAgentTestSuite s : suites) {
                 writer.writeStartElement("item");
                 writer.writeAttribute("title", s.getSuiteNameWithTime());
                 writer.writeAttribute("link", getLinkToSuite(s));

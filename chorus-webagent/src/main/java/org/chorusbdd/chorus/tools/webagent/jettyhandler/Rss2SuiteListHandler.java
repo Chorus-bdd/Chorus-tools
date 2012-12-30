@@ -1,15 +1,13 @@
 package org.chorusbdd.chorus.tools.webagent.jettyhandler;
 
-import com.sun.xml.internal.txw2.output.IndentingXMLStreamWriter;
 import org.chorusbdd.chorus.tools.webagent.TestSuiteFilter;
 import org.chorusbdd.chorus.tools.webagent.WebAgentFeatureCache;
+import org.chorusbdd.chorus.tools.webagent.WebAgentTestSuite;
 import org.chorusbdd.chorus.tools.webagent.util.WebAgentUtil;
-import org.chorusbdd.chorus.tools.xml.writer.TestSuite;
 import org.eclipse.jetty.server.Request;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
 import java.io.IOException;
@@ -36,7 +34,7 @@ public class Rss2SuiteListHandler extends AbstractSuiteListHandler {
     }
 
     @Override
-    protected void doHandle(List<TestSuite> suites, String target, Request baseRequest, HttpServletRequest request, HttpServletResponse response) throws IOException {
+    protected void doHandle(List<WebAgentTestSuite> suites, String target, Request baseRequest, HttpServletRequest request, HttpServletResponse response) throws IOException {
         try {
             XMLStreamWriter writer = WebAgentUtil.getIndentingXmlStreamWriter(response);
             writer.writeStartDocument();
@@ -46,11 +44,11 @@ public class Rss2SuiteListHandler extends AbstractSuiteListHandler {
             writeSimpleTextElement(writer, "title", title);
             writeSimpleTextElement(writer, "link", "http://localhost:" + localPort + "/" + getHandledPath() + ".xml");
             writeSimpleTextElement(writer, "description", description);
-            for (TestSuite s : suites) {
+            for (WebAgentTestSuite s : suites) {
                 writer.writeStartElement("item");
                 writeSimpleTextElement(writer, "title", s.getSuiteNameWithTime());
                 writeSimpleTextElement(writer, "link", getLinkToSuite(s));
-                writeSimpleTextElement(writer, "description", "Test suite named " + s.getSuiteName() + " run at " +
+                writeSimpleTextElement(writer, "description", "Test suite named " + s.getTestSuiteName() + " run at " +
                         s.getSuiteStartTime() + " status " + s.getFinalStatusAsString());
                 writer.writeEndElement();
             }

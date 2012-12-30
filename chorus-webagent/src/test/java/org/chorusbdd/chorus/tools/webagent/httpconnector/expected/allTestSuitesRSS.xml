@@ -6,17 +6,17 @@
     <description>All the test suites which are available from ChorusWebAgent Main Cache cache</description>
     <item>
       <title>Test Suite 20121229 00:07:20 GMT</title>
-      <link>http://localhost:9080/Main+Cache/Test+Suite-1356739640931.xml</link>
+      <link>http://localhost:9080/Main+Cache/testSuite.xml?suiteName=Test+Suite-1356739640931.xml</link>
       <description>Test suite named Test Suite run at 20121229 00:07:20 GMT status Failed</description>
     </item>
     <item>
       <title>Test Suite 20121229 00:07:21 GMT</title>
-      <link>http://localhost:9080/Main+Cache/Test+Suite-1356739641128.xml</link>
+      <link>http://localhost:9080/Main+Cache/testSuite.xml?suiteName=Test+Suite-1356739641128.xml</link>
       <description>Test suite named Test Suite run at 20121229 00:07:21 GMT status Failed</description>
     </item>
     <item>
       <title>Test Suite 20121229 00:07:21 GMT</title>
-      <link>http://localhost:9080/Main+Cache/Test+Suite-1356739641133.xml</link>
+      <link>http://localhost:9080/Main+Cache/testSuite.xml?suiteName=Test+Suite-1356739641133.xml</link>
       <description>Test suite named Test Suite run at 20121229 00:07:21 GMT status Failed</description>
     </item>
   </channel>

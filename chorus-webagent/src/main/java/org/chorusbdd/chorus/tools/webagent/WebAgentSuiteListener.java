@@ -10,7 +10,6 @@ import org.chorusbdd.chorus.results.ExecutionToken;
 import org.chorusbdd.chorus.results.FeatureToken;
 import org.chorusbdd.chorus.results.ScenarioToken;
 import org.chorusbdd.chorus.results.StepToken;
-import org.chorusbdd.chorus.tools.webagent.JmxManagementServerExporter;
 
 import javax.management.MBeanServer;
 import javax.management.ObjectName;

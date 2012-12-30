@@ -2,7 +2,6 @@ package org.chorusbdd.chorus.tools.webagent;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.chorusbdd.chorus.tools.webagent.JmxManagementServerExporter;
 
 import java.util.List;
 
