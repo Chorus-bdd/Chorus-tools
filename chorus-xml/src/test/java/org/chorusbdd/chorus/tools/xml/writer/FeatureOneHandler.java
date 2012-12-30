@@ -23,7 +23,7 @@ public class FeatureOneHandler {
     public void testContainsSteps() {
     }
 
-    @Step("then I can use this to generate tokens which I can access in my junit xml writers")
+    @Step("I can use this to generate tokens which I can access in my junit xml writers")
     public void testGenerateTokens() {
     }
 }

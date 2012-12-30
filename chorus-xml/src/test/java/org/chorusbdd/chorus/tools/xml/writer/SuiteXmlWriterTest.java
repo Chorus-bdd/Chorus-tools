@@ -3,10 +3,8 @@ package org.chorusbdd.chorus.tools.xml.writer;
 import junit.framework.Assert;
 import org.chorusbdd.chorus.Chorus;
 import org.chorusbdd.chorus.executionlistener.ExecutionListener;
-import org.chorusbdd.chorus.results.ExecutionToken;
-import org.chorusbdd.chorus.results.FeatureToken;
-import org.chorusbdd.chorus.results.ScenarioToken;
-import org.chorusbdd.chorus.results.StepToken;
+import org.chorusbdd.chorus.results.*;
+import org.chorusbdd.chorus.tools.xml.beans.TestSuiteBean;
 import org.chorusbdd.chorus.tools.xml.util.FileUtil;
 import org.junit.Test;
 import java.io.*;
@@ -46,16 +44,15 @@ public class SuiteXmlWriterTest extends Assert {
         assertEquals("Check Expected XML", expectedXml.trim(), out.toString().trim());
     }
 
-    private TestSuite getTestSuite() throws Exception {
+    private TestSuiteBean getTestSuite() throws Exception {
         String baseDir = findChorusXmlModuleRoot();
         String featureDirPath = baseDir + File.separator + "src" + File.separator + "test";
         Chorus chorus = new Chorus(new String[] {"-f", featureDirPath, "-h", "org.chorusbdd.chorus.tools.xml","-l", "debug"});
         MockExecutionListener l = new MockExecutionListener();
         chorus.addExecutionListener(l);
         chorus.run();
-        TestSuite t = new TestSuite();
-        
-        return new TestSuite(l.testExecutionToken, l.featureTokens);
+        TestSuiteBean testSuite = new TestSuiteBean(new TestSuite(l.testExecutionToken, l.featureTokens));
+        return testSuite;
     }
 
     private String findChorusXmlModuleRoot() {
