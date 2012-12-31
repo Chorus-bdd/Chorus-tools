@@ -1,6 +1,7 @@
 package org.chorusbdd.chorus.tools.webagent.jettyhandler;
 
 import org.chorusbdd.chorus.tools.webagent.WebAgentFeatureCache;
+import org.chorusbdd.chorus.tools.webagent.WebAgentTestSuite;
 import org.eclipse.jetty.server.Request;
 
 import javax.servlet.http.HttpServletRequest;
@@ -22,7 +23,13 @@ public class TestSuiteHandler extends AbstractWebAgentHandler {
 
     @Override
     protected void doHandle(String target, Request baseRequest, HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String suiteId = baseRequest.getParameter("suiteId");
+        if ( suiteId == null) {
+            response.setStatus(HttpServletResponse.SC_MULTIPLE_CHOICES);
+        } else {
+            WebAgentTestSuite s = cache.getSuite(suiteId);
 
+        }
     }
 
     @Override

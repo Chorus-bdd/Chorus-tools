@@ -7,6 +7,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
+import com.sun.xml.internal.txw2.annotation.XmlCDATA;
 import org.chorusbdd.chorus.results.EndState;
 import org.chorusbdd.chorus.results.ScenarioToken;
 import org.chorusbdd.chorus.tools.xml.adapter.ScenarioTokenAdapter;
@@ -50,7 +51,7 @@ public class FeatureTokenBean {
 		this.configurationName = configurationName;
 	}
 
-	@XmlElement
+    @XmlElement
 	public String getDescription() {
 		return description;
 	}

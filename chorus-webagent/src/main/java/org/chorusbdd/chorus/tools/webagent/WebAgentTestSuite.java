@@ -1,11 +1,10 @@
 package org.chorusbdd.chorus.tools.webagent;
 
-import org.chorusbdd.chorus.results.EndState;
 import org.chorusbdd.chorus.results.ExecutionToken;
 import org.chorusbdd.chorus.results.FeatureToken;
 import org.chorusbdd.chorus.results.TestSuite;
+import org.chorusbdd.chorus.tools.xml.util.FormattingUtils;
 
-import java.text.SimpleDateFormat;
 import java.util.List;
 
 /**
@@ -15,16 +14,11 @@ import java.util.List;
  */
 public class WebAgentTestSuite extends TestSuite {
 
-    private static final ThreadLocal<SimpleDateFormat> startTimeFormatter = new ThreadLocal<SimpleDateFormat>() {
-        public SimpleDateFormat initialValue() {
-            return new SimpleDateFormat("yyyyMMdd HH:mm:ss zzz");
-        }
-    };
     private final String suiteTime;
 
     public WebAgentTestSuite(ExecutionToken executionToken, List<FeatureToken> features) {
         super(executionToken, features);
-        this.suiteTime = startTimeFormatter.get().format(executionToken.getExecutionStartTime());
+        this.suiteTime = FormattingUtils.getStartTimeFormatter().format(executionToken.getExecutionStartTime());
     }
 
     public String getFinalStatusAsString() {
@@ -47,7 +41,7 @@ public class WebAgentTestSuite extends TestSuite {
     /**
      * @return Suite name with timestamp which together identify this TestSuite instance
      */
-    public String getSuiteNameWithTimestamp() {
+    public String getSuiteId() {
         return getTestSuiteName() + "-" + getExecutionStartTime();
     }
 }

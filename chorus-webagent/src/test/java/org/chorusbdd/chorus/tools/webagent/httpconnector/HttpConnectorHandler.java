@@ -52,8 +52,8 @@ public class HttpConnectorHandler extends Assert {
     }
 
     public String replaceAllTimesAndDates(String content) {
-        content = content.replaceAll("\\d{8} \\d\\d:\\d\\d:\\d\\d \\w\\w\\w", "DATETIME");
-        content = content.replaceAll("-\\d{13}.xml", "TIMESTAMP.xml");
+        content = content.replaceAll("\\d{2} \\w{3} \\d{4} \\d\\d:\\d\\d:\\d\\d \\w\\w\\w", "{DATETIME}");
+        content = content.replaceAll("-\\d{13}.xml", "-{TIMESTAMP}.xml");
         return content;
     }
 

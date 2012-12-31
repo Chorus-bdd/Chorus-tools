@@ -6,9 +6,9 @@ import org.chorusbdd.chorus.executionlistener.ExecutionListenerAdapter;
 import org.chorusbdd.chorus.results.ExecutionToken;
 import org.chorusbdd.chorus.results.FeatureToken;
 import org.chorusbdd.chorus.tools.webagent.util.WebAgentUtil;
+import org.eclipse.jetty.http.PathMap;
 
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicLong;
 
 /**
@@ -23,7 +23,12 @@ public class WebAgentFeatureCache extends ExecutionListenerAdapter {
 
     private static final Log log = LogFactory.getLog(JmxManagementServerExporter.class);
 
-    private final LinkedList<WebAgentTestSuite> cachedSuites = new LinkedList<WebAgentTestSuite>();
+    //a size restricted linked hash map
+    private final LinkedHashMap<String, WebAgentTestSuite> cachedSuites = new LinkedHashMap<String,WebAgentTestSuite>() {
+        protected boolean removeEldestEntry(Map.Entry eldest) {
+            return size() > maxSuiteHistory;
+         }
+    };
     private final AtomicLong suitesReceived = new AtomicLong();
     private final String cacheName;
     private String httpName;
@@ -42,11 +47,8 @@ public class WebAgentFeatureCache extends ExecutionListenerAdapter {
 
     private void addToCachedSuites(WebAgentTestSuite testSuite) {
         synchronized ( cachedSuites ) {
-            cachedSuites.add(testSuite);
+            cachedSuites.put(testSuite.getSuiteId(), testSuite);
             suitesReceived.incrementAndGet();
-            if ( cachedSuites.size() > maxSuiteHistory) {
-                cachedSuites.removeLast();
-            }
         }
     }
 
@@ -68,7 +70,18 @@ public class WebAgentFeatureCache extends ExecutionListenerAdapter {
         this.maxSuiteHistory = maxHistory;
         synchronized (cachedSuites) {
             while ( cachedSuites.size() > 0 && cachedSuites.size() > maxHistory) {
-                cachedSuites.removeLast();
+                removeExcessEntries(maxHistory);
+            }
+        }
+    }
+
+    private void removeExcessEntries(int maxHistory) {
+        Iterator<Map.Entry<String, WebAgentTestSuite>> i = cachedSuites.entrySet().iterator();
+        int count = 0;
+        while(i.hasNext()) {
+            i.next();
+            if ( ++count > maxHistory) {
+                i.remove();
             }
         }
     }
@@ -100,12 +113,16 @@ public class WebAgentFeatureCache extends ExecutionListenerAdapter {
     public List<WebAgentTestSuite> getSuites(TestSuiteFilter testSuiteFilter) {
         List<WebAgentTestSuite> l = new LinkedList<WebAgentTestSuite>();
         synchronized (cachedSuites) {
-            for ( WebAgentTestSuite s : cachedSuites) {
+            for ( WebAgentTestSuite s : cachedSuites.values()) {
                 if ( testSuiteFilter.accept(s)) {
                     l.add(s);
                 }
             }
         }
         return l;
+    }
+
+    public WebAgentTestSuite getSuite(String suiteId) {
+        return cachedSuites.get(suiteId);
     }
 }

@@ -60,7 +60,7 @@ public abstract class AbstractSuiteListHandler extends AbstractWebAgentHandler {
     }
 
     protected String getLinkToSuite(WebAgentTestSuite s) {
-        String suiteHttpName = WebAgentUtil.urlEncode(s.getSuiteNameWithTimestamp());
-        return "http://localhost:" + getLocalPort() + "/" + getCache().getHttpName() + "/testSuite.xml?suiteName=" + suiteHttpName + ".xml";
+        String suiteHttpName = WebAgentUtil.urlEncode(s.getSuiteId());
+        return "http://localhost:" + getLocalPort() + "/" + getCache().getHttpName() + "/testSuite.xml?suiteId=" + suiteHttpName + ".xml";
     }
 }

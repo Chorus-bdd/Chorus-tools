@@ -61,6 +61,7 @@ public class WebAgentHttpConnector {
                 "All Test Suites in " + c.getName(),
                 localPort)
             );
+            l.addHandler(new TestSuiteHandler(c));
         }
         server.setHandler(l);
     }
