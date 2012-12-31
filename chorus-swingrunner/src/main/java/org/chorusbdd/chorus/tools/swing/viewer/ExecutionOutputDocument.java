@@ -29,16 +29,17 @@
  */
 package org.chorusbdd.chorus.tools.swing.viewer;
 
-import org.chorusbdd.chorus.results.ExecutionToken;
-import org.chorusbdd.chorus.results.FeatureToken;
-import org.chorusbdd.chorus.results.ScenarioToken;
-import org.chorusbdd.chorus.results.StepToken;
+import org.chorusbdd.chorus.results.*;
 import org.chorusbdd.chorus.executionlistener.PlainResultsFormatter;
 
 import javax.swing.text.*;
 import java.awt.*;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintWriter;
+
+import static org.chorusbdd.chorus.results.StepEndState.PENDING;
+import static org.chorusbdd.chorus.results.StepEndState.SKIPPED;
+import static org.chorusbdd.chorus.results.StepEndState.UNDEFINED;
 
 /**
  * Created by IntelliJ IDEA.
@@ -125,11 +126,11 @@ public class ExecutionOutputDocument extends DefaultStyledDocument {
     }
 
     public void stepCompleted(StepToken step) {
-        Style s = step.isUndefinedPendingOrSkipped() ? incompleteStepDetail :
-                step.isPassed() ? stepDetail : failedStepDetail;
+        Style s = step.inOneOf(UNDEFINED, PENDING, SKIPPED) ? incompleteStepDetail :
+                step.getEndState()!= StepEndState.FAILED ? stepDetail : failedStepDetail;   //DRY RUN counts as pass
 
-        Style h = step.isUndefinedPendingOrSkipped() ? incompleteStepHeader :
-                        step.isPassed() ? stepHeader : failedStepHeader;
+        Style h = step.inOneOf(UNDEFINED, PENDING, SKIPPED) ? incompleteStepHeader :
+                step.getEndState()!= StepEndState.FAILED ? stepHeader : failedStepHeader;   //DRY RUN counts as pass
 
         String stepText = step.toString();
         String stepHeaderText = stepText, stepDetailText = "";

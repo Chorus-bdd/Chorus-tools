@@ -1,21 +1,20 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <testSuite suiteName="Test Suite">
-    <execution>
-        <resultsSummary featuresFailed="0" featuresPassed="1" featuresPending="0" scenariosFailed="0" scenariosPassed="1" scenariosPending="0" stepsFailed="0" stepsPassed="3" stepsPending="0" stepsSkipped="0" stepsUndefined="0" tokenId="2" unavailableHandlers="0"/>
+    <execution executionHost="{EXECUTIONHOST}">
+        <resultsSummary endState="PASSED" featuresFailed="0" featuresPassed="1" featuresPending="0" scenariosFailed="0" scenariosPassed="1" scenariosPending="0" stepsFailed="0" stepsPassed="3" stepsPending="0" stepsSkipped="0" stepsUndefined="0" timeTaken="{TIMETAKEN}" timeTakenSeconds="{TIMETAKEN_SECONDS}" unavailableHandlers="0"/>
         <testSuiteName>Test Suite</testSuiteName>
     </execution>
     <features>
-        <feature name="Feature One">
-            <configurationName>base</configurationName>
+        <feature configurationName="base" endState="PASSED" name="Feature One">
             <description>Test XML generation for a very simple feature with a single scenario
 Here we are simply using the chorus interpreter to run the feature and then we can get
 hold of the ExecutionToken and Feature tokens to convert with our xml writer</description>
             <scenarios>
-                <scenario name="Convert A Simple Scenario to xml">
+                <scenario endState="PASSED" name="Convert A Simple Scenario to xml">
                     <steps>
-                        <step type="Given" action="I have a simple scenario" endState="PASSED" message=""/>
-                        <step type="And" action="this contains some steps" endState="PASSED" message=""/>
-                        <step type="Then" action="I can use this to generate tokens which I can access in my junit xml writers" endState="PASSED" message=""/>
+                        <step type="Given" action="I have a simple scenario" endState="PASSED" message="" timeTaken="{TIMETAKEN}" timeTakenSeconds="{TIMETAKEN_SECONDS}"/>
+                        <step type="And" action="this contains some steps" endState="PASSED" message="" timeTaken="{TIMETAKEN}" timeTakenSeconds="{TIMETAKEN_SECONDS}"/>
+                        <step type="Then" action="I can use this to generate tokens which I can access in my junit xml writers" endState="PASSED" message="" timeTaken="{TIMETAKEN}" timeTakenSeconds="{TIMETAKEN_SECONDS}"/>
                     </steps>
                 </scenario>
             </scenarios>

@@ -8,16 +8,17 @@ import org.chorusbdd.chorus.tools.xml.beans.FeatureTokenBean;
 public class FeatureTokenAdapter  extends XmlAdapter<FeatureTokenBean, FeatureToken>{
 
 	@Override
-	public FeatureTokenBean marshal(FeatureToken arg0) throws Exception {
-		FeatureTokenBean toRet = new FeatureTokenBean();
-		toRet.setName(arg0.getName());
-		if (arg0.getUsesHandlers()!=null && arg0.getUsesHandlers().length>0) {
-			toRet.setUsesHandlers(Arrays.toString(arg0.getUsesHandlers()));
+	public FeatureTokenBean marshal(FeatureToken f) throws Exception {
+		FeatureTokenBean result = new FeatureTokenBean();
+		result.setName(f.getName());
+		if (f.getUsesHandlers()!=null && f.getUsesHandlers().length>0) {
+			result.setUsesHandlers(Arrays.toString(f.getUsesHandlers()));
 		}
-		toRet.setConfigurationName(arg0.getConfigurationName());
-	    toRet.setDescription(arg0.getDescription().toString());
-	    toRet.setScenarios(arg0.getScenarios());
-		return toRet;
+		result.setConfigurationName(f.getConfigurationName());
+	    result.setDescription(f.getDescription());
+	    result.setScenarios(f.getScenarios());
+        result.setEndState(f.getEndState());
+		return result;
 	}
 
 	@Override

@@ -4,6 +4,7 @@ import javax.xml.bind.annotation.adapters.XmlAdapter;
 
 import org.chorusbdd.chorus.results.StepToken;
 import org.chorusbdd.chorus.tools.xml.beans.StepTokenBean;
+import org.chorusbdd.chorus.tools.xml.util.FormattingUtils;
 
 public class StepTokenAdapter extends XmlAdapter<StepTokenBean, StepToken>{
 
@@ -18,11 +19,13 @@ public class StepTokenAdapter extends XmlAdapter<StepTokenBean, StepToken>{
 	    if (v.getThrowable()!=null)
 	    {	
 	    	toRet.setThrowable(v.getThrowable().toString());
-	    }	    
+	    }
+        toRet.setTimeTaken(v.getTimeTaken());
+        toRet.setTimeTakenSeconds(FormattingUtils.getTimeTakenAsSecondsString(v.getTimeTaken()));
 		return toRet;
 	}
 
-	@Override
+    @Override
 	public StepToken unmarshal(StepTokenBean v) throws Exception {
 		// TODO Auto-generated method stub
 		return null;

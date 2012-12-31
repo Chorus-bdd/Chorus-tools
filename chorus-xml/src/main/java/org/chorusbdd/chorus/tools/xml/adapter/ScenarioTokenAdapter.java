@@ -11,13 +11,14 @@ import org.chorusbdd.chorus.tools.xml.beans.ScenarioTokenBean;
 public class ScenarioTokenAdapter extends XmlAdapter<ScenarioTokenBean, ScenarioToken> {
 
 	@Override
-	public ScenarioTokenBean marshal(ScenarioToken v) throws Exception {
-		ScenarioTokenBean toRet = new ScenarioTokenBean();
-		toRet.setName(v.getName());
-		toRet.setSteps(v.getSteps());
-        List<String> tags = v.getTags();
-        toRet.setTags(tags.size() == 0 ? null : Arrays.toString(tags.toArray()));
-		return toRet;
+	public ScenarioTokenBean marshal(ScenarioToken s) throws Exception {
+		ScenarioTokenBean result = new ScenarioTokenBean();
+		result.setName(s.getName());
+		result.setSteps(s.getSteps());
+        List<String> tags = s.getTags();
+        result.setTags(tags.size() == 0 ? null : Arrays.toString(tags.toArray()));
+        result.setEndState(s.getEndState());
+		return result;
 	}
 
 	@Override

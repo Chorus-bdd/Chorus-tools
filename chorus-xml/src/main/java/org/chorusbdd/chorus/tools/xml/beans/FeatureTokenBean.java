@@ -7,6 +7,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
+import org.chorusbdd.chorus.results.EndState;
 import org.chorusbdd.chorus.results.ScenarioToken;
 import org.chorusbdd.chorus.tools.xml.adapter.ScenarioTokenAdapter;
 
@@ -17,8 +18,9 @@ public class FeatureTokenBean {
 	private String configurationName;
     private String description;
     private List<ScenarioToken> scenarios ;
-	
-	public FeatureTokenBean(){}
+    private EndState endState;
+
+    public FeatureTokenBean(){}
 
 	
 	@XmlAttribute
@@ -39,7 +41,7 @@ public class FeatureTokenBean {
 		this.usesHandlers = usesHandlers;
 	}
 
-	@XmlElement
+    @XmlAttribute
 	public String getConfigurationName() {
 		return configurationName;
 	}
@@ -65,8 +67,15 @@ public class FeatureTokenBean {
 
 	public void setScenarios(List<ScenarioToken> scenarios) {
 		this.scenarios = scenarios;
-	};
-	
-	
+	}
 
+    @XmlAttribute
+    public EndState getEndState() {
+        return endState;
+    }
+
+    public void setEndState(EndState endState) {
+        this.endState = endState;
+    }
+	
 }

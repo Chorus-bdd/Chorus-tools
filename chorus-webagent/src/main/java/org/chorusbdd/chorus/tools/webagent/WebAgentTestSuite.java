@@ -1,5 +1,6 @@
 package org.chorusbdd.chorus.tools.webagent;
 
+import org.chorusbdd.chorus.results.EndState;
 import org.chorusbdd.chorus.results.ExecutionToken;
 import org.chorusbdd.chorus.results.FeatureToken;
 import org.chorusbdd.chorus.results.TestSuite;
@@ -27,8 +28,13 @@ public class WebAgentTestSuite extends TestSuite {
     }
 
     public String getFinalStatusAsString() {
-        return getExecutionToken().isPassed() ? "Passed" :
-                getExecutionToken().isPending() ? "Pending" : "Failed";
+        switch (getExecutionToken().getEndState()) {
+            case PASSED: return "Passed";
+            case PENDING: return "Pending";
+            case FAILED: return "Failed";
+            default:
+                throw new UnsupportedOperationException("Unknown end state " + getExecutionToken().getEndState());
+        }
     }
     public String getSuiteNameWithTime() {
         return getTestSuiteName() + " " + suiteTime;

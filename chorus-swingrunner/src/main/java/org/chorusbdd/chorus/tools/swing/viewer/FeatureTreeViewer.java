@@ -130,7 +130,7 @@ public class FeatureTreeViewer extends JPanel implements ExecutionListener {
         return newNode;
     }
 
-    private abstract class AbstractTokenTreeNode<N extends Token> extends DefaultMutableTreeNode {
+    private abstract class AbstractTokenTreeNode<N extends PassPendingFailToken> extends DefaultMutableTreeNode {
 
         private N token;
 
@@ -151,13 +151,13 @@ public class FeatureTreeViewer extends JPanel implements ExecutionListener {
             return token.toString();
         }
 
-
         public ImageIcon getIcon() {
-            return this == getCurrentlyProcessingNode() ? getInProgressIcon() :
-                    token.isPassed() ?
-                        token.isFullyImplemented() ? getOkIcon() : getNotImplementedIcon() :
-                        getFailedIcon();
-
+            switch(getToken().getEndState()) {
+                case PASSED: return getOkIcon();
+                case PENDING: return getNotImplementedIcon();
+                case FAILED: return getFailedIcon();
+                default: return getFailedIcon(); //should never happen only 3 states
+            }
         }
 
         protected abstract ImageIcon getFailedIcon();

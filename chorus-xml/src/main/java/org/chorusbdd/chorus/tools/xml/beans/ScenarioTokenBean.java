@@ -6,6 +6,7 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
+import org.chorusbdd.chorus.results.EndState;
 import org.chorusbdd.chorus.results.StepToken;
 import org.chorusbdd.chorus.tools.xml.adapter.StepTokenAdapter;
 
@@ -14,6 +15,7 @@ public class ScenarioTokenBean {
     private String name;
     private List<StepToken> steps ;
     private String tags;
+    private EndState endState;
 
     public ScenarioTokenBean() {}
 
@@ -44,6 +46,13 @@ public class ScenarioTokenBean {
 	public void setTags(String tags) {
 		this.tags = tags;
 	}
-    
-    
+
+    @XmlAttribute
+    public EndState getEndState() {
+        return endState;
+    }
+
+    public void setEndState(EndState endState) {
+        this.endState = endState;
+    }
 }

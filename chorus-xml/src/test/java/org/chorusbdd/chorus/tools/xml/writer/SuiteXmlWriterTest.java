@@ -41,7 +41,19 @@ public class SuiteXmlWriterTest extends Assert {
 
         URL expectedOutputResource = getClass().getResource("featureOneExpectedOutput.xml");
         String expectedXml = FileUtil.readToString(expectedOutputResource.openStream());
-        assertEquals("Check Expected XML", expectedXml.trim(), out.toString().trim());
+        String actualXml = out.toString().trim();
+        actualXml = removeVariableContent(actualXml);
+        assertEquals("Check Expected XML", expectedXml.trim(), actualXml );
+    }
+
+    //some contents is variable based on time and date, replace this
+    private String removeVariableContent(String xml) {
+        xml = xml.replaceAll("timeTaken=\"\\d{0,5}\"", "timeTaken=\"{TIMETAKEN}\"");
+        xml = xml.replaceAll("timeTakenSeconds=\"\\d{0,5}\\.?\\d?\"", "timeTakenSeconds=\"{TIMETAKEN_SECONDS}\"");
+        xml = xml.replaceAll("executionStartTime=\".*\"", "executionStartTime=\"{STARTTIME}\"");
+        xml = xml.replaceAll("executionStartTimestamp=\".*\"", "executionStartTimestamp=\"{STARTTIMSTAMP}\"");
+        xml = xml.replaceAll("executionHost=\".*\"", "executionHost=\"{EXECUTIONHOST}\"");
+        return xml;
     }
 
     private TestSuiteBean getTestSuite() throws Exception {

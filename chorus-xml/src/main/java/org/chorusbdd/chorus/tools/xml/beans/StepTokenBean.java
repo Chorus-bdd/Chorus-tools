@@ -14,6 +14,9 @@ public class StepTokenBean {
     private StepEndState endState;
     private String message = "";
     private String throwable;
+    private String timeTakenSeconds;
+
+    private long timeTaken;
     
     public StepTokenBean() {}
 
@@ -60,7 +63,23 @@ public class StepTokenBean {
 
 	public void setThrowable(String throwable) {
 		this.throwable = throwable;
-	};
-    
-    
+	}
+
+    @XmlAttribute
+    public long getTimeTaken() {
+        return timeTaken;
+    }
+
+    public void setTimeTaken(long timeTaken) {
+        this.timeTaken = timeTaken;
+    }
+
+    @XmlAttribute
+    public String getTimeTakenSeconds() {
+        return timeTakenSeconds;
+    }
+
+    public void setTimeTakenSeconds(String timeTakenSeconds) {
+        this.timeTakenSeconds = timeTakenSeconds;
+    }
 }

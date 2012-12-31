@@ -4,6 +4,9 @@ import javax.xml.bind.annotation.adapters.XmlAdapter;
 
 import org.chorusbdd.chorus.results.ResultsSummary;
 import org.chorusbdd.chorus.tools.xml.beans.ResultSummaryBean;
+import org.chorusbdd.chorus.tools.xml.util.FormattingUtils;
+
+import java.text.DecimalFormat;
 
 public class ResultSummaryAdapter extends XmlAdapter<ResultSummaryBean, ResultsSummary> {
 
@@ -26,7 +29,11 @@ public class ResultSummaryAdapter extends XmlAdapter<ResultSummaryBean, ResultsS
 	    ret.setStepsPending(v.getStepsPending());
 	    ret.setStepsUndefined(v.getStepsUndefined());
 	    ret.setStepsSkipped(v.getStepsSkipped());
-	    ret.setTokenId(v.getTokenId());
+
+        ret.setEndState(v.getEndState());
+
+        ret.setTimeTaken(v.getTimeTaken());
+        ret.setTimeTakenSeconds(FormattingUtils.getTimeTakenAsSecondsString(v.getTimeTaken()));
 		return ret;
 	}
 

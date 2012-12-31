@@ -1,5 +1,7 @@
 package org.chorusbdd.chorus.tools.xml.beans;
 
+import org.chorusbdd.chorus.results.EndState;
+
 import javax.xml.bind.annotation.XmlAttribute;
 
 public class ResultSummaryBean {
@@ -19,14 +21,11 @@ public class ResultSummaryBean {
     private int stepsPending = 0;
     private int stepsUndefined = 0;
     private int stepsSkipped = 0;
-    
-    private long tokenId;
-    
-    @XmlAttribute
-    public long getTokenId() {
-		return tokenId;
-	}
 
+    private long timeTaken = -1;
+    private String timeTakenSeconds;
+
+    private EndState endState;
 
     @XmlAttribute
 	public int getFeaturesPassed() {
@@ -136,10 +135,30 @@ public class ResultSummaryBean {
 		this.stepsSkipped = stepsSkipped;
 	}
 
-	
-	public void setTokenId(long tokenId) {
-		this.tokenId = tokenId;
-	}
-    
-    
+    @XmlAttribute
+    public long getTimeTaken() {
+        return timeTaken;
+    }
+
+    public void setTimeTaken(long timeTaken) {
+        this.timeTaken = timeTaken;
+    }
+
+    @XmlAttribute
+    public String getTimeTakenSeconds() {
+        return timeTakenSeconds;
+    }
+
+    public void setTimeTakenSeconds(String timeTakenSeconds) {
+        this.timeTakenSeconds = timeTakenSeconds;
+    }
+
+    @XmlAttribute
+    public EndState getEndState() {
+        return endState;
+    }
+
+    public void setEndState(EndState endState) {
+        this.endState = endState;
+    }
 }

@@ -30,10 +30,7 @@
 package org.chorusbdd.chorus.tools.swing.viewer;
 
 import org.chorusbdd.chorus.executionlistener.ExecutionListener;
-import org.chorusbdd.chorus.results.ExecutionToken;
-import org.chorusbdd.chorus.results.FeatureToken;
-import org.chorusbdd.chorus.results.ScenarioToken;
-import org.chorusbdd.chorus.results.StepToken;
+import org.chorusbdd.chorus.results.*;
 import org.chorusbdd.chorus.tools.util.ImageUtils;
 
 import javax.swing.*;
@@ -167,8 +164,8 @@ public class ChorusViewerMainFrame extends JFrame implements ExecutionListener {
         }
 
         private void configureLabel(ExecutionToken t) {
-            ImageIcon i = t.isPassedAndFullyImplemented() ? ImageUtils.FEATURE_OK :
-                    t.isPassed() ? ImageUtils.FEATURE_NOT_IMPLEMENTED : ImageUtils.FEATURE_FAILED;
+            ImageIcon i = (t.getEndState() == EndState.PASSED && t.isFullyImplemented()) ? ImageUtils.FEATURE_OK :
+                    t.getEndState() == EndState.PENDING ? ImageUtils.FEATURE_NOT_IMPLEMENTED : ImageUtils.FEATURE_FAILED;
             resultsLabel.setIcon(i);
             resultsLabel.setText(t.toString());
         }
