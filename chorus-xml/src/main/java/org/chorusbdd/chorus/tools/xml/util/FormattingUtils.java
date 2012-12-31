@@ -2,6 +2,9 @@ package org.chorusbdd.chorus.tools.xml.util;
 
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * User: nick
@@ -31,7 +34,24 @@ public class FormattingUtils {
     }
 
     public static String getTimeTakenAsSecondsString(long timeTakenMillis) {
-        float timeSeconds = timeTakenMillis / 1000f;
-        return getSecondsFormatter().format(timeSeconds);
+        String result = "0";
+        if ( timeTakenMillis > 0) {
+            float timeSeconds = timeTakenMillis / 1000f;
+            result = getSecondsFormatter().format(timeSeconds);
+        }
+        return result;
+    }
+
+    public static String getAsCsv(String[] usesHandlers) {
+        StringBuilder sb = new StringBuilder();
+        List<String> l = Arrays.asList(usesHandlers);
+        Iterator<String> i = l.iterator();
+        while(i.hasNext()) {
+            sb.append(i.next());
+            if ( i.hasNext()) {
+                sb.append(",");
+            }
+        }
+        return sb.toString();
     }
 }

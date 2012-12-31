@@ -27,25 +27,19 @@ public class XmlSuiteListHandler extends AbstractSuiteListHandler {
         this.title = title;
     }
 
-    protected void doHandle(List<WebAgentTestSuite> suites, String target, Request baseRequest, HttpServletRequest request, HttpServletResponse response) throws IOException {
-        try {
-            XMLStreamWriter writer = WebAgentUtil.getIndentingXmlStreamWriter(response);
-            writer.writeStartDocument();
-            addStylesheetInstruction(writer, "suiteListResponse.xsl");
-            writer.writeStartElement("suiteList");
-            writer.writeAttribute("title", title);
-            for (WebAgentTestSuite s : suites) {
-                writer.writeStartElement("item");
-                writer.writeAttribute("title", s.getSuiteNameWithTime());
-                writer.writeAttribute("link", getLinkToSuite(s));
-                writer.writeEndElement();
-            }
+    protected void doHandle(List<WebAgentTestSuite> suites, String target, Request baseRequest, HttpServletRequest request, HttpServletResponse response, XMLStreamWriter writer) throws XMLStreamException {
+        writer.writeStartDocument();
+        addStylesheetInstruction(writer, "suiteListResponse.xsl");
+        writer.writeStartElement("suiteList");
+        writer.writeAttribute("title", title);
+        for (WebAgentTestSuite s : suites) {
+            writer.writeStartElement("item");
+            writer.writeAttribute("title", s.getSuiteNameWithTime());
+            writer.writeAttribute("link", getLinkToSuite(s));
             writer.writeEndElement();
-            writer.writeEndDocument();
-            writer.flush();
-        } catch (XMLStreamException e) {
-            throw new IOException("Failed to render response as xml stream", e);
         }
+        writer.writeEndElement();
+        writer.writeEndDocument();
     }
 
 }

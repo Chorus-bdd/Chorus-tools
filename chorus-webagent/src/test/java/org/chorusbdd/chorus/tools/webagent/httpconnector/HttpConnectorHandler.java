@@ -12,7 +12,6 @@ import javax.annotation.Resource;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
-import java.net.URLConnection;
 
 /**
  * User: nick
@@ -28,6 +27,16 @@ public class HttpConnectorHandler extends Assert {
     @Resource
     private WebAgentFeatureCache mainFeatureCache;
 
+
+    @Step(".*the web agent cache contains (\\d) test suites?")
+    public void testSuiteCount(final int count) {
+        new PolledAssertion() {
+            protected void validate() {
+                assertEquals("Expect " + count + " items in cache", count, mainFeatureCache.getNumberOfTestSuites());
+            }
+        }.await();
+    }
+
     @Step(".*(http://.*) matches (.*)")
     public void checkWebContent(final String url, String resource) throws IOException {
         InputStream is = getClass().getResource("expected/" + resource).openStream();
@@ -41,8 +50,8 @@ public class HttpConnectorHandler extends Assert {
                     InputStream urlStream = u.openStream();
                     String actual = FileUtil.readToString(urlStream);
 
-                    String e = replaceAllTimesAndDates(expected);
-                    String a = replaceAllTimesAndDates(actual);
+                    String e = replaceVariableContent(expected);
+                    String a = replaceVariableContent(actual);
                     assertEquals("Check http results", e, a);
                 } catch (IOException e) {
                     fail("Could not connect");
@@ -51,9 +60,19 @@ public class HttpConnectorHandler extends Assert {
         }.await();
     }
 
-    public String replaceAllTimesAndDates(String content) {
+    @Step(".*reset the cache suite ids using a zero-based index")
+    public void resetSuiteIds() {
+        mainFeatureCache.setSuiteIdsUsingZeroBasedIndex();
+    }
+
+    private String replaceVariableContent(String content) {
         content = content.replaceAll("\\d{2} \\w{3} \\d{4} \\d\\d:\\d\\d:\\d\\d \\w\\w\\w", "{DATETIME}");
-        content = content.replaceAll("-\\d{13}.xml", "-{TIMESTAMP}.xml");
+        content = content.replaceAll("\\d{13}", "{TIMESTAMP}");
+        content = content.replaceAll("timeTaken=\"\\d{0,5}\"", "timeTaken=\"{TIMETAKEN}\"");
+        content = content.replaceAll("timeTakenSeconds=\"\\d{0,5}\\.?\\d?\"", "timeTakenSeconds=\"{TIMETAKEN_SECONDS}\"");
+        content = content.replaceAll("executionStartTime=\".*\"", "executionStartTime=\"{STARTTIME}\"");
+        content = content.replaceAll("executionStartTimestamp=\".*\"", "executionStartTimestamp=\"{STARTTIMSTAMP}\"");
+        content = content.replaceAll("executionHost=\".*\"", "executionHost=\"{EXECUTIONHOST}\"");
         return content;
     }
 

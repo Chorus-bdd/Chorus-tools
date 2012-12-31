@@ -34,30 +34,24 @@ public class Rss2SuiteListHandler extends AbstractSuiteListHandler {
     }
 
     @Override
-    protected void doHandle(List<WebAgentTestSuite> suites, String target, Request baseRequest, HttpServletRequest request, HttpServletResponse response) throws IOException {
-        try {
-            XMLStreamWriter writer = WebAgentUtil.getIndentingXmlStreamWriter(response);
-            writer.writeStartDocument();
-            writer.writeStartElement("rss");
-            writer.writeAttribute("version", "2.0");
-            writer.writeStartElement("channel");
-            writeSimpleTextElement(writer, "title", title);
-            writeSimpleTextElement(writer, "link", "http://localhost:" + localPort + "/" + getHandledPath() + ".xml");
-            writeSimpleTextElement(writer, "description", description);
-            for (WebAgentTestSuite s : suites) {
-                writer.writeStartElement("item");
-                writeSimpleTextElement(writer, "title", s.getSuiteNameWithTime());
-                writeSimpleTextElement(writer, "link", getLinkToSuite(s));
-                writeSimpleTextElement(writer, "description", "Test suite named " + s.getTestSuiteName() + " run at " +
-                        s.getSuiteStartTime() + " status " + s.getFinalStatusAsString());
-                writer.writeEndElement();
-            }
+    protected void doHandle(List<WebAgentTestSuite> suites, String target, Request baseRequest, HttpServletRequest request, HttpServletResponse response, XMLStreamWriter writer) throws XMLStreamException {
+        writer.writeStartDocument();
+        writer.writeStartElement("rss");
+        writer.writeAttribute("version", "2.0");
+        writer.writeStartElement("channel");
+        writeSimpleTextElement(writer, "title", title);
+        writeSimpleTextElement(writer, "link", "http://localhost:" + localPort + "/" + getHandledPath() + ".xml");
+        writeSimpleTextElement(writer, "description", description);
+        for (WebAgentTestSuite s : suites) {
+            writer.writeStartElement("item");
+            writeSimpleTextElement(writer, "title", s.getSuiteNameWithTime());
+            writeSimpleTextElement(writer, "link", getLinkToSuite(s));
+            writeSimpleTextElement(writer, "description", "Test suite named " + s.getTestSuiteName() + " run at " +
+                    s.getSuiteStartTime() + " status " + s.getFinalStatusAsString());
             writer.writeEndElement();
-            writer.writeEndElement();
-            writer.writeEndDocument();
-            writer.flush();
-        } catch (XMLStreamException e) {
-            throw new IOException("Failed to render response as xml stream", e);
         }
+        writer.writeEndElement();
+        writer.writeEndElement();
+        writer.writeEndDocument();
     }
 }

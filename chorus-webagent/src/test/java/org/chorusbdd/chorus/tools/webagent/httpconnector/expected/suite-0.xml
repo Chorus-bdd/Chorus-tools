@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<testSuite suiteName="Test Suite">
+    <execution executionHost="{EXECUTIONHOST}" executionStartTime="{DATETIME}" executionStartTimestamp="{TIMESTAMP}">
+        <resultsSummary endState="PASSED" featuresFailed="0" featuresPassed="1" featuresPending="0" scenariosFailed="0" scenariosPassed="1" scenariosPending="0" stepsFailed="0" stepsPassed="1" stepsPending="0" stepsSkipped="0" stepsUndefined="0" timeTaken="{TIMETAKEN}" timeTakenSeconds="{TIMETAKEN_SECONDS}" unavailableHandlers="0"/>
+        <testSuiteName>Test Suite</testSuiteName>
+    </execution>
+    <features>
+        <feature configurationName="base" endState="PASSED" name="Simple Feature">
+            <description></description>
+            <scenarios>
+                <scenario endState="PASSED" name="Simple Scenario">
+                    <steps>
+                        <step type="Given" action="I wait 1 seconds for a step to run" endState="PASSED" message="" timeTaken="{TIMETAKEN}" timeTakenSeconds="{TIMETAKEN_SECONDS}"/>
+                    </steps>
+                </scenario>
+            </scenarios>
+            <usesHandlers>Timers</usesHandlers>
+        </feature>
+    </features>
+</testSuite>

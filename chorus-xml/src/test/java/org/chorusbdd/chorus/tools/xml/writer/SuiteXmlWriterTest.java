@@ -29,7 +29,7 @@ public class SuiteXmlWriterTest extends Assert {
     @Test
     public void testWriteSuite() throws Exception {
         StringWriter out = new StringWriter();
-        TestSuiteWriter w = new TestSuiteWriter();
+        TestSuiteXmlWriter w = new TestSuiteXmlWriter();
         w.write(out, getTestSuite());
         out.flush();
         out.close();
@@ -56,15 +56,14 @@ public class SuiteXmlWriterTest extends Assert {
         return xml;
     }
 
-    private TestSuiteBean getTestSuite() throws Exception {
+    private TestSuite getTestSuite() throws Exception {
         String baseDir = findChorusXmlModuleRoot();
         String featureDirPath = baseDir + File.separator + "src" + File.separator + "test";
         Chorus chorus = new Chorus(new String[] {"-f", featureDirPath, "-h", "org.chorusbdd.chorus.tools.xml","-l", "debug"});
         MockExecutionListener l = new MockExecutionListener();
         chorus.addExecutionListener(l);
         chorus.run();
-        TestSuiteBean testSuite = new TestSuiteBean(new TestSuite(l.testExecutionToken, l.featureTokens));
-        return testSuite;
+        return new TestSuite(l.testExecutionToken, l.featureTokens);
     }
 
     private String findChorusXmlModuleRoot() {

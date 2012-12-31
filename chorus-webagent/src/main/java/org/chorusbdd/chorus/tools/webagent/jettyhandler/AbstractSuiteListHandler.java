@@ -8,6 +8,8 @@ import org.eclipse.jetty.server.Request;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.xml.stream.XMLStreamException;
+import javax.xml.stream.XMLStreamWriter;
 import java.io.IOException;
 import java.util.List;
 
@@ -16,7 +18,7 @@ import java.util.List;
  * Date: 27/12/12
  * Time: 16:31
  */
-public abstract class AbstractSuiteListHandler extends AbstractWebAgentHandler {
+public abstract class AbstractSuiteListHandler extends XmlStreamingHandler {
 
     private WebAgentFeatureCache cache;
     private TestSuiteFilter testSuiteFilter;
@@ -35,12 +37,12 @@ public abstract class AbstractSuiteListHandler extends AbstractWebAgentHandler {
     }
 
     @Override
-    protected void doHandle(String target, Request baseRequest, HttpServletRequest request, HttpServletResponse response) throws IOException {
+    protected void doHandle(String target, Request baseRequest, HttpServletRequest request, HttpServletResponse response, XMLStreamWriter writer) throws XMLStreamException {
         List<WebAgentTestSuite> suites = cache.getSuites(testSuiteFilter);
-        doHandle(suites, target, baseRequest, request, response);
+        doHandle(suites, target, baseRequest, request, response, writer);
     }
 
-    protected abstract void doHandle(List<WebAgentTestSuite> suites, String target, Request baseRequest, HttpServletRequest request, HttpServletResponse response) throws IOException;
+    protected abstract void doHandle(List<WebAgentTestSuite> suites, String target, Request baseRequest, HttpServletRequest request, HttpServletResponse response, XMLStreamWriter writer) throws XMLStreamException;
 
     @Override
     protected boolean shouldHandle(String target) {
@@ -61,6 +63,6 @@ public abstract class AbstractSuiteListHandler extends AbstractWebAgentHandler {
 
     protected String getLinkToSuite(WebAgentTestSuite s) {
         String suiteHttpName = WebAgentUtil.urlEncode(s.getSuiteId());
-        return "http://localhost:" + getLocalPort() + "/" + getCache().getHttpName() + "/testSuite.xml?suiteId=" + suiteHttpName + ".xml";
+        return "http://localhost:" + getLocalPort() + "/" + getCache().getHttpName() + "/testSuite.xml?suiteId=" + suiteHttpName;
     }
 }

@@ -16,7 +16,7 @@ import java.util.List;
  * Date: 27/12/12
  * Time: 10:05
  */
-public class IndexHandler extends AbstractWebAgentHandler {
+public class IndexHandler extends XmlStreamingHandler {
 
     private List<WebAgentFeatureCache> cacheList;
 
@@ -25,25 +25,20 @@ public class IndexHandler extends AbstractWebAgentHandler {
     }
 
     @Override
-    protected void doHandle(String target, Request baseRequest, HttpServletRequest request, HttpServletResponse response) throws IOException {
-        try {
-            XMLStreamWriter writer = WebAgentUtil.getIndentingXmlStreamWriter(response);
-            writer.writeStartDocument();
-            addStylesheetInstruction(writer, "indexResponse.xsl");
-            writer.writeStartElement("index");
-            for ( WebAgentFeatureCache cache : cacheList) {
-                writer.writeEmptyElement("featureCache");
-                writer.writeAttribute("name", cache.getName());
-                writer.writeAttribute("numberOfTestSuites", String.valueOf(cache.getNumberOfTestSuites()));
-                writer.writeAttribute("maxHistory", String.valueOf(cache.getMaxHistory()));
-                writer.writeAttribute("suitesReceived", String.valueOf(cache.getSuitesReceived()));
-                writer.writeAttribute("indexLink", "/" + cache.getHttpName() + "/index.xml" );
-            }
-            writer.writeEndElement();
-            writer.writeEndDocument();
-        } catch (XMLStreamException e) {
-            throw new IOException("Failed to render response as xml stream", e);
+    protected void doHandle(String target, Request baseRequest, HttpServletRequest request, HttpServletResponse response, XMLStreamWriter writer) throws XMLStreamException {
+        writer.writeStartDocument();
+        addStylesheetInstruction(writer, "indexResponse.xsl");
+        writer.writeStartElement("index");
+        for ( WebAgentFeatureCache cache : cacheList) {
+            writer.writeEmptyElement("featureCache");
+            writer.writeAttribute("name", cache.getName());
+            writer.writeAttribute("numberOfTestSuites", String.valueOf(cache.getNumberOfTestSuites()));
+            writer.writeAttribute("maxHistory", String.valueOf(cache.getMaxHistory()));
+            writer.writeAttribute("suitesReceived", String.valueOf(cache.getSuitesReceived()));
+            writer.writeAttribute("indexLink", "/" + cache.getHttpName() + "/index.xml" );
         }
+        writer.writeEndElement();
+        writer.writeEndDocument();
     }
 
     @Override

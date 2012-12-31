@@ -111,7 +111,7 @@ public class WebAgentFeatureCache extends ExecutionListenerAdapter {
     }
 
     public List<WebAgentTestSuite> getSuites(TestSuiteFilter testSuiteFilter) {
-        List<WebAgentTestSuite> l = new LinkedList<WebAgentTestSuite>();
+        List<WebAgentTestSuite> l = new LinkedList<>();
         synchronized (cachedSuites) {
             for ( WebAgentTestSuite s : cachedSuites.values()) {
                 if ( testSuiteFilter.accept(s)) {
@@ -124,5 +124,19 @@ public class WebAgentFeatureCache extends ExecutionListenerAdapter {
 
     public WebAgentTestSuite getSuite(String suiteId) {
         return cachedSuites.get(suiteId);
+    }
+
+    /**
+     * A testing hook to set the cached suites to have predictable keys
+     */
+    public void setSuiteIdsUsingZeroBasedIndex() {
+        synchronized (cachedSuites) {
+            List<WebAgentTestSuite> s = new ArrayList<>(cachedSuites.values());
+            cachedSuites.clear();
+            for ( int index=0; index < s.size(); index++) {
+                WebAgentTestSuite suite = s.get(index);
+                cachedSuites.put(suite.getTestSuiteName() + "-" + index, suite);
+            }
+        }
     }
 }

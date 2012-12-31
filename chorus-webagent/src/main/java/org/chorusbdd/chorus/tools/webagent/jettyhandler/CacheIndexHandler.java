@@ -17,7 +17,7 @@ import java.io.IOException;
  *
  * Show an index of the available resources under a feature cache
  */
-public class CacheIndexHandler extends AbstractWebAgentHandler {
+public class CacheIndexHandler extends XmlStreamingHandler {
 
     private WebAgentFeatureCache cache;
     private final String resourcePath;
@@ -30,22 +30,17 @@ public class CacheIndexHandler extends AbstractWebAgentHandler {
     }
 
     @Override
-    protected void doHandle(String target, Request baseRequest, HttpServletRequest request, HttpServletResponse response) throws IOException {
-        try {
-            XMLStreamWriter writer = WebAgentUtil.getIndentingXmlStreamWriter(response);
-            writer.writeStartDocument();
-            addStylesheetInstruction(writer, "cacheIndexResponse.xsl");
-            writer.writeStartElement("cache");
-            writer.writeAttribute("name", cache.getName());
-            writer.writeEmptyElement("resource");
-            writer.writeAttribute("name", "allTestSuites");
-            writer.writeAttribute("rssLink", "./allTestSuites.rss");
-            writer.writeAttribute("xmlLink", "./allTestSuites.xml");
-            writer.writeEndElement();
-            writer.writeEndDocument();
-        } catch (XMLStreamException e) {
-            throw new IOException("Failed to render response as xml stream", e);
-        }
+    protected void doHandle(String target, Request baseRequest, HttpServletRequest request, HttpServletResponse response, XMLStreamWriter writer) throws XMLStreamException {
+        writer.writeStartDocument();
+        addStylesheetInstruction(writer, "cacheIndexResponse.xsl");
+        writer.writeStartElement("cache");
+        writer.writeAttribute("name", cache.getName());
+        writer.writeEmptyElement("resource");
+        writer.writeAttribute("name", "allTestSuites");
+        writer.writeAttribute("rssLink", "./allTestSuites.rss");
+        writer.writeAttribute("xmlLink", "./allTestSuites.xml");
+        writer.writeEndElement();
+        writer.writeEndDocument();
     }
 
     @Override

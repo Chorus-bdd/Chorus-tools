@@ -6,18 +6,18 @@
     <description>All the test suites which are available from ChorusWebAgent Main Cache cache</description>
     <item>
       <title>Test Suite {DATETIME}</title>
-      <link>http://localhost:9080/Main+Cache/testSuite.xml?suiteId=Test+Suite-{TIMESTAMP}.xml</link>
-      <description>Test suite named Test Suite run at {DATETIME} status Failed</description>
+      <link>http://localhost:9080/Main+Cache/testSuite.xml?suiteId=Test+Suite-{TIMESTAMP}</link>
+      <description>Test suite named Test Suite run at {DATETIME} status Passed</description>
     </item>
     <item>
       <title>Test Suite {DATETIME}</title>
-      <link>http://localhost:9080/Main+Cache/testSuite.xml?suiteId=Test+Suite-{TIMESTAMP}.xml</link>
-      <description>Test suite named Test Suite run at {DATETIME} status Failed</description>
+      <link>http://localhost:9080/Main+Cache/testSuite.xml?suiteId=Test+Suite-{TIMESTAMP}</link>
+      <description>Test suite named Test Suite run at {DATETIME} status Passed</description>
     </item>
     <item>
       <title>Test Suite {DATETIME}</title>
-      <link>http://localhost:9080/Main+Cache/testSuite.xml?suiteId=Test+Suite-{TIMESTAMP}.xml</link>
-      <description>Test suite named Test Suite run at {DATETIME} status Failed</description>
+      <link>http://localhost:9080/Main+Cache/testSuite.xml?suiteId=Test+Suite-{TIMESTAMP}</link>
+      <description>Test suite named Test Suite run at {DATETIME} status Passed</description>
     </item>
   </channel>
 </rss>
