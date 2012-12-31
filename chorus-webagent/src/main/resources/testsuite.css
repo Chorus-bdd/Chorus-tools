@@ -2,6 +2,7 @@ body {
 	font-size: small;
 	font-family: Arial, Helvetica, sans-serif;
 	background-color: #FFFFF2;
+	color: #006	
 }
 .suiteDetails {
 	padding-left: 50px;
@@ -12,12 +13,17 @@ body {
 	padding-right: 20px;
 	font-size: large;
 	font-weight: bold;
-	color: #006	
 }
 .suiteTime {
-	font-size: x-small;
+	font-size: small;
 	font-weight: bold;
-	color: #006	
+	padding-top: 5px;
+}
+.suiteTimeTaken {
+	display: inline-block;
+	color: navy;
+	font-size: x-small;
+	padding-left: 40px;
 }
 .results {
 	padding: 20px 10px 10px 120px;
@@ -81,18 +87,33 @@ th[scope="row"] {
 }
 
 .resultTextOK {
+	display: inline-block;
 	color: green;
 	font-size: x-small;
+	width: 60px;
 }
 
 .resultTextFAIL {
+	display: inline-block;
 	color: red;
 	font-size: x-small;
+	width: 60px;
 }
 
 .resultTextPEND {
+	display: inline-block;
 	color: orange;
 	font-size: x-small;
+	width: 60px;
+}
+
+.timeTaken {
+	display: inline-block;
+	color: navy;
+	font-size: x-small;
+	padding-left: 5px;
+	width: 40px;
+	text-align: right;
 }
 
 .featureDescription {

@@ -8,7 +8,9 @@
 <div class="suiteDetails">
     <span class="suiteName">Test Suite: Suite Name</span>
 
-    <p class="suiteTime">12 Jan 2012 10:15:05 GMT</p>
+    <div class="suiteTime">12 Jan 2012 10:15:05 GMT
+    <span class="suiteTimeTaken">Run time: 456.5 seconds</span>
+    </div>
 
     <div class="results">
         <table class="resultsTable">
@@ -59,10 +61,9 @@
 <div class="scenario">
     <div class="scenarioTitle">Convert A Simple Scenario to xml</div>
     <div class="steps">
-        <div class="step"><span class="stepText">Given I have a simple scenario</span><span
-                class="resultTextOK">OK</span></div>
-        <div class="step"><span class="stepTextFail">And this contains some steps</span><span class="resultTextFAIL">FAIL</span>
-        </div>
+        <div class="step"><span class="stepText">Given I have a simple scenario</span><span class="resultTextOK">OK</span><span class="timeTaken">(0.1s)</span></div>
+        <div class="step"><span class="stepTextFail">And this contains some steps</span><span class="resultTextFAIL">FAIL</span><span class="timeTaken">(12.3s)</span></div>
+        <div class="step"><span class="stepTextPend">And this contains some steps</span><span class="resultTextPEND">PENDING</span><span class="timeTaken">(1003.3s)</span></div>
     </div>
 </div>
 </div>
