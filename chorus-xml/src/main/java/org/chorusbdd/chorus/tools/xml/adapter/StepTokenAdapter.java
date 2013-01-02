@@ -16,8 +16,7 @@ public class StepTokenAdapter extends XmlAdapter<StepTokenBean, StepToken>{
 	    toRet.setAction(v.getAction());
 	    toRet.setEndState(v.getEndState());
 	    toRet.setMessage(v.getMessage());
-	    if (v.getThrowable()!=null)
-	    {	
+	    if (v.getThrowable()!=null){
 	    	toRet.setThrowable(v.getThrowable().toString());
 	    }
         toRet.setTimeTaken(v.getTimeTaken());
