@@ -54,7 +54,7 @@ public class HttpConnectorHandler extends Assert {
                     String a = replaceVariableContent(actual);
                     assertEquals("Check http results", e, a);
                 } catch (IOException e) {
-                    fail("Could not connect");
+                    fail("Failed to connect or download \n" + e);
                 }
             }
         }.await();

@@ -21,9 +21,9 @@ import java.util.Map;
  *
  * Serve an xsl stylesheet from a classpath resouce
  */
-public class StyleSheetHandler extends AbstractWebAgentHandler {
+public class XsltStyleSheetHandler extends AbstractWebAgentHandler {
 
-    private static final Log log = LogFactory.getLog(StyleSheetHandler.class);
+    private static final Log log = LogFactory.getLog(XsltStyleSheetHandler.class);
 
     private final Map<String, char[]> stylesheetCache = Collections.synchronizedMap(new HashMap<String, char[]>());
 

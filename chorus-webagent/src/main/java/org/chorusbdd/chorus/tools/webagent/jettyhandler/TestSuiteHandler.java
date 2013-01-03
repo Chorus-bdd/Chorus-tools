@@ -9,6 +9,7 @@ import org.eclipse.jetty.server.Request;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.xml.bind.PropertyException;
 import javax.xml.stream.XMLStreamWriter;
 import java.io.IOException;
 
@@ -41,6 +42,10 @@ public class TestSuiteHandler extends XmlStreamingHandler {
             } else {
                 try {
                     handleForSuite(response, s);
+                } catch (PropertyException pe) {
+                    response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+                    log.error("Failed to serialize test suite to xml, PropertyException, probably your Marshaller " +
+                         "implementation does not support the property com.sun.xml.internal.bind.xmlHeaders", pe);
                 } catch (Exception e) {
                     response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR); //client may not see this if we have already written output
                     log.error("Failed to serialize test suite to xml", e);
@@ -51,6 +56,10 @@ public class TestSuiteHandler extends XmlStreamingHandler {
 
     private void handleForSuite(HttpServletResponse response, WebAgentTestSuite s) throws Exception {
         TestSuiteXmlWriter testSuiteWriter = new TestSuiteXmlWriter();
+        testSuiteWriter.addMarshallerProperty(
+            "com.sun.xml.internal.bind.xmlHeaders",      //:( this may break with some Marshaller implementations
+            "<?xml-stylesheet type='text/xsl' href='/testSuiteResponse.xsl'?>\n"
+        );
         testSuiteWriter.write(response.getWriter(), s);
     }
 
