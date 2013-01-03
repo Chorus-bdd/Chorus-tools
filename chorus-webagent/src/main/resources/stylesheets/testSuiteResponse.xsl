@@ -5,13 +5,16 @@
             <head>
                 <META HTTP-EQUIV="Pragma" CONTENT="no-cache"/>
                 <title><xsl:value-of select="@suiteName"/></title>
-                <LINK href="testSuite.css" rel="stylesheet" type="text/css"/>
+                <LINK href="../testSuite.css" rel="stylesheet" type="text/css"/>
             </head>
             <body>
              <div class="suiteDetails">
                  <span class="suiteName">Test Suite: <xsl:value-of select="@suiteName"/></span>
-                <div class="suiteTime"><xsl:value-of select="execution/@executionStartTime"/>&#160;<xsl:value-of select="execution/@executionHost"/>
-                <span class="suiteTimeTaken">Run time: <xsl:value-of select="execution/resultsSummary/@timeTakenSeconds"/> seconds</span>
+                <div class="suiteTime"><xsl:value-of select="execution/@executionStartTime"/>
+                <span class="suiteTimeTaken">
+                    Host: <xsl:value-of select="execution/@executionHost"/>&#160;&#160;
+                    Run time: <xsl:value-of select="execution/resultsSummary/@timeTakenSeconds"/> seconds
+                </span>
                 </div>
                  <xsl:apply-templates select="execution"/>
             </div>

@@ -21,9 +21,9 @@ import java.util.Map;
  *
  * Serve an xsl stylesheet from a classpath resouce
  */
-public class XsltStyleSheetHandler extends AbstractWebAgentHandler {
+public class StyleSheetResourceHandler extends AbstractWebAgentHandler {
 
-    private static final Log log = LogFactory.getLog(XsltStyleSheetHandler.class);
+    private static final Log log = LogFactory.getLog(StyleSheetResourceHandler.class);
 
     private final Map<String, char[]> stylesheetCache = Collections.synchronizedMap(new HashMap<String, char[]>());
 
@@ -64,7 +64,7 @@ public class XsltStyleSheetHandler extends AbstractWebAgentHandler {
     }
 
     private void sendResponse(HttpServletResponse response, char[] stylesheet) throws IOException {
-        log.info("Stylesheet exists? " + (stylesheet != null));
+        log.info("StyleSheet exists? " + (stylesheet != null));
         if ( stylesheet == null) {
             response.setStatus(HttpServletResponse.SC_NOT_FOUND);
         } else {
@@ -73,10 +73,10 @@ public class XsltStyleSheetHandler extends AbstractWebAgentHandler {
     }
 
     protected boolean shouldHandle(String target) {
-        return target.endsWith("xsl");
+        return target.endsWith("xsl") || target.endsWith("css");
     }
 
-    protected String getContentType() {
-        return "text/xsl;charset=utf-8";
+    protected String getContentType(String target) {
+        return target.endsWith("xsl") ? "text/xsl;charset=utf-8" : "text/css;charset=utf-8";
     }
 }

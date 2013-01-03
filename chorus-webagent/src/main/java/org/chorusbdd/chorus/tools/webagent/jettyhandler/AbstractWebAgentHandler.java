@@ -21,13 +21,13 @@ public abstract class AbstractWebAgentHandler extends AbstractHandler {
     public void handle(String target, Request baseRequest, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         if (shouldHandle(target)) {
             response.setStatus(HttpServletResponse.SC_OK);
-            response.setContentType(getContentType());
+            response.setContentType(getContentType(target));
             doHandle(target, baseRequest, request, response);
             baseRequest.setHandled(true);
         }
     }
 
-    protected String getContentType() {
+    protected String getContentType(String target) {
         return "text/xml;charset=utf-8";
     }
 
