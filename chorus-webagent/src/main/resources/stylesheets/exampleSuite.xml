@@ -6,11 +6,12 @@
     </execution>
     <features>
         <feature configurationName="base" endState="PASSED" name="Simple Feature">
-            <description></description>
+            <description>This is a test description</description>
             <scenarios>
                 <scenario endState="PASSED" name="Simple Scenario">
                     <steps>
                         <step type="Given" action="I wait 1 seconds for a step to run" endState="PASSED" message="" timeTaken="{TIMETAKEN}" timeTakenSeconds="{TIMETAKEN_SECONDS}"/>
+                        <step type="Given" action="I wait 2 seconds for a step to run" endState="FAILED" message="" timeTaken="{TIMETAKEN}" timeTakenSeconds="{TIMETAKEN_SECONDS}"/>
                     </steps>
                 </scenario>
             </scenarios>
