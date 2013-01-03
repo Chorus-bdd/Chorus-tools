@@ -40,7 +40,7 @@ public class WebAgentHttpConnector {
     private void addHandlers(Server server) {
         HandlerList l = new HandlerList();
         l.addHandler(new IndexHandler(cacheList));
-        l.addHandler(new StyleSheetHandler());
+        l.addHandler(new XsltStyleSheetHandler());
         for ( WebAgentFeatureCache c : cacheList) {
             l.addHandler(new CacheIndexHandler(c));
             l.addHandler(new Rss2SuiteListHandler(
