@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<?xml-stylesheet type='text/xsl' href='/testSuiteResponse.xsl'?>
+<?xml-stylesheet type='text/xsl' href='testSuiteResponse.xsl'?>
 <testSuite suiteName="Test Suite">
     <execution executionHost="{EXECUTIONHOST}" executionStartTime="{DATETIME}" executionStartTimestamp="{TIMESTAMP}">
         <resultsSummary endState="PASSED" featuresFailed="0" featuresPassed="1" featuresPending="0" scenariosFailed="0" scenariosPassed="1" scenariosPending="0" stepsFailed="0" stepsPassed="1" stepsPending="0" stepsSkipped="0" stepsUndefined="0" timeTaken="{TIMETAKEN}" timeTakenSeconds="{TIMETAKEN_SECONDS}" unavailableHandlers="0"/>

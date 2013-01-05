@@ -1,17 +1,20 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<testSuite suiteName="Test Suite">
-    <execution executionHost="{EXECUTIONHOST}" executionStartTime="{DATETIME}" executionStartTimestamp="{TIMESTAMP}">
-        <resultsSummary endState="PASSED" featuresFailed="0" featuresPassed="1" featuresPending="0" scenariosFailed="0" scenariosPassed="1" scenariosPending="0" stepsFailed="0" stepsPassed="1" stepsPending="0" stepsSkipped="0" stepsUndefined="0" timeTaken="{TIMETAKEN}" timeTakenSeconds="{TIMETAKEN_SECONDS}" unavailableHandlers="0"/>
+<testSuite suiteName="Example Suite">
+    <execution executionHost="localhost" executionStartTime="12 Dec 2012 15:13:12 GMT" executionStartTimestamp="1234567890123">
+        <resultsSummary endState="PASSED" featuresFailed="0" featuresPassed="1" featuresPending="0" scenariosFailed="0" scenariosPassed="1" scenariosPending="0" stepsFailed="0" stepsPassed="1" stepsPending="0" stepsSkipped="0" stepsUndefined="0" timeTaken="4500" timeTakenSeconds="4.5" unavailableHandlers="0"/>
         <testSuiteName>Test Suite</testSuiteName>
     </execution>
     <features>
         <feature configurationName="base" endState="PASSED" name="Simple Feature">
-            <description>This is a test description</description>
+            <description>This is a test description. This is a test description. This is a test description. This is a test description. This is a test description.
+                This is a test description. This is a test description. This is a test description. This is a test description. This is a test description. This is a test description.
+                This is a test description. This is a test description. This is a test description. This is a test description. </description>
             <scenarios>
                 <scenario endState="PASSED" name="Simple Scenario">
                     <steps>
-                        <step type="Given" action="I wait 1 seconds for a step to run" endState="PASSED" message="" timeTaken="{TIMETAKEN}" timeTakenSeconds="{TIMETAKEN_SECONDS}"/>
-                        <step type="Given" action="I wait 2 seconds for a step to run" endState="FAILED" message="" timeTaken="{TIMETAKEN}" timeTakenSeconds="{TIMETAKEN_SECONDS}"/>
+                        <step type="Given" action="I wait 1 seconds for a step to run" endState="PASSED" message="test message" timeTaken="{TIMETAKEN}" timeTakenSeconds="1"/>
+                        <step type="Given" action="I wait 2 seconds for a step to run" endState="FAILED" message="" timeTaken="{TIMETAKEN}" timeTakenSeconds="2"/>
+                        <step type="And" action="I wait 3 seconds for a step to run" endState="UNDEFINED" message="" timeTaken="{TIMETAKEN}" timeTakenSeconds="3"/>
                     </steps>
                 </scenario>
             </scenarios>

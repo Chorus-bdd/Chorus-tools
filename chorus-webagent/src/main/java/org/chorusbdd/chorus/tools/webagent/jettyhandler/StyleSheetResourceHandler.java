@@ -28,8 +28,9 @@ public class StyleSheetResourceHandler extends AbstractWebAgentHandler {
     private final Map<String, char[]> stylesheetCache = Collections.synchronizedMap(new HashMap<String, char[]>());
 
     protected void doHandle(String target, Request baseRequest, HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String stylesheetResourceName = getStylesheetResource(target);
         synchronized (stylesheetCache) {
-            String classpathResource = "/stylesheets" + target;
+            String classpathResource = "/stylesheets/" + stylesheetResourceName;
             char[] stylesheet;
             if ( stylesheetCache.containsKey(classpathResource)) {
                 stylesheet = stylesheetCache.get(classpathResource);
@@ -41,6 +42,15 @@ public class StyleSheetResourceHandler extends AbstractWebAgentHandler {
             }
             sendResponse(response, stylesheet);
         }
+    }
+
+    //just find the stylesheet name, disregarding nested folder names
+    private String getStylesheetResource(String target) {
+        int index = target.lastIndexOf('/');
+        if ( index > -1 ) {
+            target = target.substring(index + 1);
+        }
+        return target;
     }
 
     /**

@@ -5,7 +5,7 @@
             <head>
                 <META HTTP-EQUIV="Pragma" CONTENT="no-cache"/>
                 <title><xsl:value-of select="@suiteName"/></title>
-                <LINK href="../testSuite.css" rel="stylesheet" type="text/css"/>
+                <LINK href="testSuite.css" rel="stylesheet" type="text/css"/>
             </head>
             <body>
              <div class="suiteDetails">
@@ -92,9 +92,12 @@
                     </xsl:otherwise>
                 </xsl:choose>
             </xsl:variable>
-            <span class="stepText{$stepClass}"><xsl:value-of select="@type"/>&#160;<xsl:value-of select="@action"/></span>
-            <span class="resultText{$stepClass}"><xsl:value-of select="@endState"/></span>
-            <span class="timeTaken">(<xsl:value-of select="@timeTakenSeconds"/>s)</span>
+            <span class="step{$stepClass}">
+                <span class="stepText"><xsl:value-of select="@type"/>&#160;<xsl:value-of select="@action"/></span>
+                <span class="endState"><xsl:value-of select="@endState"/></span>
+                <span class="stepMessage"><xsl:value-of select="@message"/></span>
+                <span class="timeTaken">(<xsl:value-of select="@timeTakenSeconds"/>s)</span>
+            </span>
         </div>
     </xsl:template>
 

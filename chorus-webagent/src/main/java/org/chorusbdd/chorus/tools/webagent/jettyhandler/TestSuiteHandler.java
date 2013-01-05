@@ -58,7 +58,7 @@ public class TestSuiteHandler extends XmlStreamingHandler {
         TestSuiteXmlWriter testSuiteWriter = new TestSuiteXmlWriter();
         testSuiteWriter.addMarshallerProperty(
             "com.sun.xml.internal.bind.xmlHeaders",      //:( this may break with some Marshaller implementations
-            "<?xml-stylesheet type='text/xsl' href='/testSuiteResponse.xsl'?>\n"
+            "<?xml-stylesheet type='text/xsl' href='testSuiteResponse.xsl'?>\n"
         );
         testSuiteWriter.write(response.getWriter(), s);
     }
