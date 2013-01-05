@@ -8,7 +8,7 @@ body {
     margin-right: auto;
 }
 .suiteDetails {
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 }
 .suiteName {
     display: inline-block;
@@ -27,7 +27,7 @@ body {
     padding-left: 400px;
 }
 .results {
-    padding: 20px 0px 10px 220px;
+    padding: 10px 0px 0px 220px;
 }
 table {
     border-color: #303;
