@@ -1,5 +1,6 @@
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
+    <xsl:output method="html"/>
     <xsl:template match="/testSuite">
         <html>
             <head>
@@ -27,7 +28,7 @@
         <div class="results">
             <table class="resultsTable">
                 <tr>
-                    <th scope="row"></th>
+                    <th scope="row"/>
                     <th scope="col">Passed</th>
                     <th scope="col">Failed</th>
                     <th scope="col">Pending</th>
@@ -63,7 +64,21 @@
     </xsl:template>
 
     <xsl:template match="feature">
-        <div class="featureTitle"><xsl:value-of select="@name"/></div>
+        <!-- show the configuration next to feature name when not base configuration -->
+        <xsl:variable name="configuration">
+            <xsl:choose>
+                <xsl:when test="@configurationName='base'">
+                    <xsl:value-of select="''"/>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:value-of select="@configurationName"/>
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:variable>
+
+        <div class="featureTitle">
+            <xsl:value-of select="@name"/>&#160;<xsl:value-of select="$configuration"/>
+        </div>
         <div class="featureDescription">
         <xsl:value-of select="description"/>
         </div>

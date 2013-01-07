@@ -5,7 +5,7 @@
         <testSuiteName>Test Suite</testSuiteName>
     </execution>
     <features>
-        <feature configurationName="base" endState="PASSED" name="Simple Feature">
+        <feature configurationName="Config1" endState="PASSED" name="Simple Feature">
             <description>This is a test description. This is a test description. This is a test description. This is a test description. This is a test description.
                 This is a test description. This is a test description. This is a test description. This is a test description. This is a test description. This is a test description.
                 This is a test description. This is a test description. This is a test description. This is a test description. </description>
