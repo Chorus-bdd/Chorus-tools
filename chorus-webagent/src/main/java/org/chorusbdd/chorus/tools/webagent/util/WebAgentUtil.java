@@ -29,7 +29,7 @@
  */
 package org.chorusbdd.chorus.tools.webagent.util;
 
-import com.sun.xml.internal.txw2.output.IndentingXMLStreamWriter;
+import javanet.staxutils.IndentingXMLStreamWriter;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
