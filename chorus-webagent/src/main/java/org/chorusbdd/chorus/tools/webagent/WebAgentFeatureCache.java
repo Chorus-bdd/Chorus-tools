@@ -6,7 +6,6 @@ import org.chorusbdd.chorus.executionlistener.ExecutionListenerAdapter;
 import org.chorusbdd.chorus.results.ExecutionToken;
 import org.chorusbdd.chorus.results.FeatureToken;
 import org.chorusbdd.chorus.tools.webagent.util.WebAgentUtil;
-import org.eclipse.jetty.http.PathMap;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicLong;

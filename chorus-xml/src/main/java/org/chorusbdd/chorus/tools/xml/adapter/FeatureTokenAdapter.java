@@ -1,9 +1,10 @@
 package org.chorusbdd.chorus.tools.xml.adapter;
 
-import javax.xml.bind.annotation.adapters.XmlAdapter;
 import org.chorusbdd.chorus.results.FeatureToken;
 import org.chorusbdd.chorus.tools.xml.beans.FeatureTokenBean;
 import org.chorusbdd.chorus.tools.xml.util.FormattingUtils;
+
+import javax.xml.bind.annotation.adapters.XmlAdapter;
 
 public class FeatureTokenAdapter  extends XmlAdapter<FeatureTokenBean, FeatureToken>{
 

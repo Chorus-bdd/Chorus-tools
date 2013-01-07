@@ -1,10 +1,9 @@
 package org.chorusbdd.chorus.tools.xml.beans;
 
+import org.chorusbdd.chorus.results.StepEndState;
+
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlType;
-
-
-import org.chorusbdd.chorus.results.StepEndState;
 
 @XmlType(propOrder = {"type", "action", "endState", "message", "throwable"})
 public class StepTokenBean {

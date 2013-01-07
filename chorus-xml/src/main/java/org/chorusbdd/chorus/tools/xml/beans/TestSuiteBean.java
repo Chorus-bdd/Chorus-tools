@@ -6,13 +6,11 @@ import org.chorusbdd.chorus.results.TestSuite;
 import org.chorusbdd.chorus.tools.xml.adapter.ExecutionTokenAdapter;
 import org.chorusbdd.chorus.tools.xml.adapter.FeatureTokenAdapter;
 
-import java.text.SimpleDateFormat;
-import java.util.List;
-
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.

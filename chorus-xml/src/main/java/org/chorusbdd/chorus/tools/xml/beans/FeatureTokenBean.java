@@ -1,16 +1,15 @@
 package org.chorusbdd.chorus.tools.xml.beans;
 
 
-import java.util.List;
+import org.chorusbdd.chorus.results.EndState;
+import org.chorusbdd.chorus.results.ScenarioToken;
+import org.chorusbdd.chorus.tools.xml.adapter.ScenarioTokenAdapter;
+
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
-
-import com.sun.xml.internal.txw2.annotation.XmlCDATA;
-import org.chorusbdd.chorus.results.EndState;
-import org.chorusbdd.chorus.results.ScenarioToken;
-import org.chorusbdd.chorus.tools.xml.adapter.ScenarioTokenAdapter;
+import java.util.List;
 
 public class FeatureTokenBean {
 

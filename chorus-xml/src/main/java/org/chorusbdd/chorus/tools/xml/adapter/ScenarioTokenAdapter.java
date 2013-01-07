@@ -1,12 +1,11 @@
 package org.chorusbdd.chorus.tools.xml.adapter;
 
-import java.util.Arrays;
-import java.util.List;
-
-import javax.xml.bind.annotation.adapters.XmlAdapter;
-
 import org.chorusbdd.chorus.results.ScenarioToken;
 import org.chorusbdd.chorus.tools.xml.beans.ScenarioTokenBean;
+
+import javax.xml.bind.annotation.adapters.XmlAdapter;
+import java.util.Arrays;
+import java.util.List;
 
 public class ScenarioTokenAdapter extends XmlAdapter<ScenarioTokenBean, ScenarioToken> {
 
