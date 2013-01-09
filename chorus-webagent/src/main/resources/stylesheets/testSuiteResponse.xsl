@@ -76,19 +76,23 @@
             </xsl:choose>
         </xsl:variable>
 
-        <div class="featureTitle">
-            <xsl:value-of select="@name"/>&#160;<xsl:value-of select="$configuration"/>
+        <div class="feature">
+            <div class="featureTitle">
+                <xsl:value-of select="@name"/>&#160;<xsl:value-of select="$configuration"/>
+            </div>
+            <div class="featureDescription">
+            <xsl:value-of select="description"/>
+            </div>
+            <xsl:apply-templates select="scenarios/scenario"/>
         </div>
-        <div class="featureDescription">
-        <xsl:value-of select="description"/>
-        </div>
-        <xsl:apply-templates select="scenarios/scenario"/>
     </xsl:template>
 
     <xsl:template match="scenario">
-        <div class="scenarioTitle"><xsl:value-of select="@name"/></div>
-        <div class="steps">
-            <xsl:apply-templates select="steps/step"/>
+        <div class="scenario">
+            <div class="scenarioTitle"><xsl:value-of select="@name"/></div>
+            <div class="steps">
+                <xsl:apply-templates select="steps/step"/>
+            </div>
         </div>
     </xsl:template>
 
@@ -97,13 +101,16 @@
             <xsl:variable name="stepClass">
                 <xsl:choose>
                     <xsl:when test="@endState='PASSED'">
-                        <xsl:value-of select="'OK'"/>
+                        <xsl:value-of select="'GREEN'"/>
                     </xsl:when>
                     <xsl:when test="@endState='FAILED'">
-                        <xsl:value-of select="'FAIL'"/>
+                        <xsl:value-of select="'RED'"/>
+                    </xsl:when>
+                    <xsl:when test="@endState='UNDEFINED'">
+                        <xsl:value-of select="'RED'"/>
                     </xsl:when>
                     <xsl:otherwise>
-                        <xsl:value-of select="'PEND'"/>
+                        <xsl:value-of select="'ORANGE'"/>
                     </xsl:otherwise>
                 </xsl:choose>
             </xsl:variable>

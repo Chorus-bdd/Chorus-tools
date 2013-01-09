@@ -1,24 +1,140 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<testSuite suiteName="Example Suite">
-    <execution executionHost="localhost" executionStartTime="12 Dec 2012 15:13:12 GMT" executionStartTimestamp="1234567890123">
-        <resultsSummary endState="PASSED" featuresFailed="0" featuresPassed="1" featuresPending="0" scenariosFailed="0" scenariosPassed="1" scenariosPending="0" stepsFailed="0" stepsPassed="1" stepsPending="0" stepsSkipped="0" stepsUndefined="0" timeTaken="4500" timeTakenSeconds="4.5" unavailableHandlers="0"/>
+<?xml-stylesheet type='text/xsl' href='testSuiteResponse.xsl'?>
+<testSuite suiteName="Test Suite">
+    <execution executionHost="samsungs9" executionStartTime="09 Jan 2013 09:13:10 GMT" executionStartTimestamp="1357722790263">
+        <resultsSummary endState="FAILED" featuresFailed="6" featuresPassed="0" featuresPending="0" scenariosFailed="11" scenariosPassed="0" scenariosPending="0" stepsFailed="1" stepsPassed="5" stepsPending="0" stepsSkipped="22" stepsUndefined="10" timeTaken="8990" timeTakenSeconds="9" unavailableHandlers="0"/>
         <testSuiteName>Test Suite</testSuiteName>
     </execution>
     <features>
-        <feature configurationName="Config1" endState="PASSED" name="Simple Feature">
-            <description>This is a test description. This is a test description. This is a test description. This is a test description. This is a test description.
-                This is a test description. This is a test description. This is a test description. This is a test description. This is a test description. This is a test description.
-                This is a test description. This is a test description. This is a test description. This is a test description. </description>
+        <feature configurationName="base" endState="FAILED" name="Feature Which Fails">
+            <description>This is a test feature with two scenarios which fail</description>
             <scenarios>
-                <scenario endState="PASSED" name="Simple Scenario">
+                <scenario endState="FAILED" name="Scenario Which Fails With Undefined Steps">
                     <steps>
-                        <step type="Given" action="I wait 1 seconds for a step to run" endState="PASSED" message="test message" timeTaken="{TIMETAKEN}" timeTakenSeconds="1"/>
-                        <step type="Given" action="I wait 2 seconds for a step to run" endState="FAILED" message="" timeTaken="{TIMETAKEN}" timeTakenSeconds="2"/>
-                        <step type="And" action="I wait 3 seconds for a step to run" endState="UNDEFINED" message="" timeTaken="{TIMETAKEN}" timeTakenSeconds="3"/>
+                        <step type="Given" action="I run a scenario with several steps" endState="PASSED" message="" timeTaken="1" timeTakenSeconds="0"/>
+                        <step type="And" action="at least one step is undefined" endState="UNDEFINED" message="" timeTaken="0" timeTakenSeconds="0"/>
+                        <step type="Then" action="the scenario will fail horribly" endState="SKIPPED" message="" timeTaken="0" timeTakenSeconds="0"/>
+                        <step type="And" action="show up in red in the web agent html" endState="SKIPPED" message="" timeTaken="0" timeTakenSeconds="0"/>
+                    </steps>
+                </scenario>
+                <scenario endState="FAILED" name="Scenario Which Fails Due To Step Failure">
+                    <steps>
+                        <step type="Given" action="I run a scenario with several steps" endState="PASSED" message="" timeTaken="0" timeTakenSeconds="0"/>
+                        <step type="And" action="a step fails an assertion" endState="FAILED" message="(WebAgentSelfTestHandler:22)-Fail an assertion" timeTaken="5" timeTakenSeconds="0">
+                            <throwable>junit.framework.AssertionFailedError: Fail an assertion</throwable>
+                        </step>
+                        <step type="Then" action="the scenario will be failed" endState="SKIPPED" message="" timeTaken="0" timeTakenSeconds="0"/>
+                        <step type="And" action="the feature will be failed" endState="SKIPPED" message="" timeTaken="0" timeTakenSeconds="0"/>
+                        <step type="And" action="subsequent steps are skipped" endState="SKIPPED" message="" timeTaken="0" timeTakenSeconds="0"/>
+                        <step type="And" action="the web agent html will be a sea of red" endState="SKIPPED" message="" timeTaken="0" timeTakenSeconds="0"/>
+                    </steps>
+                </scenario>
+                <scenario endState="FAILED" name="Scenario Which Failes Due To Timeout">
+                    <steps>
+                        <step type="Given" action="I run a scenario with several steps" endState="PASSED" message="" timeTaken="0" timeTakenSeconds="0"/>
+                        <step type="And" action="chorus scenario timeout is set to 2 seconds" endState="PASSED" message="" timeTaken="0" timeTakenSeconds="0"/>
+                        <step type="And" action="I wait for four seconds for timeout" endState="PASSED" message="" timeTaken="4000" timeTakenSeconds="4"/>
+                        <step type="Then" action="the previous step timed out" endState="UNDEFINED" message="" timeTaken="0" timeTakenSeconds="0"/>
+                        <step type="And" action="subsequent steps are skipped" endState="SKIPPED" message="" timeTaken="0" timeTakenSeconds="0"/>
+                    </steps>
+                </scenario>
+            </scenarios>
+            <usesHandlers>Timers,Web Agent Self Test</usesHandlers>
+        </feature>
+        <feature configurationName="base" endState="FAILED" name="Feature Which Is Pending">
+            <description>This is a test feature with a scenario which has pending steps. The scenario and feature should take on pending
+                state</description>
+            <scenarios>
+                <scenario endState="FAILED" name="Scenario Which Has Pending Steps">
+                    <steps>
+                        <step type="Given" action="I run a scenario with several steps" endState="UNDEFINED" message="" timeTaken="0" timeTakenSeconds="0"/>
+                        <step type="And" action="one of the steps is marked pending" endState="SKIPPED" message="" timeTaken="0" timeTakenSeconds="0"/>
+                        <step type="Then" action="the subsequent steps are skipped" endState="SKIPPED" message="" timeTaken="0" timeTakenSeconds="0"/>
+                        <step type="And" action="the scenario and feature finish in pending state" endState="SKIPPED" message="" timeTaken="0" timeTakenSeconds="0"/>
+                    </steps>
+                </scenario>
+                <scenario endState="FAILED" name="Scenario Which Throws Pending Exception">
+                    <steps>
+                        <step type="Given" action="I run a scenario with several steps" endState="UNDEFINED" message="" timeTaken="0" timeTakenSeconds="0"/>
+                        <step type="And" action="one of the steps throws a pending exception" endState="SKIPPED" message="" timeTaken="0" timeTakenSeconds="0"/>
+                        <step type="Then" action="the subsequent steps are skipped" endState="SKIPPED" message="" timeTaken="0" timeTakenSeconds="0"/>
                     </steps>
                 </scenario>
             </scenarios>
             <usesHandlers>Timers</usesHandlers>
+        </feature>
+        <feature configurationName="base" endState="FAILED" name="Feature One">
+            <description>This is a first test feature</description>
+            <scenarios>
+                <scenario endState="FAILED" name="Scenario Which Passes">
+                    <steps>
+                        <step type="Given" action="I run a feature with a single test scenario which passes" endState="UNDEFINED" message="" timeTaken="0" timeTakenSeconds="0"/>
+                        <step type="Then" action="the scenario passes and the feature passes" endState="SKIPPED" message="" timeTaken="0" timeTakenSeconds="0"/>
+                    </steps>
+                </scenario>
+            </scenarios>
+            <usesHandlers>Timers,Web Agent Self Test</usesHandlers>
+        </feature>
+        <feature configurationName="base" endState="FAILED" name="Feature With Pending And Passed">
+            <description>This is a test feature a pending and a passed scenario. Feature state should end as Pending</description>
+            <scenarios>
+                <scenario endState="FAILED" name="Scenario Which Passes">
+                    <steps>
+                        <step type="Given" action="I run a scenario with a single test step which passes" endState="UNDEFINED" message="" timeTaken="0" timeTakenSeconds="0"/>
+                    </steps>
+                </scenario>
+                <scenario endState="FAILED" name="Scenario Which Is Pending">
+                    <steps>
+                        <step type="Given" action="I run a scenario with several steps" endState="UNDEFINED" message="" timeTaken="0" timeTakenSeconds="0"/>
+                        <step type="And" action="one of the steps is marked pending" endState="SKIPPED" message="" timeTaken="0" timeTakenSeconds="0"/>
+                        <step type="Then" action="the subsequent steps are skipped" endState="SKIPPED" message="" timeTaken="0" timeTakenSeconds="0"/>
+                        <step type="And" action="the scenario and feature finish in pending state" endState="SKIPPED" message="" timeTaken="0" timeTakenSeconds="0"/>
+                    </steps>
+                </scenario>
+            </scenarios>
+            <usesHandlers>Timers</usesHandlers>
+        </feature>
+        <feature configurationName="base" endState="FAILED" name="Feature With Pending Passed And Failed Scenario">
+            <description>This is a test feature a pending, passed and failed scenario. Feature state should end as Failed</description>
+            <scenarios>
+                <scenario endState="FAILED" name="Scenario Which Passes">
+                    <steps>
+                        <step type="Given" action="I run a scenario with a single test step which passes" endState="UNDEFINED" message="" timeTaken="0" timeTakenSeconds="0"/>
+                    </steps>
+                </scenario>
+                <scenario endState="FAILED" name="Scenario Which Is Pending">
+                    <steps>
+                        <step type="Given" action="I run a scenario with several steps" endState="UNDEFINED" message="" timeTaken="0" timeTakenSeconds="0"/>
+                        <step type="And" action="one of the steps is marked pending" endState="SKIPPED" message="" timeTaken="0" timeTakenSeconds="0"/>
+                        <step type="Then" action="the subsequent steps are skipped" endState="SKIPPED" message="" timeTaken="0" timeTakenSeconds="0"/>
+                        <step type="And" action="the scenario and feature finish in pending state" endState="SKIPPED" message="" timeTaken="0" timeTakenSeconds="0"/>
+                    </steps>
+                </scenario>
+                <scenario endState="FAILED" name="Scenario Which Fails With Undefined Steps">
+                    <steps>
+                        <step type="Given" action="I run a scenario with several steps" endState="UNDEFINED" message="" timeTaken="0" timeTakenSeconds="0"/>
+                        <step type="And" action="at least one step is undefined" endState="SKIPPED" message="" timeTaken="0" timeTakenSeconds="0"/>
+                        <step type="Then" action="the scenario will fail horribly" endState="SKIPPED" message="" timeTaken="0" timeTakenSeconds="0"/>
+                        <step type="And" action="show up in red in the web agent html" endState="SKIPPED" message="" timeTaken="0" timeTakenSeconds="0"/>
+                    </steps>
+                </scenario>
+            </scenarios>
+            <usesHandlers>Timers</usesHandlers>
+        </feature>
+        <feature configurationName="base" endState="PASSED" name="Self Test Suite">
+            <description></description>
+            <scenarios>
+                <scenario endState="PASSED" name="Check I can view xml for a test suite">
+                    <steps>
+                        <step type="Given" action="I start a chorusInterpreter process named sessionOne" message="" timeTaken="0" timeTakenSeconds="0"/>
+                        <step type="When" action="the web agent cache contains 1 test suites" message="" timeTaken="0" timeTakenSeconds="0"/>
+                        <step type="And" action="I reset the cache suite ids using a zero-based index" message="" timeTaken="0" timeTakenSeconds="0"/>
+                        <step type="And" action="I wait for 60 seconds for nick to look" message="" timeTaken="0" timeTakenSeconds="0"/>
+                        <step type="Then" action="http://localhost:9080/Main+Cache/testSuite.xml?suiteId=Test+Suite-0 matches suite-0.xml" message="" timeTaken="0" timeTakenSeconds="0"/>
+                    </steps>
+                </scenario>
+            </scenarios>
+            <usesHandlers>Http Connector,Processes,Timers</usesHandlers>
         </feature>
     </features>
 </testSuite>

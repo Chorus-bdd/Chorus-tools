@@ -3,7 +3,7 @@ body {
     font-family: Verdana, Geneva, sans-serif;
     background-color: #FFFFF2;
     color: navy;
-    width: 900px;
+    width: 1024px;
     margin-left: auto;
     margin-right: auto;
 }
@@ -24,10 +24,10 @@ body {
 .suiteTimeTaken {
     display: inline-block;
     font-size: x-small;
-    padding-left: 400px;
+    padding-left: 500px;
 }
 .results {
-    padding: 10px 0px 0px 220px;
+    padding: 10px 0px 0px 275px;
 }
 table {
     border-color: #303;
@@ -52,58 +52,69 @@ th[scope="row"] {
     text-align: right;
     min-width:  10px;
 }
+.feature {
+    padding: 0px 0px 20px 0px
+}
 .featureTitle {
     font-size: medium;
-    padding-left: 50px;
+    padding-left: 30px;
     font-weight: bold;
 }
 
 .featureDescription {
-    padding-left: 50px;
+    padding-left: 30px;
     font-size: x-small;
     margin-top: 10px;
     margin-bottom: 10px;
 }
 
+.scenario {
+    padding: 0px 0px 10px 0px;
+}
+
 .scenarioTitle {
     font-size: small;
-    padding-left: 70px;
+    padding: 0px 0px 4px 50px;
     font-weight: bold;
 }
 
 .step {
-    padding-left: 80px;
+    padding-left: 60px;
 }
 
-.stepOK {
+.stepGREEN {
     font-size: x-small;
     color: #006400;
 }
 
-.stepFAIL {
+.stepRED {
     color: red;
     font-size: x-small;
 }
 
-.stepPEND {
+.stepORANGE {
     color: orange;
     font-size: x-small;
 }
 
 .stepText {
     display: inline-block;
-    min-width: 450px;
+    min-width: 500px;
+    max-width: 500px;
+    vertical-align: top;
 }
 
 .endState {
     display: inline-block;
     width: 65px;
     padding-left: 5px;
+    vertical-align: top;
 }
 
 .stepMessage {
     display: inline-block;
-    min-width: 90px;
+    min-width: 170px;
+    max-width: 170px;
     text-align: left;
     padding-left: 10px;
  }
