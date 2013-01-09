@@ -18,12 +18,6 @@ Feature: Feature Which Fails
     And subsequent steps are skipped
     And the web agent html will be a sea of red
 
-  Scenario: Scenario Which Failes Due To Timeout
-    Given I run a scenario with several steps
-    And chorus scenario timeout is set to 2 seconds
-    And I wait for four seconds for timeout
-    Then the previous step timed out
-    And subsequent steps are skipped
 
 
 

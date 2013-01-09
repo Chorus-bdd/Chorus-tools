@@ -1,4 +1,5 @@
 Uses: Timers
+Uses: Web Agent Self Test
 
 Feature: Feature With Pending Passed And Failed Scenario
   This is a test feature a pending, passed and failed scenario. Feature state should end as Failed

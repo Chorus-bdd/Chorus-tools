@@ -1,4 +1,4 @@
-package org.chorusbdd.chorus.tools.webagent.testsuite;
+package org.chorusbdd.chorus.tools.webagent.suite;
 
 import junit.framework.TestSuite;
 import org.chorusbdd.chorus.ChorusJUnitRunner;
@@ -12,9 +12,9 @@ public class TestTestSuite {
 
     public static TestSuite suite() {
         return ChorusJUnitRunner.suite("" +
-            "-f src/test/java/org/chorusbdd/chorus/tools/webagent/testsuite/TestSuite.feature " +
-            "-h org.chorusbdd.chorus.tools.webagent" +
-            " -l info" //+
+            "-f src/test/java/org/chorusbdd/chorus/tools/webagent/suite/TestSuite.feature " +
+            "-h org.chorusbdd.chorus.tools.webagent " +
+            "-l info " //+
             //" -t @ThisOne"
         );
     }

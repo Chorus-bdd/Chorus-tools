@@ -1,4 +1,5 @@
 Uses: Timers
+Uses: Web Agent Self Test
 
 Feature: Feature Which Is Pending
   This is a test feature with a scenario which has pending steps. The scenario and feature should take on pending

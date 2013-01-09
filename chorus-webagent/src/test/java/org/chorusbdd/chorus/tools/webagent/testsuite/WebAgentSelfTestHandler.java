@@ -3,6 +3,7 @@ package org.chorusbdd.chorus.tools.webagent.testsuite;
 import junit.framework.Assert;
 import org.chorusbdd.chorus.annotations.Handler;
 import org.chorusbdd.chorus.annotations.Step;
+import org.chorusbdd.chorus.core.interpreter.StepPendingException;
 
 /**
  * User: nick
@@ -26,11 +27,27 @@ public class WebAgentSelfTestHandler extends Assert {
     public void timeoutSet() {
     }
 
-    @Step("I wait for four seconds for timeout")
+    @Step("I wait for twelve seconds for timeout")
     public void waitForFour() throws InterruptedException {
-        Thread.sleep(4000);
+        Thread.sleep(12000);
     }
 
+    @Step(value = "one of the steps is marked pending", pending = "here be a pending message")
+    public void stepMarkedPending() {
+    }
+
+    @Step(value = "one of the steps throws a pending exception")
+    public void stepThrowsPending() {
+        throw new StepPendingException("This one Pending");
+    }
+
+    @Step("I run a feature with a single test scenario which passes")
+    public void runAFeatureWhichPasses() {
+    }
+
+    @Step("the scenario passes and the feature passes")
+    public void scenarioPasses() {
+    }
 }
 
 

@@ -1,4 +1,5 @@
 Uses: Timers
+Uses: Web Agent Self Test
 
 Feature: Feature With Pending And Passed
   This is a test feature a pending and a passed scenario. Feature state should end as Pending
