@@ -21,7 +21,7 @@
                     <steps>
                         <step type="Given" action="I run a scenario with several steps" endState="PASSED" message="" timeTaken="0" timeTakenSeconds="0"/>
                         <step type="And" action="a step fails an assertion" endState="FAILED" message="(WebAgentSelfTestHandler:23)-Fail an assertion" timeTaken="4" timeTakenSeconds="0">
-                            <throwable>junit.framework.AssertionFailedError: Fail an assertion</throwable>
+                            <exception>junit.framework.AssertionFailedError: Fail an assertion</exception>
                         </step>
                         <step type="Then" action="the scenario will be failed" endState="SKIPPED" message="" timeTaken="0" timeTakenSeconds="0"/>
                         <step type="And" action="the feature will be failed" endState="SKIPPED" message="" timeTaken="0" timeTakenSeconds="0"/>
@@ -137,7 +137,7 @@
                     <steps>
                         <step type="Given" action="I run a scenario with several steps" endState="PASSED" message="" timeTaken="0" timeTakenSeconds="0"/>
                         <step type="And" action="one of the steps throws a pending exception" endState="PENDING" message="This one Pending" timeTaken="0" timeTakenSeconds="0">
-                            <throwable>org.chorusbdd.chorus.core.interpreter.StepPendingException: This one Pending</throwable>
+                            <exception>org.chorusbdd.chorus.core.interpreter.StepPendingException: This one Pending</exception>
                         </step>
                         <step type="Then" action="the subsequent steps are skipped" endState="SKIPPED" message="" timeTaken="0" timeTakenSeconds="0"/>
                     </steps>

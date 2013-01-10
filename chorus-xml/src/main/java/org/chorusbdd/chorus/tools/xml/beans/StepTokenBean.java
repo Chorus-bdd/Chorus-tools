@@ -34,14 +34,15 @@ import org.chorusbdd.chorus.results.StepEndState;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlType;
 
-@XmlType(propOrder = {"type", "action", "endState", "message", "throwable"})
+@XmlType(propOrder = {"type", "action", "endState", "message", "exception", "stackTrace"})
 public class StepTokenBean {
 	private String type;
     private String action;
 
     private StepEndState endState;
     private String message = "";
-    private String throwable;
+    private String exception;
+    private String stackTrace;
     private String timeTakenSeconds;
 
     private long timeTaken;
@@ -57,7 +58,6 @@ public class StepTokenBean {
 		this.type = type;
 	}
 
-	
 	@XmlAttribute
 	public String getAction() {
 		return action;
@@ -85,12 +85,12 @@ public class StepTokenBean {
 		this.message = message;
 	}
 
-	public String getThrowable() {
-		return throwable;
+	public String getException() {
+		return exception;
 	}
 
-	public void setThrowable(String throwable) {
-		this.throwable = throwable;
+	public void setException(String exception) {
+		this.exception = exception;
 	}
 
     @XmlAttribute
@@ -110,4 +110,14 @@ public class StepTokenBean {
     public void setTimeTakenSeconds(String timeTakenSeconds) {
         this.timeTakenSeconds = timeTakenSeconds;
     }
+
+    @XmlAttribute
+    public void setStackTrace(String stackTrace) {
+        this.stackTrace = stackTrace;
+    }
+
+    public String getStackTrace() {
+        return this.stackTrace;
+    }
+
 }
