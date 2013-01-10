@@ -6,7 +6,7 @@
             <head>
                 <META HTTP-EQUIV="Pragma" CONTENT="no-cache"/>
                 <title>Chorus Web Agent - Index of Feature Cache <xsl:value-of select="@name"/></title>
-                <style type="text/css"/>
+                <LINK href="testSuite.css" rel="stylesheet" type="text/css"/>
             </head>
             <body>
                 <h2>Index of <xsl:value-of select="@name"/></h2>

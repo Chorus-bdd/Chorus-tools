@@ -30,7 +30,7 @@
 package org.chorusbdd.chorus.tools.xml.beans;
 
 import org.chorusbdd.chorus.results.ResultsSummary;
-import org.chorusbdd.chorus.tools.xml.adapter.ResultSummaryAdapter;
+import org.chorusbdd.chorus.tools.xml.adapter.ResultsSummaryAdapter;
 
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
@@ -51,7 +51,7 @@ public class ExecutionTokenBean {
 		return testSuiteName;
 	}
 
-	@XmlJavaTypeAdapter(ResultSummaryAdapter.class)
+	@XmlJavaTypeAdapter(ResultsSummaryAdapter.class)
 	public ResultsSummary getResultsSummary() {
 		return resultsSummary;
 	}

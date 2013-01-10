@@ -32,10 +32,12 @@ package org.chorusbdd.chorus.tools.webagent.jettyhandler;
 import org.chorusbdd.chorus.tools.webagent.TestSuiteFilter;
 import org.chorusbdd.chorus.tools.webagent.WebAgentFeatureCache;
 import org.chorusbdd.chorus.tools.webagent.WebAgentTestSuite;
+import org.chorusbdd.chorus.tools.xml.writer.ResultSummaryXmlWriter;
 import org.eclipse.jetty.server.Request;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.xml.bind.Marshaller;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
 import java.util.List;
@@ -54,15 +56,23 @@ public class XmlSuiteListHandler extends AbstractSuiteListHandler {
         this.title = title;
     }
 
-    protected void doHandle(List<WebAgentTestSuite> suites, String target, Request baseRequest, HttpServletRequest request, HttpServletResponse response, XMLStreamWriter writer) throws XMLStreamException {
+    protected void doHandle(List<WebAgentTestSuite> suites, String target, Request baseRequest, HttpServletRequest request, HttpServletResponse response, XMLStreamWriter writer) throws Exception {
         writer.writeStartDocument();
         addStylesheetInstruction(writer, "suiteListResponse.xsl");
         writer.writeStartElement("suiteList");
         writer.writeAttribute("title", title);
         for (WebAgentTestSuite s : suites) {
-            writer.writeStartElement("item");
+            writer.writeStartElement("suite");
+            writer.writeAttribute("suiteId", s.getSuiteId());
             writer.writeAttribute("title", s.getSuiteNameWithTime());
+            writer.writeAttribute("name", s.getTestSuiteName());
+            writer.writeAttribute("startTime", s.getSuiteStartTime());
+            writer.writeAttribute("endState", s.getEndStateString());
+            writer.writeAttribute("executionHost", s.getExecutionHost());
             writer.writeAttribute("link", getLinkToSuite(s));
+            ResultSummaryXmlWriter resultSummaryXmlWriter = new ResultSummaryXmlWriter();
+            resultSummaryXmlWriter.addMarshallerProperty(Marshaller.JAXB_FRAGMENT, Boolean.TRUE);
+            resultSummaryXmlWriter.write(writer, s.getResultsSummary());
             writer.writeEndElement();
         }
         writer.writeEndElement();

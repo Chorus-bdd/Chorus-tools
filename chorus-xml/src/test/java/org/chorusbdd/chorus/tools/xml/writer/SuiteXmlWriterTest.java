@@ -37,7 +37,7 @@ public class SuiteXmlWriterTest extends Assert {
         System.out.println();
         System.out.println("This is the output as XML --->");
         System.out.println(out.toString());
-        
+
 
         URL expectedOutputResource = getClass().getResource("featureOneExpectedOutput.xml");
         String expectedXml = FileUtil.readToString(expectedOutputResource.openStream());

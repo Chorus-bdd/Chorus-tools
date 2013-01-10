@@ -64,14 +64,4 @@ public abstract class AbstractWebAgentHandler extends AbstractHandler {
 
     protected abstract boolean shouldHandle(String target);
 
-    protected void writeSimpleTextElement(XMLStreamWriter writer, String element, String elementText) throws XMLStreamException {
-        writer.writeStartElement(element);
-        writer.writeCharacters(elementText);
-        writer.writeEndElement();
-    }
-
-    protected void addStylesheetInstruction(XMLStreamWriter writer, String stylesheetName) throws XMLStreamException {
-        writer.writeProcessingInstruction("xml-stylesheet", "type='text/xsl' href='/" + stylesheetName + "'");
-        writer.writeCharacters("\n");
-    }
 }

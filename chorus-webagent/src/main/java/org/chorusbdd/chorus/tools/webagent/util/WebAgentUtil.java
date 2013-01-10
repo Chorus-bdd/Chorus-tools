@@ -57,14 +57,4 @@ public class WebAgentUtil {
         }
         return token;
     }
-
-    /**
-     * Return an XMLStreamWriter which indents the xml
-     * (ideally XMLOutputFactory would support a property which would set this up for us to avoid a dependency
-     * on a com.sun.xml class, but it doesn't for the present time appear to do so)
-     */
-    public static XMLStreamWriter getIndentingXmlStreamWriter(HttpServletResponse response) throws XMLStreamException, IOException {
-        XMLOutputFactory f = XMLOutputFactory.newInstance();
-        return new IndentingXMLStreamWriter(f.createXMLStreamWriter(response.getWriter()));
-    }
 }

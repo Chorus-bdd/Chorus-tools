@@ -32,7 +32,9 @@ package org.chorusbdd.chorus.tools.xml.beans;
 import org.chorusbdd.chorus.results.EndState;
 
 import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlRootElement;
 
+@XmlRootElement
 public class ResultSummaryBean {
 
     private int featuresPassed = 0;

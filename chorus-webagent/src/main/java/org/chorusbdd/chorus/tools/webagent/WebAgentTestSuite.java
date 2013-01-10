@@ -50,7 +50,7 @@ public class WebAgentTestSuite extends TestSuite {
         this.suiteTime = FormattingUtils.getStartTimeFormatter().format(executionToken.getExecutionStartTime());
     }
 
-    public String getFinalStatusAsString() {
+    public String getEndStateString() {
         switch (getExecutionToken().getEndState()) {
             case PASSED: return "Passed";
             case PENDING: return "Pending";

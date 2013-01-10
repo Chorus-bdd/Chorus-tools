@@ -74,7 +74,7 @@ public class Rss2SuiteListHandler extends AbstractSuiteListHandler {
             writeSimpleTextElement(writer, "title", s.getSuiteNameWithTime());
             writeSimpleTextElement(writer, "link", getLinkToSuite(s));
             writeSimpleTextElement(writer, "description", "Test suite named " + s.getTestSuiteName() + " run at " +
-                    s.getSuiteStartTime() + " status " + s.getFinalStatusAsString());
+                    s.getSuiteStartTime() + " status " + s.getEndStateString());
             writer.writeEndElement();
         }
         writer.writeEndElement();

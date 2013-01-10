@@ -32,6 +32,7 @@ package org.chorusbdd.chorus.tools.webagent.jettyhandler;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.chorusbdd.chorus.tools.webagent.util.WebAgentUtil;
+import org.chorusbdd.chorus.tools.xml.util.XmlUtils;
 import org.eclipse.jetty.server.Request;
 
 import javax.servlet.http.HttpServletRequest;
@@ -52,15 +53,26 @@ public abstract class XmlStreamingHandler extends AbstractWebAgentHandler {
     @Override
     protected final void doHandle(String target, Request baseRequest, HttpServletRequest request, HttpServletResponse response) throws IOException {
         try {
-            XMLStreamWriter writer = WebAgentUtil.getIndentingXmlStreamWriter(response);
+            XMLStreamWriter writer = XmlUtils.getIndentingXmlStreamWriter(response.getWriter());
             doHandle(target, baseRequest, request, response, writer);
             writer.flush();
-        } catch (XMLStreamException e) {
+        } catch (Exception e) {
             response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR); //client may not see if content already sent
             log.error("Failed while streaming XML", e);
         }
     }
 
-    protected abstract void doHandle(String target, Request baseRequest, HttpServletRequest request, HttpServletResponse response, XMLStreamWriter writer) throws XMLStreamException, IOException;
+    protected abstract void doHandle(String target, Request baseRequest, HttpServletRequest request, HttpServletResponse response, XMLStreamWriter writer) throws Exception;
+
+    protected void writeSimpleTextElement(XMLStreamWriter writer, String element, String elementText) throws XMLStreamException {
+        writer.writeStartElement(element);
+        writer.writeCharacters(elementText);
+        writer.writeEndElement();
+    }
+
+    protected void addStylesheetInstruction(XMLStreamWriter writer, String stylesheetName) throws XMLStreamException {
+        writer.writeProcessingInstruction("xml-stylesheet", "type='text/xsl' href='/" + stylesheetName + "'");
+        writer.writeCharacters("\n");
+    }
 
 }

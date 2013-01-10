@@ -7,7 +7,7 @@
             <head>
                 <META HTTP-EQUIV="Pragma" CONTENT="no-cache"/>
                 <title>Chorus Web Agent - Main Index</title>
-                <style type="text/css"/>
+                <LINK href="testSuite.css" rel="stylesheet" type="text/css"/>
             </head>
             <body>
                 <h2>Chorus WebAgent Index</h2>

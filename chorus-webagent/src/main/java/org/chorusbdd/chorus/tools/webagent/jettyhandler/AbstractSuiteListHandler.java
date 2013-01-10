@@ -65,12 +65,12 @@ public abstract class AbstractSuiteListHandler extends XmlStreamingHandler {
     }
 
     @Override
-    protected void doHandle(String target, Request baseRequest, HttpServletRequest request, HttpServletResponse response, XMLStreamWriter writer) throws XMLStreamException {
+    protected void doHandle(String target, Request baseRequest, HttpServletRequest request, HttpServletResponse response, XMLStreamWriter writer) throws Exception {
         List<WebAgentTestSuite> suites = cache.getSuites(testSuiteFilter);
         doHandle(suites, target, baseRequest, request, response, writer);
     }
 
-    protected abstract void doHandle(List<WebAgentTestSuite> suites, String target, Request baseRequest, HttpServletRequest request, HttpServletResponse response, XMLStreamWriter writer) throws XMLStreamException;
+    protected abstract void doHandle(List<WebAgentTestSuite> suites, String target, Request baseRequest, HttpServletRequest request, HttpServletResponse response, XMLStreamWriter writer) throws Exception;
 
     @Override
     protected boolean shouldHandle(String target) {
