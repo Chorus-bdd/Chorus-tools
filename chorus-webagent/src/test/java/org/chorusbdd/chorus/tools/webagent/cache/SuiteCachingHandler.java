@@ -34,7 +34,7 @@ public class SuiteCachingHandler extends Assert {
             protected void validate() {
                 assertEquals("Expect " + count + " items in cache", count, mainFeatureCache.getNumberOfTestSuites());
             }
-        }.await();
+        }.await(20);
     }
 
     @Step(".*the web agent cache received (\\d) test suites?")
@@ -43,7 +43,7 @@ public class SuiteCachingHandler extends Assert {
             protected void validate() {
                 assertEquals("Expect " + count + " suites received", count, mainFeatureCache.getSuitesReceived());
             }
-        }.await();
+        }.await(20);
     }
 
     @Step(".*I set the web agent cache to a max history of (\\d)")
