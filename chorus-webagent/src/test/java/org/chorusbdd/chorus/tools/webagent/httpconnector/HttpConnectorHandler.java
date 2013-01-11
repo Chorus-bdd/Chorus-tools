@@ -62,7 +62,7 @@ public class HttpConnectorHandler extends Assert {
                     fail("Failed to connect or download \n" + e);
                 }
             }
-        }.await();
+        }.await(60);
     }
 
     @Step(".*reset the cache suite ids using a zero-based index")

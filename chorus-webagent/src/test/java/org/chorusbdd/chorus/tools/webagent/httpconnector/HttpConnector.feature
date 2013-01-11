@@ -3,7 +3,7 @@ Uses: Processes
 Uses: Timers
 
 Feature: Http Connector
-  Start chorus interpereter to publish some test suites into a chorus web agent, and then vaidate the
+  Start chorus interpreter to publish some test suites into a chorus web agent, and then vaidate the
   xml and rss feeds supplied by the agent's http connector
 
   Scenario: Web Agent serves a main index
@@ -19,9 +19,9 @@ Feature: Http Connector
 
   Scenario: Check list all test suites from main cache
     Given I start a chorusInterpreter process named sessionOne
-    And I wait for 20 milliseconds to guarantee a unique timestamp for the next suite
+    And I wait for 500 milliseconds to guarantee a unique timestamp for the next suite
     And I start a chorusInterpreter process named sessionTwo
-    And I wait for 20 milliseconds to guarantee a unique timestamp for the next suite
+    And I wait for 500 milliseconds to guarantee a unique timestamp for the next suite
     And I start a chorusInterpreter process named sessionThree
     Then http://localhost:9080/Main+Cache/allTestSuites.xml matches allTestSuites.xml
     Then http://localhost:9080/Main+Cache/allTestSuites.rss matches allTestSuitesRSS.xml

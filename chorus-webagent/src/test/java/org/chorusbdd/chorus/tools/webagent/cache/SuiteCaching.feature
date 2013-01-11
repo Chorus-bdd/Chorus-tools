@@ -14,7 +14,7 @@ Feature: Suite Caching
   Scenario: Web Agent can receive two test suites from different chorus interpreter sessions
     Given the web agent cache is empty
     And I start a chorusInterpreter process named sessionOne
-    And I wait for 20 milliseconds to guarantee a unique timestamp for the next suite
+    And I wait for 500 milliseconds to guarantee a unique timestamp for the next suite
     And I start a chorusInterpreter process named sessionTwo
     Then the web agent cache received 2 test suites
     Then the web agent cache contains 2 test suites
@@ -23,9 +23,9 @@ Feature: Suite Caching
     Given the web agent cache is empty
     And I set the web agent cache to a max history of 2
     And I start a chorusInterpreter process named sessionOne
-    And I wait for 20 milliseconds to guarantee a unique timestamp for the next suite
+    And I wait for 500 milliseconds to guarantee a unique timestamp for the next suite
     And I start a chorusInterpreter process named sessionTwo
-    And I wait for 20 milliseconds to guarantee a unique timestamp for the next suite
+    And I wait for 500 milliseconds to guarantee a unique timestamp for the next suite
     And I start a chorusInterpreter process named sessionThree
     Then the web agent cache received 3 test suites
     And the web agent cache contains 2 test suites
@@ -33,7 +33,7 @@ Feature: Suite Caching
   Scenario: Web Agent max history can be reduced
     Given the web agent cache is empty
     And I start a chorusInterpreter process named sessionOne
-    And I wait for 20 milliseconds to guarantee a unique timestamp for the next suite
+    And I wait for 500 milliseconds to guarantee a unique timestamp for the next suite
     And I start a chorusInterpreter process named sessionTwo
     Then the web agent cache contains 2 test suites
     And when I set the web agent cache to a max history of 1
