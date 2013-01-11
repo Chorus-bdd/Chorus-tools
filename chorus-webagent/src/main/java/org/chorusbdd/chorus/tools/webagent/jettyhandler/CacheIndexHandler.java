@@ -63,7 +63,7 @@ public class CacheIndexHandler extends XmlStreamingHandler {
         writer.writeStartElement("cache");
         writer.writeAttribute("name", cache.getName());
         writer.writeEmptyElement("resource");
-        writer.writeAttribute("name", "allTestSuites");
+        writer.writeAttribute("name", "List Of All Test Suites");
         writer.writeAttribute("rssLink", "./allTestSuites.rss");
         writer.writeAttribute("xmlLink", "./allTestSuites.xml");
         writer.writeEndElement();

@@ -30,13 +30,20 @@ body {
     padding: 10px 0px 0px 275px;
 }
 table {
-    border-color: #303;
     color: #06F;
     font-size: x-small;
     padding: 5px 5px 5px 5px;
+    border-collapse: collapse;
+}
+table.fullWidth {
+    width: 100%;
 }
 td {
     text-align: center;
+    padding: 4px 7px 4px 7px;
+    background: #f0f8ff;
+}
+td.other {
     color: orange;
 }
 td.fail {
@@ -47,10 +54,12 @@ td.pass {
 }
 th {
     min-width:  60px;
+    background: #b0c4de;
 }
 th[scope="row"] {
     text-align: right;
     min-width:  10px;
+    background: #f0f8ff;
 }
 .feature {
     padding: 0px 0px 25px 0px

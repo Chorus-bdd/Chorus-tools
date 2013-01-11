@@ -11,20 +11,40 @@
             </head>
             <body>
                 <h2><xsl:value-of select="@title"/></h2>
-                <xsl:apply-templates select="suite"/>
+                <table class='fullWidth'>
+                    <tr><th/><th/><th colspan='3'>Features:</th><th/><th/></tr>
+                    <tr>
+                        <th>Suite</th>
+                        <th>End State</th>
+                        <th>Passed</th>
+                        <th>Failed</th>
+                        <th>Pending</th>
+                        <th>Run Time (s)</th>
+                        <th>Host</th>
+                    </tr>
+                    <xsl:apply-templates select="suite"/>
+                </table>
             </body>
         </html>
     </xsl:template>
 
     <xsl:template match="suite">
-        <div>
-            <xsl:element name="a">
-                <xsl:attribute name="href">
-                    <xsl:value-of select="@link"/>
-                </xsl:attribute>
-                <xsl:value-of select="@name"/>
-            </xsl:element>
-        </div>
+        <tr>
+            <td>
+                <xsl:element name="a">
+                    <xsl:attribute name="href">
+                        <xsl:value-of select="@link"/>
+                    </xsl:attribute>
+                    <xsl:value-of select="@title"/>
+                </xsl:element>
+            </td>
+            <td><xsl:value-of select="@endState"/></td>
+            <td class='pass'><xsl:value-of select="resultSummaryBean/@featuresPassed"/></td>
+            <td class='fail'><xsl:value-of select="resultSummaryBean/@featuresFailed"/></td>
+            <td class='other'><xsl:value-of select="resultSummaryBean/@featuresPending"/></td>
+            <td><xsl:value-of select="resultSummaryBean/@timeTakenSeconds"/></td>
+            <td><xsl:value-of select="@executionHost"/></td>
+        </tr>
     </xsl:template>
 
 

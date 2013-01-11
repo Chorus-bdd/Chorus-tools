@@ -1,4 +1,4 @@
 <?xml version="1.0" ?>
-<cache name="Test">
-    <resource name="allTestSuites" rssFeedLink="allTestSuites.rss" htmlLink="allTestSuites.html"/>
+<cache name="Self Test Cache">
+    <resource name="List Of All Test Suites" rssFeedLink="allTestSuites.rss" htmlLink="allTestSuites.html"/>
 </cache>
