@@ -6,6 +6,7 @@ import org.chorusbdd.chorus.annotations.Step;
 import org.chorusbdd.chorus.handlers.util.PolledAssertion;
 import org.chorusbdd.chorus.tools.webagent.WebAgentFeatureCache;
 import org.chorusbdd.chorus.tools.webagent.util.FileUtil;
+import org.custommonkey.xmlunit.Diff;
 import org.springframework.test.context.ContextConfiguration;
 
 import javax.annotation.Resource;
@@ -52,8 +53,12 @@ public class HttpConnectorHandler extends Assert {
 
                     String e = replaceVariableContent(expected);
                     String a = replaceVariableContent(actual);
-                    assertEquals("Check http results", e, a);
-                } catch (IOException e) {
+                    //DifferenceListener myDifferenceListener = new IgnoreTextAndAttributeValuesDifferenceListener();
+                    //myDiff.overrideDifferenceListener(myDifferenceListener);
+                    Diff myDiff = new Diff(e, a);
+                    assertTrue("check http results XML identical " + myDiff, myDiff.identical());
+                    //assertEquals("Check http results", e, a);
+                } catch (Exception e) {
                     fail("Failed to connect or download \n" + e);
                 }
             }

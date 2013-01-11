@@ -6,6 +6,10 @@ import org.chorusbdd.chorus.executionlistener.ExecutionListener;
 import org.chorusbdd.chorus.results.*;
 import org.chorusbdd.chorus.tools.xml.beans.TestSuiteBean;
 import org.chorusbdd.chorus.tools.xml.util.FileUtil;
+import org.custommonkey.xmlunit.Diff;
+import org.custommonkey.xmlunit.DifferenceListener;
+import org.custommonkey.xmlunit.XMLTestCase;
+import org.custommonkey.xmlunit.XMLUnit;
 import org.junit.Test;
 import java.io.*;
 import java.net.URL;
@@ -24,7 +28,7 @@ import java.util.List;
  * up the interpreter tokens which give feature/scenario state during and
  * after execution
  */
-public class SuiteXmlWriterTest extends Assert {
+public class SuiteXmlWriterTest extends XMLTestCase {
 
     @Test
     public void testWriteSuite() throws Exception {
@@ -43,7 +47,12 @@ public class SuiteXmlWriterTest extends Assert {
         String expectedXml = FileUtil.readToString(expectedOutputResource.openStream());
         String actualXml = out.toString().trim();
         actualXml = removeVariableContent(actualXml);
-        assertEquals("Check Expected XML", expectedXml.trim(), actualXml );
+        XMLUnit.setNormalizeWhitespace(true);
+
+        //DifferenceListener myDifferenceListener = new IgnoreTextAndAttributeValuesDifferenceListener();
+        //myDiff.overrideDifferenceListener(myDifferenceListener);
+        Diff myDiff = new Diff(expectedXml, actualXml);
+        assertTrue("test XML identical " + myDiff, myDiff.identical());
     }
 
     //some contents is variable based on time and date, replace this
