@@ -1,13 +1,10 @@
 package org.chorusbdd.chorus.tools.xml.writer;
 
-import junit.framework.Assert;
 import org.chorusbdd.chorus.Chorus;
 import org.chorusbdd.chorus.executionlistener.ExecutionListener;
 import org.chorusbdd.chorus.results.*;
-import org.chorusbdd.chorus.tools.xml.beans.TestSuiteBean;
 import org.chorusbdd.chorus.tools.xml.util.FileUtil;
 import org.custommonkey.xmlunit.Diff;
-import org.custommonkey.xmlunit.DifferenceListener;
 import org.custommonkey.xmlunit.XMLTestCase;
 import org.custommonkey.xmlunit.XMLUnit;
 import org.junit.Test;
@@ -37,17 +34,18 @@ public class SuiteXmlWriterTest extends XMLTestCase {
         w.write(out, getTestSuite());
         out.flush();
         out.close();
-        
-        System.out.println();
-        System.out.println("This is the output as XML --->");
-        System.out.println(out.toString());
 
 
         URL expectedOutputResource = getClass().getResource("featureOneExpectedOutput.xml");
         String expectedXml = FileUtil.readToString(expectedOutputResource.openStream());
         String actualXml = out.toString().trim();
         actualXml = removeVariableContent(actualXml);
+        expectedXml = removeVariableContent(expectedXml);
         XMLUnit.setNormalizeWhitespace(true);
+
+        System.out.println();
+        System.out.println("This is the expected output as XML --->");
+        System.out.println(expectedXml);
 
         //DifferenceListener myDifferenceListener = new IgnoreTextAndAttributeValuesDifferenceListener();
         //myDiff.overrideDifferenceListener(myDifferenceListener);
@@ -62,26 +60,29 @@ public class SuiteXmlWriterTest extends XMLTestCase {
         xml = xml.replaceAll("executionStartTime=\".*\"", "executionStartTime=\"{STARTTIME}\"");
         xml = xml.replaceAll("executionStartTimestamp=\".*\"", "executionStartTimestamp=\"{STARTTIMSTAMP}\"");
         xml = xml.replaceAll("executionHost=\".*\"", "executionHost=\"{EXECUTIONHOST}\"");
+        xml = xml.replaceAll("(?s)stackTrace=\".*?\"", "stackTrace=\"{REPLACED}\"");
         return xml;
     }
 
     private TestSuite getTestSuite() throws Exception {
-        String baseDir = findChorusXmlModuleRoot();
-        String featureDirPath = baseDir + File.separator + "src" + File.separator + "test";
-        Chorus chorus = new Chorus(new String[] {"-f", featureDirPath, "-h", "org.chorusbdd.chorus.tools.xml","-l", "debug"});
+        String baseDir = findProjectBaseDir();
+        String s = File.separator;
+        String featureDirPath = baseDir + s + "chorus-mocksuite" + s + "src" + s + "main" + s
+                + "java" + s + "org" + s + "chorusbdd" + s + "chorus" + s + "tools" + s + "mocksuite" + s + "mocksuiteone";
+        Chorus chorus = new Chorus(new String[] {"-f", featureDirPath, "-h", "org.chorusbdd.chorus.tools.mocksuite.mocksuiteone","-l", "debug"});
         MockExecutionListener l = new MockExecutionListener();
         chorus.addExecutionListener(l);
         chorus.run();
         return new TestSuite(l.testExecutionToken, l.featureTokens);
     }
 
-    private String findChorusXmlModuleRoot() {
-        String baseDir = System.getProperty("user.dir");
-        File f = new File(baseDir, "chorus-xml");
-        if ( f.exists() ) {
-            baseDir = f.getPath();
+    private String findProjectBaseDir() {
+        String projectDir = System.getProperty("user.dir");
+        File f = new File(projectDir, "chorus-xml");
+        if ( ! f.exists() ) {  //we are already at project root level
+            projectDir = f.getParentFile().getPath();
         }
-        return baseDir;
+        return projectDir;
     }
 
     private static class MockExecutionListener implements ExecutionListener {
