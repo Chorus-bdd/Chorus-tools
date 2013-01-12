@@ -77,12 +77,16 @@ public class SuiteXmlWriterTest extends XMLTestCase {
     }
 
     private String findProjectBaseDir() {
-        String projectDir = System.getProperty("user.dir");
-        File f = new File(projectDir, "chorus-xml");
-        if ( ! f.exists() ) {  //we are already at project root level
-            projectDir = f.getParentFile().getPath();
+        String userDir = System.getProperty("user.dir");
+        File f = new File(userDir, "chorus-xml");
+
+        System.out.println("UserDir-->" + userDir);
+        String result = userDir;
+        if ( ! f.exists() ) {  //we are already at the chorus-xml module root level, we need to look one level up to project root
+            result = new File(userDir).getParentFile().getPath();
         }
-        return projectDir;
+        System.out.println("Project Base Dir -->" + userDir);
+        return result;
     }
 
     private static class MockExecutionListener implements ExecutionListener {
