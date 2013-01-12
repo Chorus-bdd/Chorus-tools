@@ -36,9 +36,11 @@ import org.chorusbdd.chorus.tools.xml.adapter.ExecutionTokenAdapter;
 import org.chorusbdd.chorus.tools.xml.adapter.FeatureTokenAdapter;
 
 import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -53,31 +55,37 @@ import java.util.List;
 @XmlRootElement(name="testSuite")
 public class TestSuiteBean {
 
-    private TestSuite testSuite;
-
-    public TestSuiteBean() {}
-
-    public TestSuiteBean(TestSuite testSuite) {
-        this.testSuite = testSuite;
-    }
-
-    public void setTestSuite(TestSuite testSuite) {
-        this.testSuite = testSuite;
-    }
+    private ExecutionToken execution;
+    private List<FeatureToken> features;
+    private String suiteName;
 
     @XmlJavaTypeAdapter(ExecutionTokenAdapter.class)
     public ExecutionToken getExecution() {
-        return testSuite.getExecutionToken();
+        return execution;
+    }
+
+    public void setExecution(ExecutionToken execution) {
+        this.execution = execution;
     }
 
     @XmlElementWrapper(name="features")
+    @XmlElement(name = "feature")
     @XmlJavaTypeAdapter(FeatureTokenAdapter.class)
-    public List<FeatureToken> getFeature() {
-        return testSuite.getFeatureList();
+    public List<FeatureToken> getFeatures() {
+        return features;
+    }
+
+    public void setFeatures(List<FeatureToken> features) {
+        this.features = features;
     }
 
     @XmlAttribute
     public String getSuiteName() {
-        return testSuite.getTestSuiteName();
+        return suiteName;
     }
+
+    public void setSuiteName(String suiteName) {
+        this.suiteName = suiteName;
+    }
+
 }

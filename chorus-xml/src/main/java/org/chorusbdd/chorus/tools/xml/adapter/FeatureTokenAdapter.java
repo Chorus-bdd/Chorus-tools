@@ -54,8 +54,7 @@ public class FeatureTokenAdapter  extends XmlAdapter<FeatureTokenBean, FeatureTo
 
     @Override
 	public FeatureToken unmarshal(FeatureTokenBean arg0) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		return new FeatureToken();
 	}
 
 }

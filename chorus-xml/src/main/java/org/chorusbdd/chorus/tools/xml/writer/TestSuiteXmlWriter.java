@@ -31,13 +31,16 @@ package org.chorusbdd.chorus.tools.xml.writer;
 
 
 import org.chorusbdd.chorus.results.TestSuite;
+import org.chorusbdd.chorus.tools.xml.adapter.TestSuiteAdapter;
 import org.chorusbdd.chorus.tools.xml.beans.TestSuiteBean;
 
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.PropertyException;
+import javax.xml.bind.Unmarshaller;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
+import java.io.Reader;
 import java.io.Writer;
 import java.util.HashMap;
 import java.util.Map;
@@ -51,16 +54,23 @@ public class TestSuiteXmlWriter extends AbstractXmlWriter<TestSuite> {
         super(TestSuiteBean.class);
     }
 
-    public void write(XMLStreamWriter writer, TestSuite suite) throws JAXBException, XMLStreamException {
-        TestSuiteBean testSuiteBean = new TestSuiteBean(suite);
+    public void write(XMLStreamWriter writer, TestSuite suite) throws Exception {
+        TestSuiteBean testSuiteBean = new TestSuiteAdapter().marshal(suite);
         Marshaller marshaller = getMarshaller();
         marshaller.marshal(testSuiteBean, writer);
 	}
 
-    public void write(Writer writer, TestSuite suite) throws JAXBException, XMLStreamException {
-        TestSuiteBean testSuiteBean = new TestSuiteBean(suite);
+    public void write(Writer writer, TestSuite suite) throws Exception {
+        TestSuiteBean testSuiteBean = new TestSuiteAdapter().marshal(suite);
         Marshaller marshaller = getMarshaller();
         marshaller.marshal(testSuiteBean, writer);
+    }
+
+    public TestSuite read(Reader reader) throws Exception {
+        Unmarshaller unmarshaller = getUnmarshaller();
+        Object testSuite = unmarshaller.unmarshal(reader);
+        TestSuiteBean testSuiteBean = (TestSuiteBean)testSuite;
+        return new TestSuiteAdapter().unmarshal(testSuiteBean);
     }
 
 }

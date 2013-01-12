@@ -51,8 +51,7 @@ public class ScenarioTokenAdapter extends XmlAdapter<ScenarioTokenBean, Scenario
 
 	@Override
 	public ScenarioToken unmarshal(ScenarioTokenBean v) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		return new ScenarioToken();
 	}
 
 }

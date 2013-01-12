@@ -1,11 +1,6 @@
 package org.chorusbdd.chorus.tools.xml.writer;
 
-import org.chorusbdd.chorus.results.ResultsSummary;
-
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
-import javax.xml.bind.PropertyException;
+import javax.xml.bind.*;
 import javax.xml.stream.XMLStreamWriter;
 import java.io.Writer;
 import java.util.HashMap;
@@ -21,19 +16,28 @@ import java.util.Map;
 public abstract class AbstractXmlWriter<E> {
 
     private Map<String, Object> marshallerProperties = new HashMap<String, Object>();
+    private Map<String, Object> unmarshallerProperties = new HashMap<String, Object>();
     private Class beanClass;
 
     public AbstractXmlWriter(Class beanClass) {
         this.beanClass = beanClass;
         addDefaultMarshallerProperties();
+        addDefaultUnmarshallerProperties();
     }
 
     protected void addDefaultMarshallerProperties() {
         marshallerProperties.put(Marshaller.JAXB_FORMATTED_OUTPUT, true);
     }
 
+    protected void addDefaultUnmarshallerProperties() {
+    }
+
     public void addMarshallerProperty(String key, Object value) {
         marshallerProperties.put(key, value);
+    }
+
+    public void addUnmarshallerProperty(String key, Object value) {
+        unmarshallerProperties.put(key, value);
     }
 
     protected Marshaller getMarshaller() throws JAXBException {
@@ -43,7 +47,20 @@ public abstract class AbstractXmlWriter<E> {
         return marshaller;
     }
 
-    private void addMarshallerProperties(Marshaller marshaller) throws PropertyException {
+    protected Unmarshaller getUnmarshaller() throws JAXBException {
+        JAXBContext context = JAXBContext.newInstance(beanClass);
+        Unmarshaller unmarshaller = context.createUnmarshaller();
+        addUnmarshallerProperties(unmarshaller);
+        return unmarshaller;
+    }
+
+    protected void addUnmarshallerProperties(Unmarshaller unmarshaller) throws PropertyException {
+        for(Map.Entry<String, Object> e : unmarshallerProperties.entrySet()) {
+            unmarshaller.setProperty(e.getKey(), e.getValue());
+        }
+    }
+
+    protected void addMarshallerProperties(Marshaller marshaller) throws PropertyException {
         for(Map.Entry<String, Object> e : marshallerProperties.entrySet()) {
             marshaller.setProperty(e.getKey(), e.getValue());
         }

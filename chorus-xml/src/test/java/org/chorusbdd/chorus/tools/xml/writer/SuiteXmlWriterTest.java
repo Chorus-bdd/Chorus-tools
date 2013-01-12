@@ -3,7 +3,7 @@ package org.chorusbdd.chorus.tools.xml.writer;
 import org.chorusbdd.chorus.Chorus;
 import org.chorusbdd.chorus.executionlistener.ExecutionListener;
 import org.chorusbdd.chorus.results.*;
-import org.chorusbdd.chorus.tools.xml.util.FileUtil;
+import org.chorusbdd.chorus.tools.xml.util.FileUtils;
 import org.custommonkey.xmlunit.Diff;
 import org.custommonkey.xmlunit.XMLTestCase;
 import org.custommonkey.xmlunit.XMLUnit;
@@ -31,30 +31,38 @@ public class SuiteXmlWriterTest extends XMLTestCase {
     public void testWriteSuite() throws Exception {
         StringWriter out = new StringWriter();
         TestSuiteXmlWriter w = new TestSuiteXmlWriter();
-        w.write(out, getTestSuite());
+        w.write(out, runInterpreter());
         out.flush();
         out.close();
 
 
         URL expectedOutputResource = getClass().getResource("featureOneExpectedOutput.xml");
-        String expectedXml = FileUtil.readToString(expectedOutputResource.openStream());
+        String expectedXml = FileUtils.readToString(expectedOutputResource.openStream());
         String actualXml = out.toString().trim();
-        actualXml = removeVariableContent(actualXml);
-        expectedXml = removeVariableContent(expectedXml);
+        String replacedActualXml = replaceVariableContent(actualXml);
+        String replacedExpectedXml = replaceVariableContent(expectedXml);
         XMLUnit.setNormalizeWhitespace(true);
 
         System.out.println();
         System.out.println("This is the expected output as XML --->");
-        System.out.println(expectedXml);
+        System.out.println(replacedExpectedXml);
+
+        System.out.println("This is the actual output as XML --->");
+        System.out.println(replacedActualXml);
+
 
         //DifferenceListener myDifferenceListener = new IgnoreTextAndAttributeValuesDifferenceListener();
         //myDiff.overrideDifferenceListener(myDifferenceListener);
-        Diff myDiff = new Diff(expectedXml, actualXml);
+        Diff myDiff = new Diff(replacedExpectedXml, replacedActualXml);
         assertTrue("test XML identical " + myDiff, myDiff.identical());
+
+        StringReader stringReader = new StringReader(actualXml);
+        TestSuite t = w.read(stringReader);
+        System.out.println(t);
     }
 
     //some contents is variable based on time and date, replace this
-    private String removeVariableContent(String xml) {
+    private String replaceVariableContent(String xml) {
         xml = xml.replaceAll("timeTaken=\"\\d{0,5}\"", "timeTaken=\"{TIMETAKEN}\"");
         xml = xml.replaceAll("timeTakenSeconds=\"\\d{0,5}\\.?\\d?\"", "timeTakenSeconds=\"{TIMETAKEN_SECONDS}\"");
         xml = xml.replaceAll("executionStartTime=\".*\"", "executionStartTime=\"{STARTTIME}\"");
@@ -64,15 +72,14 @@ public class SuiteXmlWriterTest extends XMLTestCase {
         return xml;
     }
 
-    private TestSuite getTestSuite() throws Exception {
+    private TestSuite runInterpreter() throws Exception {
         String baseDir = findProjectBaseDir();
-        String s = File.separator;
-        String featureDirPath = baseDir + s + "chorus-mocksuite" + s + "src" + s + "main" + s
-                + "java" + s + "org" + s + "chorusbdd" + s + "chorus" + s + "tools" + s + "mocksuite" + s + "mocksuiteone";
+        String featureDirPath = FileUtils.getFilePath(baseDir, "chorus-mocksuite", "src", "main", "java", "org", "chorusbdd", "chorus", "tools", "mocksuite", "mocksuiteone");
         Chorus chorus = new Chorus(new String[] {"-f", featureDirPath, "-h", "org.chorusbdd.chorus.tools.mocksuite.mocksuiteone","-l", "debug"});
         MockExecutionListener l = new MockExecutionListener();
         chorus.addExecutionListener(l);
         chorus.run();
+        assertTrue("Chorus interpreter found some features", l.testExecutionToken.getTotalFeatures() > 0);
         return new TestSuite(l.testExecutionToken, l.featureTokens);
     }
 

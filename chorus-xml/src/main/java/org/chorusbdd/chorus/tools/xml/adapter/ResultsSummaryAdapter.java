@@ -66,8 +66,7 @@ public class ResultsSummaryAdapter extends XmlAdapter<ResultSummaryBean, Results
 
 	@Override
 	public ResultsSummary unmarshal(ResultSummaryBean v) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		return new ResultsSummary();
 	}
 
 }

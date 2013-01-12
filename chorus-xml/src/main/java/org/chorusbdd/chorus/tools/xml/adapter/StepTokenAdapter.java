@@ -56,8 +56,7 @@ public class StepTokenAdapter extends XmlAdapter<StepTokenBean, StepToken>{
 
     @Override
 	public StepToken unmarshal(StepTokenBean v) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		return new StepToken(v.getType(), v.getAction());
 	}
 
 }

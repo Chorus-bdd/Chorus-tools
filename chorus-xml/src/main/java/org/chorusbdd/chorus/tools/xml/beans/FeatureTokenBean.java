@@ -89,8 +89,9 @@ public class FeatureTokenBean {
 	}
 
 	@XmlElementWrapper(name="scenarios")
+    @XmlElement(name = "scenario")
 	@XmlJavaTypeAdapter(ScenarioTokenAdapter.class)
-	public List<ScenarioToken> getScenario() {
+	public List<ScenarioToken> getScenarios() {
 		return scenarios;
 	}
 

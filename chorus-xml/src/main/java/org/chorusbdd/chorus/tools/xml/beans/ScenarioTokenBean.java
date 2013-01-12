@@ -34,6 +34,7 @@ import org.chorusbdd.chorus.results.StepToken;
 import org.chorusbdd.chorus.tools.xml.adapter.StepTokenAdapter;
 
 import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.util.List;
@@ -57,8 +58,9 @@ public class ScenarioTokenBean {
 	}
 
 	@XmlElementWrapper(name="steps")
+    @XmlElement(name="step")
 	@XmlJavaTypeAdapter(StepTokenAdapter.class)
-	public List<StepToken> getStep() {
+	public List<StepToken> getSteps() {
 		return steps;
 	}
 
