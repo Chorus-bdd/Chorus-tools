@@ -56,7 +56,14 @@ public class StepTokenAdapter extends XmlAdapter<StepTokenBean, StepToken>{
 
     @Override
 	public StepToken unmarshal(StepTokenBean v) throws Exception {
-		return new StepToken(v.getType(), v.getAction());
+        StepToken stepToken = new StepToken(v.getType(), v.getAction());
+        stepToken.setEndState(v.getEndState());
+        stepToken.setMessage(v.getMessage());
+        stepToken.setException(v.getException());
+        stepToken.setStackTrace(v.getStackTrace());
+        stepToken.setTimeTaken(v.getTimeTaken());
+        return stepToken;
+
 	}
 
 }

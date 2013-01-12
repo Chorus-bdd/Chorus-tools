@@ -83,4 +83,19 @@ public class FormattingUtils {
         }
         return sb.toString();
     }
+
+    public static String getAsCsv(List<String> tags) {
+        return getAsCsv(tags.toArray(new String[tags.size()]));
+    }
+
+    public static List<String> getStringListFromCsv(String tags) {
+        return Arrays.asList(tags.split("\\s*,\\s*"));
+    }
+
+    public static String[] getStringArrayFromCsv(String tags) {
+        List<String> l = getStringListFromCsv(tags);
+        return l.toArray(new String[l.size()]);
+    }
+
+
 }

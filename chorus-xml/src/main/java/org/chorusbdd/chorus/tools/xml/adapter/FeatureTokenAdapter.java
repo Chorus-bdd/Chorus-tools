@@ -53,8 +53,12 @@ public class FeatureTokenAdapter  extends XmlAdapter<FeatureTokenBean, FeatureTo
 	}
 
     @Override
-	public FeatureToken unmarshal(FeatureTokenBean arg0) throws Exception {
-		return new FeatureToken();
+	public FeatureToken unmarshal(FeatureTokenBean f) throws Exception {
+        FeatureToken featureToken = new FeatureToken();
+        featureToken.setName(f.getName());
+        String h = f.getUsesHandlers();
+        featureToken.setUsesHandlers(h == null ? null : FormattingUtils.getStringArrayFromCsv(h));
+        return featureToken;
 	}
 
 }
