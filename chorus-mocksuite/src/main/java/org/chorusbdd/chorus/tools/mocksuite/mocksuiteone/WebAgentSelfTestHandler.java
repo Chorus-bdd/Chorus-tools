@@ -1,4 +1,4 @@
-package org.chorusbdd.chorus.tools.webagent.testsuite;
+package org.chorusbdd.chorus.tools.mocksuite.mocksuiteone;
 
 import junit.framework.Assert;
 import org.chorusbdd.chorus.annotations.Handler;

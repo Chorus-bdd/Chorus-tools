@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <?xml-stylesheet type='text/xsl' href='testSuiteResponse.xsl'?>
 <testSuite suiteName="Test Suite">
-    <execution executionHost="STUDIOXPS_435MT" executionStartTime="10 Jan 2013 21:19:26 GMT" executionStartTimestamp="1357852766559">
-        <resultsSummary endState="FAILED" featuresFailed="4" featuresPassed="3" featuresPending="1" scenariosFailed="6" scenariosPassed="3" scenariosPending="4" stepsFailed="1" stepsPassed="13" stepsPending="4" stepsSkipped="17" stepsUndefined="5" timeTaken="922" timeTakenSeconds="0.9" unavailableHandlers="0"/>
+    <execution executionHost="STUDIOXPS_435MT" executionStartTime="12 Jan 2013 15:04:09 GMT" executionStartTimestamp="1358003049405">
+        <resultsSummary endState="FAILED" featuresFailed="4" featuresPassed="3" featuresPending="1" scenariosFailed="6" scenariosPassed="3" scenariosPending="4" stepsFailed="1" stepsPassed="13" stepsPending="4" stepsSkipped="17" stepsUndefined="5" timeTaken="912" timeTakenSeconds="0.9" unavailableHandlers="0"/>
         <testSuiteName>Test Suite</testSuiteName>
     </execution>
     <features>
@@ -23,7 +23,7 @@
                         <step type="And" action="a step fails an assertion" endState="FAILED" message="(WebAgentSelfTestHandler:23)-Fail an assertion" stackTrace="junit.framework.AssertionFailedError: Fail an assertion
 	at junit.framework.Assert.fail(Assert.java:50)
 	at junit.framework.Assert.assertTrue(Assert.java:20)
-	at org.chorusbdd.chorus.tools.webagent.testsuite.WebAgentSelfTestHandler.failAnAssertion(WebAgentSelfTestHandler.java:23)
+	at org.chorusbdd.chorus.tools.mocksuite.mocksuiteone.WebAgentSelfTestHandler.failAnAssertion(WebAgentSelfTestHandler.java:23)
 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
 	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
@@ -137,7 +137,7 @@ state</description>
                     <steps>
                         <step type="Given" action="I run a scenario with several steps" endState="PASSED" message="" timeTaken="0" timeTakenSeconds="0"/>
                         <step type="And" action="one of the steps throws a pending exception" endState="PENDING" message="This one Pending" stackTrace="org.chorusbdd.chorus.core.interpreter.StepPendingException: This one Pending
-	at org.chorusbdd.chorus.tools.webagent.testsuite.WebAgentSelfTestHandler.stepThrowsPending(WebAgentSelfTestHandler.java:41)
+	at org.chorusbdd.chorus.tools.mocksuite.mocksuiteone.WebAgentSelfTestHandler.stepThrowsPending(WebAgentSelfTestHandler.java:41)
 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
 	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
@@ -153,7 +153,7 @@ state</description>
 	at org.chorusbdd.chorus.Chorus.run(Chorus.java:149)
 	at org.chorusbdd.chorus.Chorus.run(Chorus.java:97)
 	at org.chorusbdd.chorus.Chorus.main(Chorus.java:64)
-" timeTaken="0" timeTakenSeconds="0">
+" timeTaken="1" timeTakenSeconds="0">
                             <exception>org.chorusbdd.chorus.core.interpreter.StepPendingException: This one Pending</exception>
                         </step>
                         <step type="Then" action="the subsequent steps are skipped" endState="SKIPPED" message="" timeTaken="0" timeTakenSeconds="0"/>

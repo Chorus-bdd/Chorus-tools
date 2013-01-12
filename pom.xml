@@ -7,6 +7,7 @@
 	<version>1.0.0</version>
 	<name>Chorus Tools</name>
 	<modules>
+      <module>chorus-mocksuite</module>
       <module>chorus-xml</module>
 	  <module>chorus-swingrunner</module>
 	  <module>chorus-webagent</module>
