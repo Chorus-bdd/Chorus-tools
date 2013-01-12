@@ -85,7 +85,7 @@ public class SuiteXmlWriterTest extends XMLTestCase {
         if ( ! f.exists() ) {  //we are already at the chorus-xml module root level, we need to look one level up to project root
             result = new File(userDir).getParentFile().getPath();
         }
-        System.out.println("Project Base Dir -->" + userDir);
+        System.out.println("Project Base Dir -->" + result);
         return result;
     }
 
