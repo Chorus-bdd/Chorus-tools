@@ -9,7 +9,7 @@
                 <LINK href="testSuite.css" rel="stylesheet" type="text/css"/>
             </head>
             <body>
-                <h2>Index of Cache - <xsl:value-of select="@name"/></h2>
+                <h2>Index of <xsl:value-of select="@name"/></h2>
                 <xsl:apply-templates select="resource"/>
             </body>
         </html>
