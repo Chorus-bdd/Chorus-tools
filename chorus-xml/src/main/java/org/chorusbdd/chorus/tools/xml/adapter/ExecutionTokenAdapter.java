@@ -49,8 +49,14 @@ public class ExecutionTokenAdapter extends XmlAdapter<ExecutionTokenBean, Execut
 		return ret;
 	}
 
-	public ExecutionToken unmarshal(ExecutionTokenBean arg0) throws Exception {
-		return new ExecutionToken(arg0.getTestSuiteName());
+	public ExecutionToken unmarshal(ExecutionTokenBean t) throws Exception {
+        ExecutionToken e = new ExecutionToken(
+            t.getTestSuiteName(),
+            t.getExecutionStartTimestamp()
+        );
+        e.setResultsSummary(t.getResultsSummary());
+        e.setExecutionHost(t.getExecutionHost());
+        return e;
 	}
 	
 }

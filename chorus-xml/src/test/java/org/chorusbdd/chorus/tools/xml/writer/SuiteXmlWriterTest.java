@@ -18,25 +18,31 @@ import java.util.List;
  * Date: 29/10/12
  * Time: 08:55
  *
- * Test that we can serialize chorus interpreter tokens to xml
+ * Test that we can marshal a Chorus TestSuite to xml, and that we can unmarshal the xml back into a
+ * TestSuite
  *
- * Here we run a feature by executing the interpreter
- * and add a local observer for execution events, which allow us to pick
- * up the interpreter tokens which give feature/scenario state during and
- * after execution
+ * This test uses the mock TestSuite provided by chorus-mocksuite module as the basis for testing, since this
+ * should provide a set of features & scenarios which cover most if not all the possible variations.
+ *
+ * We run the mock suite first by executing the interpreter and adding a local observer for execution events,
+ * which allows us to create a TestSuite instance from the execution tokens received. We then marshall this to XML and
+ * compare that xml to the contents of mockSuiteOneExpectedOutput.xml
+ *
+ * To test unmarshalling, we unmarshal mockSuiteOneExpectedOutput.xml back into a TestSuite instance,
+ * and then marshal it back to XML, comparing once more the remarshaled xml to the mockSuiteOneExpectedOutput.xml
  */
 public class SuiteXmlWriterTest extends XMLTestCase {
 
     @Test
-    public void testWriteSuite() throws Exception {
+    public void testMarshallSuiteToXml() throws Exception {
         StringWriter out = new StringWriter();
         TestSuiteXmlWriter w = new TestSuiteXmlWriter();
-        w.write(out, runInterpreter());
+        TestSuite suite = runInterpreter();
+        w.write(out, suite);
         out.flush();
         out.close();
 
-
-        URL expectedOutputResource = getClass().getResource("featureOneExpectedOutput.xml");
+        URL expectedOutputResource = getClass().getResource("mockSuiteOneExpectedOutput.xml");
         String expectedXml = FileUtils.readToString(expectedOutputResource.openStream());
         String actualXml = out.toString().trim();
         String replacedActualXml = replaceVariableContent(actualXml);
@@ -58,7 +64,48 @@ public class SuiteXmlWriterTest extends XMLTestCase {
 
         StringReader stringReader = new StringReader(actualXml);
         TestSuite t = w.read(stringReader);
-        System.out.println(t);
+
+        StringWriter remarshalledOut = new StringWriter();
+        w.write(remarshalledOut, t);
+        remarshalledOut.flush();
+        remarshalledOut.close();
+        String expectedRemarshalled = remarshalledOut.toString();
+        String replacedExpectedRemarshalled = replaceVariableContent(expectedRemarshalled);
+        myDiff = new Diff(replacedExpectedXml, replacedExpectedRemarshalled);
+        assertTrue("test XML identical " + myDiff, myDiff.identical());
+    }
+
+    @Test
+    public void testUnmarshalSuiteFromXml() throws Exception {
+
+        URL expectedOutputResource = getClass().getResource("mockSuiteOneExpectedOutput.xml");
+        String expectedXml = FileUtils.readToString(expectedOutputResource.openStream());
+        String replacedExpectedXml = replaceVariableContent(expectedXml);
+
+        //first read a TestSuite from expected XML
+        TestSuiteXmlWriter w = new TestSuiteXmlWriter();
+        StringReader stringReader = new StringReader(expectedXml);
+        TestSuite t = w.read(stringReader);
+
+        //now remarshall TestSuite to remarshalledOut
+        StringWriter remarshalledOut = new StringWriter();
+        w.write(remarshalledOut, t);
+        remarshalledOut.flush();
+        remarshalledOut.close();
+        String expectedRemarshalled = remarshalledOut.toString();
+        String replacedExpectedRemarshalled = replaceVariableContent(expectedRemarshalled);
+
+        System.out.println();
+        System.out.println("This is the expected output as XML --->");
+        System.out.println(replacedExpectedXml);
+
+        System.out.println("This is the remarshalled output as XML --->");
+        System.out.println(replacedExpectedRemarshalled);
+
+        //original XML and remarshalled XML should be identical
+        XMLUnit.setNormalizeWhitespace(true);
+        Diff myDiff = new Diff(replacedExpectedXml, replacedExpectedRemarshalled);
+        assertTrue("test XML identical " + myDiff, myDiff.identical());
     }
 
     //some contents is variable based on time and date, replace this

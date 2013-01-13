@@ -34,6 +34,7 @@ import org.chorusbdd.chorus.tools.xml.beans.ScenarioTokenBean;
 import org.chorusbdd.chorus.tools.xml.util.FormattingUtils;
 
 import javax.xml.bind.annotation.adapters.XmlAdapter;
+import java.util.Collections;
 import java.util.List;
 
 public class ScenarioTokenAdapter extends XmlAdapter<ScenarioTokenBean, ScenarioToken> {
@@ -55,7 +56,9 @@ public class ScenarioTokenAdapter extends XmlAdapter<ScenarioTokenBean, Scenario
         scenarioToken.setName(v.getName());
         scenarioToken.setSteps(v.getSteps());
         String tags = v.getTags();
-        scenarioToken.setTags(tags == null ? null : FormattingUtils.getStringListFromCsv(tags));
+        if ( tags != null ) {
+            scenarioToken.setTags(FormattingUtils.getStringListFromCsv(tags));
+        }
         return scenarioToken;
 	}
 

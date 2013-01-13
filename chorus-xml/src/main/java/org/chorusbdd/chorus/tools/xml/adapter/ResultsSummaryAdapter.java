@@ -66,7 +66,24 @@ public class ResultsSummaryAdapter extends XmlAdapter<ResultSummaryBean, Results
 
 	@Override
 	public ResultsSummary unmarshal(ResultSummaryBean v) throws Exception {
-		return new ResultsSummary();
+        ResultsSummary resultsSummary = new ResultsSummary();
+        resultsSummary.setFeaturesFailed(v.getFeaturesFailed());
+        resultsSummary.setFeaturesPassed(v.getFeaturesPassed());
+        resultsSummary.setFeaturesPending(v.getFeaturesPending());
+
+        resultsSummary.setScenariosFailed(v.getScenariosFailed());
+        resultsSummary.setScenariosPassed(v.getScenariosPassed());
+        resultsSummary.setScenariosPending(v.getScenariosPending());
+        resultsSummary.setUnavailableHandlers(v.getUnavailableHandlers());
+
+        resultsSummary.setStepsPassed(v.getStepsPassed());
+        resultsSummary.setStepsFailed(v.getStepsFailed());
+        resultsSummary.setStepsPending(v.getStepsPending());
+        resultsSummary.setStepsUndefined(v.getStepsUndefined());
+        resultsSummary.setStepsSkipped(v.getStepsSkipped());
+
+        resultsSummary.setTimeTaken(v.getTimeTaken());
+        return resultsSummary;
 	}
 
 }

@@ -30,6 +30,7 @@
 package org.chorusbdd.chorus.tools.xml.adapter;
 
 import org.chorusbdd.chorus.results.FeatureToken;
+import org.chorusbdd.chorus.results.ScenarioToken;
 import org.chorusbdd.chorus.tools.xml.beans.FeatureTokenBean;
 import org.chorusbdd.chorus.tools.xml.util.FormattingUtils;
 
@@ -56,8 +57,13 @@ public class FeatureTokenAdapter  extends XmlAdapter<FeatureTokenBean, FeatureTo
 	public FeatureToken unmarshal(FeatureTokenBean f) throws Exception {
         FeatureToken featureToken = new FeatureToken();
         featureToken.setName(f.getName());
+        featureToken.setDescription(f.getDescription());
+        featureToken.setConfigurationName(f.getConfigurationName());
         String h = f.getUsesHandlers();
         featureToken.setUsesHandlers(h == null ? null : FormattingUtils.getStringArrayFromCsv(h));
+        for ( ScenarioToken s : f.getScenarios()) {
+            featureToken.addScenario(s);
+        }
         return featureToken;
 	}
 
