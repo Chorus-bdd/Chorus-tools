@@ -29,7 +29,7 @@
  */
 package org.chorusbdd.chorus.tools.webagent.jettyhandler;
 
-import org.chorusbdd.chorus.tools.webagent.TestSuiteFilter;
+import org.chorusbdd.chorus.tools.webagent.filter.TestSuiteFilter;
 import org.chorusbdd.chorus.tools.webagent.WebAgentFeatureCache;
 import org.chorusbdd.chorus.tools.webagent.WebAgentTestSuite;
 import org.chorusbdd.chorus.tools.webagent.util.WebAgentUtil;
@@ -37,7 +37,6 @@ import org.eclipse.jetty.server.Request;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
 import java.util.List;
 

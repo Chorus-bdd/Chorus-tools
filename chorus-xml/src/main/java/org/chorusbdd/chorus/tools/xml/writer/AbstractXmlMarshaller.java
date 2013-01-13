@@ -13,13 +13,13 @@ import java.util.Map;
  * Time: 22:35
  * To change this template use File | Settings | File Templates.
  */
-public abstract class AbstractXmlWriter<E> {
+public abstract class AbstractXmlMarshaller<E> {
 
     private Map<String, Object> marshallerProperties = new HashMap<String, Object>();
     private Map<String, Object> unmarshallerProperties = new HashMap<String, Object>();
     private Class beanClass;
 
-    public AbstractXmlWriter(Class beanClass) {
+    public AbstractXmlMarshaller(Class beanClass) {
         this.beanClass = beanClass;
         addDefaultMarshallerProperties();
         addDefaultUnmarshallerProperties();

@@ -58,9 +58,13 @@ public class WebAgentContext {
         if ( suiteListeners.size() == 0 ) {
             log.warn(webAgentFeatureCache + " is not configured with any suite listeners");
         }
+
         for (WebAgentSuiteListener l : suiteListeners) {
             log.info(webAgentFeatureCache + " will receive test suites from suite listener " + l);
             l.addExecutionListener(webAgentFeatureCache);
         }
+
+        log.info("Initializing feature cache " + webAgentFeatureCache);
+        webAgentFeatureCache.initialize();
     }
 }

@@ -18,7 +18,12 @@
         <constructor-arg value="true"/>
     </bean>
 
+    <bean id="mainSuiteStore" class="org.chorusbdd.chorus.tools.webagent.store.FileSystemXmlStore">
+        <constructor-arg value="${user.home}${file.separator}chorus-webagent"/>
+    </bean>
+
     <bean id="mainFeatureCache" class="org.chorusbdd.chorus.tools.webagent.WebAgentFeatureCache">
+        <constructor-arg ref="mainSuiteStore"/>
         <constructor-arg value="Main Cache"/>
         <constructor-arg value="500"/>
     </bean>

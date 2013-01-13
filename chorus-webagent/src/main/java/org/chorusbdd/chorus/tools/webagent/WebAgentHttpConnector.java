@@ -31,6 +31,8 @@ package org.chorusbdd.chorus.tools.webagent;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.chorusbdd.chorus.tools.webagent.filter.LastNItemsFilter;
+import org.chorusbdd.chorus.tools.webagent.filter.TestSuiteFilter;
 import org.chorusbdd.chorus.tools.webagent.jettyhandler.*;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.handler.HandlerList;
@@ -49,6 +51,7 @@ public class WebAgentHttpConnector {
     private int localPort;
     private List<WebAgentFeatureCache> cacheList;
     private final Server server;
+    private int maxRssFeedItems = 50;
 
     public WebAgentHttpConnector(int localPort, List<WebAgentFeatureCache> cacheList) {
         this.localPort = localPort;
@@ -72,9 +75,10 @@ public class WebAgentHttpConnector {
         l.addHandler(new StyleSheetResourceHandler());
         for ( WebAgentFeatureCache c : cacheList) {
             l.addHandler(new CacheIndexHandler(c));
+
             l.addHandler(new Rss2SuiteListHandler(
                 c,
-                TestSuiteFilter.ALL_SUITES,
+                new LastNItemsFilter(maxRssFeedItems), //rss feed should be size limited
                 "/" + c.getHttpName() + "/allTestSuites",
                 ".rss",
                 "All Test Suites in " + c.getName(),
@@ -95,5 +99,7 @@ public class WebAgentHttpConnector {
         server.setHandler(l);
     }
 
-
+    public void setMaxRssFeedItems(int maxRssFeedItems) {
+        this.maxRssFeedItems = maxRssFeedItems;
+    }
 }

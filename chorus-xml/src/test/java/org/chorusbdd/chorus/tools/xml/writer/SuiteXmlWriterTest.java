@@ -36,7 +36,7 @@ public class SuiteXmlWriterTest extends XMLTestCase {
     @Test
     public void testMarshallSuiteToXml() throws Exception {
         StringWriter out = new StringWriter();
-        TestSuiteXmlWriter w = new TestSuiteXmlWriter();
+        TestSuiteXmlMarshaller w = new TestSuiteXmlMarshaller();
         TestSuite suite = runInterpreter();
         w.write(out, suite);
         out.flush();
@@ -83,7 +83,7 @@ public class SuiteXmlWriterTest extends XMLTestCase {
         String replacedExpectedXml = replaceVariableContent(expectedXml);
 
         //first read a TestSuite from expected XML
-        TestSuiteXmlWriter w = new TestSuiteXmlWriter();
+        TestSuiteXmlMarshaller w = new TestSuiteXmlMarshaller();
         StringReader stringReader = new StringReader(expectedXml);
         TestSuite t = w.read(stringReader);
 

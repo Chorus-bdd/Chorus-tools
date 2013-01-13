@@ -33,7 +33,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.chorusbdd.chorus.tools.webagent.WebAgentFeatureCache;
 import org.chorusbdd.chorus.tools.webagent.WebAgentTestSuite;
-import org.chorusbdd.chorus.tools.xml.writer.TestSuiteXmlWriter;
+import org.chorusbdd.chorus.tools.xml.writer.TestSuiteXmlMarshaller;
 import org.eclipse.jetty.server.Request;
 
 import javax.servlet.http.HttpServletRequest;
@@ -84,12 +84,12 @@ public class TestSuiteHandler extends XmlStreamingHandler {
     }
 
     private void handleForSuite(HttpServletResponse response, WebAgentTestSuite s) throws Exception {
-        TestSuiteXmlWriter testSuiteWriter = new TestSuiteXmlWriter();
+        TestSuiteXmlMarshaller testSuiteWriter = new TestSuiteXmlMarshaller();
         testSuiteWriter.addMarshallerProperty(
             "com.sun.xml.internal.bind.xmlHeaders",      //:( this may break with some Marshaller implementations
             "<?xml-stylesheet type='text/xsl' href='testSuiteResponse.xsl'?>\n"
         );
-        testSuiteWriter.write(response.getWriter(), s);
+        testSuiteWriter.write(response.getWriter(), s.getTestSuite());
     }
 
     @Override

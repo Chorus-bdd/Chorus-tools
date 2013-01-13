@@ -15,9 +15,9 @@ import java.io.Writer;
  * Time: 21:53
  * To change this template use File | Settings | File Templates.
  */
-public class ResultSummaryXmlWriter extends AbstractXmlWriter<ResultsSummary> {
+public class ResultSummaryXmlMarshaller extends AbstractXmlMarshaller<ResultsSummary> {
 
-    public ResultSummaryXmlWriter() {
+    public ResultSummaryXmlMarshaller() {
         super(ResultSummaryBean.class);
     }
 

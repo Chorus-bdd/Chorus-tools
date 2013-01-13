@@ -34,7 +34,11 @@ import org.apache.commons.logging.LogFactory;
 import org.chorusbdd.chorus.executionlistener.ExecutionListenerAdapter;
 import org.chorusbdd.chorus.results.ExecutionToken;
 import org.chorusbdd.chorus.results.FeatureToken;
-import org.chorusbdd.chorus.tools.webagent.util.WebAgentUtil;
+import org.chorusbdd.chorus.results.TestSuite;
+import org.chorusbdd.chorus.tools.webagent.filter.TestSuiteFilter;
+import org.chorusbdd.chorus.tools.webagent.store.ExceptionHandlingDecorator;
+import org.chorusbdd.chorus.tools.webagent.store.NullSuiteStore;
+import org.chorusbdd.chorus.tools.webagent.store.SuiteStore;import org.chorusbdd.chorus.tools.webagent.util.WebAgentUtil;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicLong;
@@ -52,25 +56,41 @@ public class WebAgentFeatureCache extends ExecutionListenerAdapter {
     private static final Log log = LogFactory.getLog(JmxManagementServerExporter.class);
 
     //a size restricted linked hash map
-    private final LinkedHashMap<String, WebAgentTestSuite> cachedSuites = new LinkedHashMap<String,WebAgentTestSuite>() {
-        protected boolean removeEldestEntry(Map.Entry eldest) {
-            return size() > maxSuiteHistory;
-         }
-    };
+    private final LinkedHashMap<String, WebAgentTestSuite> cachedSuites = new FeatureCacheLinkedMap();
+    private final SuiteStore suiteStore;
     private final AtomicLong suitesReceived = new AtomicLong();
     private final String cacheName;
     private String httpName;
     private volatile int maxSuiteHistory;
 
+
     public WebAgentFeatureCache(String cacheName, int maxSuiteHistory) {
+        this(new NullSuiteStore(), cacheName, maxSuiteHistory);
+    }
+
+    public WebAgentFeatureCache(SuiteStore suiteStore, String cacheName, int maxSuiteHistory) {
+        this.suiteStore = new ExceptionHandlingDecorator(suiteStore);
         this.cacheName = cacheName;
         this.maxSuiteHistory = maxSuiteHistory;
         setHttpName();
     }
 
-    public void testsCompleted(ExecutionToken testExecutionToken, List<FeatureToken> features) {
-        WebAgentTestSuite testSuite = new WebAgentTestSuite(testExecutionToken, features);
-        addToCachedSuites(testSuite);
+    public void initialize() {
+        List<WebAgentTestSuite> storedSuites = loadAndSortSuitesByTimestamp();
+        for ( WebAgentTestSuite s : storedSuites) {
+            addToCachedSuites(s);
+        }
+    }
+
+    private List<WebAgentTestSuite> loadAndSortSuitesByTimestamp() {
+        List<WebAgentTestSuite> storedSuites = suiteStore.loadTestSuites();
+        log.info(getClass().getSimpleName() + " loaded " + storedSuites.size() + " test suites from cache");
+        Collections.sort(storedSuites, new Comparator<WebAgentTestSuite>() {
+            public int compare(WebAgentTestSuite o1, WebAgentTestSuite o2) {
+                return ((Long) o1.getExecutionStartTime()).compareTo(o2.getExecutionStartTime());
+            }
+        });
+        return storedSuites;
     }
 
     private void addToCachedSuites(WebAgentTestSuite testSuite) {
@@ -80,12 +100,10 @@ public class WebAgentFeatureCache extends ExecutionListenerAdapter {
         }
     }
 
-    @Override
-    public String toString() {
-        return "WebAgentFeatureCache{" +
-                "cacheName='" + cacheName + '\'' +
-                ", maxSuiteHistory=" + maxSuiteHistory +
-                '}';
+    public void testsCompleted(ExecutionToken testExecutionToken, List<FeatureToken> features) {
+        WebAgentTestSuite testSuite = new WebAgentTestSuite(new TestSuite(testExecutionToken, features));
+        addToCachedSuites(testSuite);
+        suiteStore.addSuiteToStore(testSuite);
     }
 
     public int getNumberOfTestSuites() {
@@ -134,10 +152,16 @@ public class WebAgentFeatureCache extends ExecutionListenerAdapter {
         return httpName;
     }
 
+    /**
+     * @return List of TestSuite in cache, most recent first
+     */
     public List<WebAgentTestSuite> getSuites() {
         return getSuites(TestSuiteFilter.ALL_SUITES);
     }
 
+    /**
+     * @return List of TestSuite in cache, most recent first filtered by testSuiteFilter
+     */
     public List<WebAgentTestSuite> getSuites(TestSuiteFilter testSuiteFilter) {
         List<WebAgentTestSuite> l = new LinkedList<>();
         synchronized (cachedSuites) {
@@ -147,6 +171,7 @@ public class WebAgentFeatureCache extends ExecutionListenerAdapter {
                 }
             }
         }
+        Collections.reverse(l);
         return l;
     }
 
@@ -166,5 +191,28 @@ public class WebAgentFeatureCache extends ExecutionListenerAdapter {
                 cachedSuites.put(suite.getTestSuiteName() + "-" + index, suite);
             }
         }
+    }
+
+    @Override
+    public String toString() {
+        return "WebAgentFeatureCache{" +
+                "cacheName='" + cacheName + '\'' +
+                ", suitesReceived=" + suitesReceived +
+                ", suiteStore=" + suiteStore +
+                ", maxSuiteHistory=" + maxSuiteHistory +
+                '}';
+    }
+
+    /**
+     * Size limited LinkedHashMap which also triggers removal from the suite store
+     */
+    private class FeatureCacheLinkedMap extends LinkedHashMap<String,WebAgentTestSuite> {
+        protected boolean removeEldestEntry(Map.Entry eldest) {
+            boolean removeEldest = size() > maxSuiteHistory;
+            if ( removeEldest ) {
+                suiteStore.removeSuiteFromStore((WebAgentTestSuite) eldest.getValue());
+            }
+            return removeEldest;
+         }
     }
 }

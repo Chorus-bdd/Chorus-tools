@@ -27,7 +27,9 @@
  *  the Software, or for combinations of the Software with other software or
  *  hardware.
  */
-package org.chorusbdd.chorus.tools.webagent;
+package org.chorusbdd.chorus.tools.webagent.filter;
+
+import org.chorusbdd.chorus.tools.webagent.WebAgentTestSuite;
 
 /**
  * User: nick

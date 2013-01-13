@@ -34,11 +34,8 @@ import org.chorusbdd.chorus.results.TestSuite;
 import org.chorusbdd.chorus.tools.xml.adapter.TestSuiteAdapter;
 import org.chorusbdd.chorus.tools.xml.beans.TestSuiteBean;
 
-import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
-import javax.xml.bind.PropertyException;
 import javax.xml.bind.Unmarshaller;
-import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
 import java.io.Reader;
 import java.io.Writer;
@@ -46,11 +43,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-public class TestSuiteXmlWriter extends AbstractXmlWriter<TestSuite> {
+public class TestSuiteXmlMarshaller extends AbstractXmlMarshaller<TestSuite> {
 
     private Map<String, Object> marshallerProperties = new HashMap<String, Object>();
 
-    public TestSuiteXmlWriter() {
+    public TestSuiteXmlMarshaller() {
         super(TestSuiteBean.class);
     }
 

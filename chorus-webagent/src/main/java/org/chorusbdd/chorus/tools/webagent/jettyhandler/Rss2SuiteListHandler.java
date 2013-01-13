@@ -29,7 +29,7 @@
  */
 package org.chorusbdd.chorus.tools.webagent.jettyhandler;
 
-import org.chorusbdd.chorus.tools.webagent.TestSuiteFilter;
+import org.chorusbdd.chorus.tools.webagent.filter.TestSuiteFilter;
 import org.chorusbdd.chorus.tools.webagent.WebAgentFeatureCache;
 import org.chorusbdd.chorus.tools.webagent.WebAgentTestSuite;
 import org.eclipse.jetty.server.Request;

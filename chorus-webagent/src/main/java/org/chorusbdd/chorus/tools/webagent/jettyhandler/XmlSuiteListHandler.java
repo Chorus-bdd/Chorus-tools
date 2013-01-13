@@ -29,16 +29,15 @@
  */
 package org.chorusbdd.chorus.tools.webagent.jettyhandler;
 
-import org.chorusbdd.chorus.tools.webagent.TestSuiteFilter;
+import org.chorusbdd.chorus.tools.webagent.filter.TestSuiteFilter;
 import org.chorusbdd.chorus.tools.webagent.WebAgentFeatureCache;
 import org.chorusbdd.chorus.tools.webagent.WebAgentTestSuite;
-import org.chorusbdd.chorus.tools.xml.writer.ResultSummaryXmlWriter;
+import org.chorusbdd.chorus.tools.xml.writer.ResultSummaryXmlMarshaller;
 import org.eclipse.jetty.server.Request;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.xml.bind.Marshaller;
-import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
 import java.util.List;
 
@@ -70,7 +69,7 @@ public class XmlSuiteListHandler extends AbstractSuiteListHandler {
             writer.writeAttribute("endState", s.getEndStateString());
             writer.writeAttribute("executionHost", s.getExecutionHost());
             writer.writeAttribute("link", getLinkToSuite(s));
-            ResultSummaryXmlWriter resultSummaryXmlWriter = new ResultSummaryXmlWriter();
+            ResultSummaryXmlMarshaller resultSummaryXmlWriter = new ResultSummaryXmlMarshaller();
             resultSummaryXmlWriter.addMarshallerProperty(Marshaller.JAXB_FRAGMENT, Boolean.TRUE);
             resultSummaryXmlWriter.write(writer, s.getResultsSummary());
             writer.writeEndElement();
