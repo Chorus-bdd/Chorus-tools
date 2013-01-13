@@ -1,7 +1,7 @@
 body {
     font-size: small;
     font-family: Verdana, Geneva, sans-serif;
-    background-color: #FFFFF2;
+    #background-color: #FFFFF2;
     color: navy;
     width: 1024px;
     margin-left: auto;
@@ -16,25 +16,54 @@ body {
     font-size: large;
     font-weight: bold;
 }
-.suiteTime {
+.suiteTimeTaken {
+    display: inline-block;
+    font-size: x-small;
+    float: right;
+    font-weight: bold;
+}
+.suiteExecutionTime {
     font-size: small;
     font-weight: bold;
     padding-top: 5px;
 }
-.suiteTimeTaken {
-    display: inline-block;
-    font-size: x-small;
-    padding-left: 500px;
-}
+
 .results {
-    padding: 10px 0px 0px 275px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 420px;
+    padding: 5px 0px 5px 0px;
 }
+
 table {
     color: #06F;
     font-size: x-small;
     padding: 5px 5px 5px 5px;
     border-collapse: collapse;
+    border-spacing: 0;
 }
+
+table.resultsTable {
+    width: 420px;
+}
+
+th:first-child {
+    -moz-border-radius: 6px 0 0 0;
+    -webkit-border-radius: 6px 0 0 0;
+    border-radius: 6px 0 0 0;
+}
+
+th:last-child {
+    -moz-border-radius: 0 6px 0 0;
+    -webkit-border-radius: 0 6px 0 0;
+    border-radius: 0 6px 0 0;
+}
+th:only-child{
+    -moz-border-radius: 6px 6px 0 0;
+    -webkit-border-radius: 6px 6px 0 0;
+    border-radius: 6px 6px 0 0;
+}
+
 table.fullWidth {
     width: 100%;
 }

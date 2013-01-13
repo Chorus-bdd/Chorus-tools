@@ -24,8 +24,8 @@
 
     <bean id="mainFeatureCache" class="org.chorusbdd.chorus.tools.webagent.WebAgentFeatureCache">
         <constructor-arg ref="mainSuiteStore"/>
-        <constructor-arg value="Main Cache"/>
-        <constructor-arg value="500"/>
+        <constructor-arg value="${webagent.mainCache.title}"/>
+        <constructor-arg value="${webagent.mainCache.size}"/>
     </bean>
 
     <bean id="mainContext" class="org.chorusbdd.chorus.tools.webagent.WebAgentContext" init-method="start">

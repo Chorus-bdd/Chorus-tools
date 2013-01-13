@@ -12,7 +12,6 @@
             <body>
                 <h2><xsl:value-of select="@title"/></h2>
                 <table class='fullWidth'>
-                    <tr><th/><th/><th colspan='3'>Features:</th><th/><th/></tr>
                     <tr>
                         <th>Suite</th>
                         <th>End State</th>

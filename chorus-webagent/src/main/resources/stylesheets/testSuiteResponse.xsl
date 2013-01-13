@@ -10,16 +10,14 @@
             </head>
             <body>
              <div class="suiteDetails">
-                 <span class="suiteName">Test Suite: <xsl:value-of select="@suiteName"/></span>
-                <div class="suiteTime"><xsl:value-of select="execution/@executionStartTime"/>
-                <span class="suiteTimeTaken">
-                    Host: <xsl:value-of select="execution/@executionHost"/>&#160;&#160;
-                    Run time: <xsl:value-of select="execution/resultsSummary/@timeTakenSeconds"/> seconds
+                <span class="suiteName">Test Suite: <xsl:value-of select="@suiteName"/></span><span class="suiteTimeTaken">
+                 Host: <xsl:value-of select="execution/@executionHost"/>&#160;&#160;
+                 Run time: <xsl:value-of select="execution/resultsSummary/@timeTakenSeconds"/> seconds
                 </span>
-                </div>
-                 <xsl:apply-templates select="execution"/>
+                <div class="suiteExecutionTime"><xsl:value-of select="execution/@executionStartTime"/></div>
             </div>
-            <xsl:apply-templates select="features/feature"/>
+                <xsl:apply-templates select="execution"/>
+                <xsl:apply-templates select="features/feature"/>
             </body>
         </html>
     </xsl:template>
