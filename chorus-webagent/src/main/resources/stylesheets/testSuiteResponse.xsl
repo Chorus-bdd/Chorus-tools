@@ -29,9 +29,9 @@
                     <th scope="col"/>
                     <th scope="col">Passed</th>
                     <th scope="col">Failed</th>
+                    <th scope="col">Undefined</th>
                     <th scope="col">Pending</th>
                     <th scope="col">Skipped</th>
-                    <th scope="col">Undefined</th>
                 </tr>
                 <tr>
                     <th scope="row">Feature</th>
@@ -53,9 +53,9 @@
                     <th scope="row">Step</th>
                     <td class="pass"><xsl:value-of select="resultsSummary/@stepsPassed"/></td>
                     <td class="fail"><xsl:value-of select="resultsSummary/@stepsFailed"/></td>
-                    <td class="other"><xsl:value-of select="resultsSummary/@stepsPending"/></td>
+                    <td class="fail"><xsl:value-of select="resultsSummary/@stepsUndefined"/></td>
+                    <td class="pend"><xsl:value-of select="resultsSummary/@stepsPending"/></td>
                     <td class="other"><xsl:value-of select="resultsSummary/@stepsSkipped"/></td>
-                    <td class="other"><xsl:value-of select="resultsSummary/@stepsUndefined"/></td>
                 </tr>
             </table>
         </div>
@@ -107,8 +107,11 @@
                     <xsl:when test="@endState='UNDEFINED'">
                         <xsl:value-of select="'RED'"/>
                     </xsl:when>
-                    <xsl:otherwise>
+                    <xsl:when test="@endState='PENDING'">
                         <xsl:value-of select="'ORANGE'"/>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:value-of select="'GREY'"/>
                     </xsl:otherwise>
                 </xsl:choose>
             </xsl:variable>

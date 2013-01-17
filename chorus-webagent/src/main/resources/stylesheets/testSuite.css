@@ -73,13 +73,16 @@ td {
     background: #f0f8ff;
 }
 td.other {
-    color: orange;
+    color: #a9a9a9;
 }
 td.fail {
-    color: red;
+    color: #c80000;
 }
 td.pass {
-    color: #006400;
+    color: #008200;
+}
+td.pend {
+    color: #ffa32e;
 }
 th {
     min-width:  60px;
@@ -104,6 +107,7 @@ th[scope="row"] {
     font-size: x-small;
     margin-top: 10px;
     margin-bottom: 10px;
+    color: #2846a0;
 }
 
 .scenario {
@@ -122,16 +126,21 @@ th[scope="row"] {
 
 .stepGREEN {
     font-size: x-small;
-    color: #006400;
+    color: #008200;
 }
 
 .stepRED {
-    color: red;
+    color: #c80000;
     font-size: x-small;
 }
 
 .stepORANGE {
-    color: orange;
+    color: #ffa32e;
+    font-size: x-small;
+}
+
+.stepGREY {
+    color: #a9a9a9;
     font-size: x-small;
 }
 
