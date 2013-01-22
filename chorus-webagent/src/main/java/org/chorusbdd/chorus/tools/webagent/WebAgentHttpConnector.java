@@ -73,6 +73,7 @@ public class WebAgentHttpConnector {
         HandlerList l = new HandlerList();
         l.addHandler(new IndexHandler(cacheList));
         l.addHandler(new StyleSheetResourceHandler());
+        l.addHandler(new PngImageHandler());
         for ( WebAgentFeatureCache c : cacheList) {
             l.addHandler(new CacheIndexHandler(c));
 

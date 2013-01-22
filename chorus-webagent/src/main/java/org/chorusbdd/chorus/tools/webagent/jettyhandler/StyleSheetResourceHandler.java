@@ -57,47 +57,30 @@ public class StyleSheetResourceHandler extends AbstractWebAgentHandler {
     private final Map<String, char[]> stylesheetCache = Collections.synchronizedMap(new HashMap<String, char[]>());
 
     protected void doHandle(String target, Request baseRequest, HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String stylesheetResourceName = getStylesheetResource(target);
+        String stylesheetResourceName = getResourceSuffix(target);
         synchronized (stylesheetCache) {
-            String classpathResource = "/stylesheets/" + stylesheetResourceName;
+            String classpathResource = STYLESHEET_RESOURCE_PATH + stylesheetResourceName;
             char[] stylesheet;
             if ( stylesheetCache.containsKey(classpathResource)) {
                 stylesheet = stylesheetCache.get(classpathResource);
                 log.info("Serving cached stylesheet from cache " + classpathResource);
             }  else {
                 log.info("Serving stylesheet from classpath " + classpathResource);
-                stylesheet = readStylesheetFromClasspath(response, classpathResource);
+                stylesheet = readStylesheetFromClasspath(classpathResource);
                 stylesheetCache.put(classpathResource, stylesheet);
             }
             sendResponse(response, stylesheet);
         }
     }
 
-    //just find the stylesheet name, disregarding nested folder names
-    private String getStylesheetResource(String target) {
-        int index = target.lastIndexOf('/');
-        if ( index > -1 ) {
-            target = target.substring(index + 1);
-        }
-        return target;
-    }
-
     /**
      * @return char[] with stylesheet contents from classpath or null if not found
      */
-    private char[] readStylesheetFromClasspath(HttpServletResponse response, String classpathResource) throws IOException {
+    private char[] readStylesheetFromClasspath(String classpathResource) throws IOException {
+        byte[] b = readByteArrayFromClasspath(classpathResource);
         char[] stylesheet = null;
-        URL u = getClass().getResource(classpathResource);
-        if ( u != null ) {
-            InputStream is = u.openStream();
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            int nRead;
-            byte[] data = new byte[16384];
-            while ((nRead = is.read(data, 0, data.length)) != -1) {
-                buffer.write(data, 0, nRead);
-            }
-            buffer.flush();
-            stylesheet = new String(buffer.toByteArray(), "UTF-8").toCharArray();
+        if ( b != null) {
+            stylesheet = new String(b, "UTF-8").toCharArray();
         }
         return stylesheet;
     }

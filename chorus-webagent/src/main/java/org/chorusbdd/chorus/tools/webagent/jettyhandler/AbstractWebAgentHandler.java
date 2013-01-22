@@ -37,7 +37,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 
 /**
  * User: nick
@@ -46,6 +49,8 @@ import java.io.IOException;
  */
 public abstract class AbstractWebAgentHandler extends AbstractHandler {
 
+
+    protected final String STYLESHEET_RESOURCE_PATH = "/stylesheets/";
 
     public void handle(String target, Request baseRequest, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         if (shouldHandle(target)) {
@@ -64,4 +69,29 @@ public abstract class AbstractWebAgentHandler extends AbstractHandler {
 
     protected abstract boolean shouldHandle(String target);
 
+    //just find the stylesheet name, disregarding nested folder names
+    protected String getResourceSuffix(String target) {
+        int index = target.lastIndexOf('/');
+        if ( index > -1 ) {
+            target = target.substring(index + 1);
+        }
+        return target;
+    }
+
+    protected byte[] readByteArrayFromClasspath(String classpathResource) throws IOException {
+        byte[] result = null;
+        URL u = getClass().getResource(classpathResource);
+        if ( u != null ) {
+            InputStream is = u.openStream();
+            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+            int nRead;
+            byte[] data = new byte[16384];
+            while ((nRead = is.read(data, 0, data.length)) != -1) {
+                buffer.write(data, 0, nRead);
+            }
+            buffer.flush();
+            result = buffer.toByteArray();
+        }
+        return result;
+    }
 }
