@@ -172,3 +172,7 @@ th[scope="row"] {
     min-width: 80px;
     text-align: right;
 }
+
+.removeThis {
+    display: none;
+}

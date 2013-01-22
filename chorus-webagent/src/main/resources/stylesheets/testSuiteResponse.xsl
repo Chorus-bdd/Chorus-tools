@@ -9,6 +9,11 @@
                 <LINK href="testSuite.css" rel="stylesheet" type="text/css"/>
             </head>
             <body>
+              <script language="javascript">
+                  function hideFeatureBody(featureId) {
+                    document.getElementById(featureId).className = "removeThis";
+                  }
+              </script>
              <div class="suiteDetails">
                 <span class="suiteName">Test Suite: <xsl:value-of select="@suiteName"/></span><span class="suiteTimeTaken">
                  Host: <xsl:value-of select="execution/@executionHost"/>&#160;&#160;
@@ -75,13 +80,19 @@
         </xsl:variable>
 
         <div class="feature">
+            <xsl:variable name="featureId">
+                <xsl:number count="feature"/>
+            </xsl:variable>
             <div class="featureTitle">
+                <a href="#" onClick="javascript:hideFeatureBody('featureBody{$featureId}';)">hide</a>
                 <xsl:value-of select="@name"/>&#160;<xsl:value-of select="$configuration"/>
             </div>
-            <div class="featureDescription">
-            <xsl:value-of select="description"/>
+            <div id="featureBody{$featureId}">
+                <div class="featureDescription">
+                <xsl:value-of select="description"/>
+                </div>
+                <xsl:apply-templates select="scenarios/scenario"/>
             </div>
-            <xsl:apply-templates select="scenarios/scenario"/>
         </div>
     </xsl:template>
 
