@@ -10,8 +10,16 @@
             </head>
             <body>
               <script language="javascript">
-                  function hideFeatureBody(featureId) {
-                    document.getElementById(featureId).className = "removeThis";
+                  function hideOrShowFeatureBody(featureId, featureShowHideId) {
+                    var featureDiv = document.getElementById(featureId);
+                    var img = document.getElementById(featureShowHideId);
+                    if ( featureDiv.className == "featureShown" ) {
+                        featureDiv.className = "featureHidden";
+                        img.src = "expand.png"
+                    } else {
+                        featureDiv.className = "featureShown";
+                        img.src = "contract.png"
+                    }
                   }
               </script>
              <div class="suiteDetails">
@@ -83,11 +91,35 @@
             <xsl:variable name="featureId">
                 <xsl:number count="feature"/>
             </xsl:variable>
+
+            <xsl:variable name="showHideInitialImage">
+                <xsl:choose>
+                    <xsl:when test="@endState='PASSED'">
+                        <xsl:value-of select="'expand.png'"/>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:value-of select="'contract.png'"/>
+                    </xsl:otherwise>
+                </xsl:choose>
+            </xsl:variable>
+
             <div class="featureTitle">
-                <a href="#" onClick="javascript:hideFeatureBody('featureBody{$featureId}';)">hide</a>
+                <a href="javascript:hideOrShowFeatureBody('featureBody{$featureId}', 'featureShowHide{$featureId}')"><img id="featureShowHide{$featureId}" src="{$showHideInitialImage}" class="expandContractImage"/></a>
                 <xsl:value-of select="@name"/>&#160;<xsl:value-of select="$configuration"/>
             </div>
-            <div id="featureBody{$featureId}">
+
+            <xsl:variable name="featureInitialClass">
+                <xsl:choose>
+                    <xsl:when test="@endState='PASSED'">
+                        <xsl:value-of select="'featureHidden'"/>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:value-of select="'featureShown'"/>
+                    </xsl:otherwise>
+                </xsl:choose>
+            </xsl:variable>
+
+            <div id="featureBody{$featureId}" class="{$featureInitialClass}">
                 <div class="featureDescription">
                 <xsl:value-of select="description"/>
                 </div>

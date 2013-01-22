@@ -173,6 +173,30 @@ th[scope="row"] {
     text-align: right;
 }
 
-.removeThis {
+@-webkit-keyframes fadeIn {
+    from { visibility: visible; }
+      to { visibility: hidden; }
+}
+
+@-moz-keyframes fadeIn {
+    from { visibility: visible; }
+      to { visibility: hidden; }
+}
+
+@-ms-keyframes fadeIn {
+    from { visibility: visible; }
+      to { visibility: hidden; }
+}
+
+.featureShown {
+    display: block;
+}
+
+.featureHidden {
     display: none;
+}
+
+.expandContractImage {
+    vertical-align: text-top;
+    padding-right: 5px;
 }
