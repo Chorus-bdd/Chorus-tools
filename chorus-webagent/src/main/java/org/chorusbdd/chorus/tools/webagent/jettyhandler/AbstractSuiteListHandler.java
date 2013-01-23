@@ -29,6 +29,7 @@
  */
 package org.chorusbdd.chorus.tools.webagent.jettyhandler;
 
+import org.chorusbdd.chorus.tools.webagent.filter.SuiteEndStateFilter;
 import org.chorusbdd.chorus.tools.webagent.filter.SuiteNameFilter;
 import org.chorusbdd.chorus.tools.webagent.filter.TestSuiteFilter;
 import org.chorusbdd.chorus.tools.webagent.WebAgentFeatureCache;
@@ -76,10 +77,18 @@ public abstract class AbstractSuiteListHandler extends XmlStreamingHandler {
      * @return The test suite filter to use to generate the suite list
      */
     protected TestSuiteFilter getSuiteFilter(TestSuiteFilter testSuiteFilter, String target, HttpServletRequest request) {
-        if ( request.getParameter("suiteName") != null ) {
-            String[] suiteNames = request.getParameterValues("suiteName");
-            //add the filter rule to the rule chain
+
+        //if parameter set, add the filter rule to the rule chain
+        if ( request.getParameter(SuiteNameFilter.SUITE_NAME_HTTP_PARAMETER) != null ) {
+            String[] suiteNames = request.getParameterValues(SuiteNameFilter.SUITE_NAME_HTTP_PARAMETER);
             testSuiteFilter = new SuiteNameFilter(suiteNames, testSuiteFilter);
+        }
+
+        //if parameter set, add the filter rule to the rule chain
+        if ( request.getParameter(SuiteEndStateFilter.SUITE_END_STATE_HTTP_PARAMETER) != null) {
+            String[] suiteEndStates = request.getParameterValues(SuiteEndStateFilter.SUITE_END_STATE_HTTP_PARAMETER);
+            //add the filter rule to the rule chain
+            testSuiteFilter = new SuiteEndStateFilter(suiteEndStates, testSuiteFilter);
         }
         return testSuiteFilter;
     }

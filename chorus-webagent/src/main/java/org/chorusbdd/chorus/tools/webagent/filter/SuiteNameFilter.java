@@ -1,31 +1,46 @@
 package org.chorusbdd.chorus.tools.webagent.filter;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.chorusbdd.chorus.tools.webagent.JmxManagementServerExporter;
 import org.chorusbdd.chorus.tools.webagent.WebAgentTestSuite;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * User: nick
  * Date: 23/01/13
  * Time: 09:22
  */
-public class SuiteNameFilter implements TestSuiteFilter {
+public class SuiteNameFilter extends AbstractSuiteFilter {
 
-    private Set<String> suiteNames;
-    private TestSuiteFilter wrappedFilter;
+    public static final String SUITE_NAME_HTTP_PARAMETER = "suiteName";
+    private static final Log log = LogFactory.getLog(SuiteNameFilter.class);
+
+    List<Pattern> suiteNamePatterns = new ArrayList<Pattern>();
 
     public SuiteNameFilter(String[] suiteNames, TestSuiteFilter wrappedFilter) {
-        this.suiteNames = new HashSet<String>(Arrays.asList(suiteNames));
-        this.wrappedFilter = wrappedFilter;
+        super(wrappedFilter);
+        for ( String suiteName : suiteNames) {
+            try {
+                Pattern p = Pattern.compile(suiteName, Pattern.CASE_INSENSITIVE);
+                suiteNamePatterns.add(p);
+            } catch (Exception e) {
+                log.warn("Failed to compile pattern for suite name filter: [" + suiteName + "] this filter will not be used", e);
+            }
+        }
     }
 
-
-    public boolean accept(WebAgentTestSuite suite) {
-        boolean accept = wrappedFilter.accept(suite);
-        if ( accept ) {
-            accept = suiteNames.contains(suite.getTestSuiteName());
+    protected boolean applyFilter(WebAgentTestSuite suite) {
+        boolean accept = false;
+        for (Pattern p : suiteNamePatterns) {
+            Matcher m = p.matcher(suite.getTestSuiteName());
+            if ( m.find()) {
+                accept = true;
+                break;
+            }
         }
         return accept;
     }
