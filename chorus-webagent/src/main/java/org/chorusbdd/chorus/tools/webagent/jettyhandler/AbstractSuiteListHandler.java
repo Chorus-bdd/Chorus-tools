@@ -29,6 +29,7 @@
  */
 package org.chorusbdd.chorus.tools.webagent.jettyhandler;
 
+import org.chorusbdd.chorus.tools.webagent.filter.SuiteNameFilter;
 import org.chorusbdd.chorus.tools.webagent.filter.TestSuiteFilter;
 import org.chorusbdd.chorus.tools.webagent.WebAgentFeatureCache;
 import org.chorusbdd.chorus.tools.webagent.WebAgentTestSuite;
@@ -65,8 +66,22 @@ public abstract class AbstractSuiteListHandler extends XmlStreamingHandler {
 
     @Override
     protected void doHandle(String target, Request baseRequest, HttpServletRequest request, HttpServletResponse response, XMLStreamWriter writer) throws Exception {
-        List<WebAgentTestSuite> suites = cache.getSuites(testSuiteFilter);
+        TestSuiteFilter filter = getSuiteFilter(testSuiteFilter, target, request);
+        List<WebAgentTestSuite> suites = cache.getSuites(filter);
         doHandle(suites, target, baseRequest, request, response, writer);
+    }
+
+    /**
+     * A subclass may decorate, amend or otherwise change the filter rules
+     * @return The test suite filter to use to generate the suite list
+     */
+    protected TestSuiteFilter getSuiteFilter(TestSuiteFilter testSuiteFilter, String target, HttpServletRequest request) {
+        if ( request.getParameter("suiteName") != null ) {
+            String[] suiteNames = request.getParameterValues("suiteName");
+            //add the filter rule to the rule chain
+            testSuiteFilter = new SuiteNameFilter(suiteNames, testSuiteFilter);
+        }
+        return testSuiteFilter;
     }
 
     protected abstract void doHandle(List<WebAgentTestSuite> suites, String target, Request baseRequest, HttpServletRequest request, HttpServletResponse response, XMLStreamWriter writer) throws Exception;

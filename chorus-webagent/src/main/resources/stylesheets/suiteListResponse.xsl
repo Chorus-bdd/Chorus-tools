@@ -14,6 +14,7 @@
                 <table class='fullWidth'>
                     <tr>
                         <th>Suite</th>
+                        <th>Suite Name</th>
                         <th>End State</th>
                         <th>Passed</th>
                         <th>Failed</th>
@@ -37,6 +38,7 @@
                     <xsl:value-of select="@title"/>
                 </xsl:element>
             </td>
+            <td><xsl:value-of select="@name"/></td>
             <td><xsl:value-of select="@endState"/></td>
             <td class='pass'><xsl:value-of select="resultSummaryBean/@featuresPassed"/></td>
             <td class='fail'><xsl:value-of select="resultSummaryBean/@featuresFailed"/></td>
