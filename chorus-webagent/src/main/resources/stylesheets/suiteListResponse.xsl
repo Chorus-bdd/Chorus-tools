@@ -10,6 +10,13 @@
                 <LINK href="testSuite.css" rel="stylesheet" type="text/css"/>
             </head>
             <body>
+                <script language="javascript">
+                    function reloadWithParameter(parameterName, parameterValue) {
+                        location = window.location
+                        location.href='//' + location.host + location.pathname + '?' + parameterName + '=' + escape(parameterValue)
+                    }
+                </script>
+
                 <h2><xsl:value-of select="@title"/></h2>
                 <table class='fullWidth'>
                     <tr>
@@ -38,8 +45,8 @@
                     <xsl:value-of select="@title"/>
                 </xsl:element>
             </td>
-            <td><xsl:value-of select="@name"/></td>
-            <td><xsl:value-of select="@endState"/></td>
+            <td><a href="#" onclick="javascript:reloadWithParameter('suiteName', '{@name}')"><xsl:value-of select="@name"/></a></td>
+            <td><a href="#" onclick="javascript:reloadWithParameter('suiteEndState', '{@endState}')"><xsl:value-of select="@endState"/></a></td>
             <td class='pass'><xsl:value-of select="resultSummaryBean/@featuresPassed"/></td>
             <td class='fail'><xsl:value-of select="resultSummaryBean/@featuresFailed"/></td>
             <td class='other'><xsl:value-of select="resultSummaryBean/@featuresPending"/></td>
