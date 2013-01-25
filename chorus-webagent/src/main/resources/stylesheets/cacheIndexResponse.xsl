@@ -10,12 +10,12 @@
             </head>
             <body>
                 <h2>Index of <xsl:value-of select="@name"/></h2>
-                <xsl:apply-templates select="resource"/>
+                <xsl:apply-templates select="resources"/>
             </body>
         </html>
     </xsl:template>
 
-    <xsl:template match="resource">
+    <xsl:template match="resources">
         <div>
             <table>
                 <tr>
@@ -23,25 +23,29 @@
                     <th/>
                     <th/>
                 </tr>
-                <tr>
-                    <td>
-                        <xsl:value-of select="@name"/>
-                    </td>
-                    <td>
-                        <xsl:element name="a">
-                            <xsl:attribute name="href">
-                                <xsl:value-of select="@xmlLink"/>
-                            </xsl:attribute>XML/HTML</xsl:element>
-                    </td>
-                    <td>
-                        <xsl:element name="a">
-                            <xsl:attribute name="href">
-                                <xsl:value-of select="@rssLink"/>
-                            </xsl:attribute>RSS</xsl:element>
-                    </td>
-                </tr>
+                <xsl:apply-templates select="resource"/>
             </table>
         </div>
+    </xsl:template>
+
+    <xsl:template match="resource">
+        <tr>
+            <td>
+                <xsl:value-of select="@name"/>
+            </td>
+            <td>
+                <xsl:element name="a">
+                    <xsl:attribute name="href">
+                        <xsl:value-of select="@xmlLink"/>
+                    </xsl:attribute>XML/HTML</xsl:element>
+            </td>
+            <td>
+                <xsl:element name="a">
+                    <xsl:attribute name="href">
+                        <xsl:value-of select="@rssLink"/>
+                    </xsl:attribute>RSS</xsl:element>
+            </td>
+        </tr>
     </xsl:template>
 
 </xsl:stylesheet>

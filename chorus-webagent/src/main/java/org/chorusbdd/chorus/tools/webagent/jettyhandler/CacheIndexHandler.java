@@ -62,10 +62,16 @@ public class CacheIndexHandler extends XmlStreamingHandler {
         addStylesheetInstruction(writer, "cacheIndexResponse.xsl");
         writer.writeStartElement("cache");
         writer.writeAttribute("name", cache.getName());
+        writer.writeStartElement("resources");
         writer.writeEmptyElement("resource");
         writer.writeAttribute("name", "List Of All Test Suites");
         writer.writeAttribute("rssLink", "./allTestSuites.rss");
         writer.writeAttribute("xmlLink", "./allTestSuites.xml");
+        writer.writeEmptyElement("resource");
+        writer.writeAttribute("name", "List Of Failed Test Suites");
+        writer.writeAttribute("rssLink", "./allTestSuites.rss?suiteEndState=FAILED");
+        writer.writeAttribute("xmlLink", "./allTestSuites.xml?suiteEndState=FAILED");
+        writer.writeEndElement();
         writer.writeEndElement();
         writer.writeEndDocument();
     }
