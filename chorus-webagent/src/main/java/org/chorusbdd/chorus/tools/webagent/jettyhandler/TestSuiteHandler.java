@@ -51,9 +51,11 @@ public class TestSuiteHandler extends XmlStreamingHandler {
 
     private static final Log log = LogFactory.getLog(TestSuiteHandler.class);
 
+    private String handledPath;
     private WebAgentFeatureCache cache;
 
-    public TestSuiteHandler(WebAgentFeatureCache cache) {
+    public TestSuiteHandler(String target, WebAgentFeatureCache cache) {
+        this.handledPath = target;
         this.cache = cache;
     }
 
@@ -94,6 +96,6 @@ public class TestSuiteHandler extends XmlStreamingHandler {
 
     @Override
     protected boolean shouldHandle(String target) {
-        return target.endsWith("testSuite.xml");
+        return handledPath.equals(target);
     }
 }

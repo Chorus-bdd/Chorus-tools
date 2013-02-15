@@ -35,6 +35,7 @@ import org.chorusbdd.chorus.tools.webagent.filter.TestSuiteFilter;
 import org.chorusbdd.chorus.tools.webagent.WebAgentFeatureCache;
 import org.chorusbdd.chorus.tools.webagent.WebAgentTestSuite;
 import org.chorusbdd.chorus.tools.webagent.util.WebAgentUtil;
+import org.chorusbdd.chorus.util.NetworkUtils;
 import org.eclipse.jetty.server.Request;
 
 import javax.servlet.http.HttpServletRequest;
@@ -114,6 +115,6 @@ public abstract class AbstractSuiteListHandler extends XmlStreamingHandler {
 
     protected String getLinkToSuite(WebAgentTestSuite s) {
         String suiteHttpName = WebAgentUtil.urlEncode(s.getSuiteId());
-        return "http://localhost:" + getLocalPort() + "/" + getCache().getHttpName() + "/testSuite.xml?suiteId=" + suiteHttpName;
+        return "http://" + NetworkUtils.getHostname() + ":" + getLocalPort() + "/" + getCache().getHttpName() + "/testSuite.xml?suiteId=" + suiteHttpName;
     }
 }

@@ -6,6 +6,7 @@ import org.chorusbdd.chorus.annotations.Step;
 import org.chorusbdd.chorus.handlers.util.PolledAssertion;
 import org.chorusbdd.chorus.tools.webagent.WebAgentFeatureCache;
 import org.chorusbdd.chorus.tools.webagent.util.FileUtil;
+import org.chorusbdd.chorus.util.NetworkUtils;
 import org.custommonkey.xmlunit.Diff;
 import org.springframework.test.context.ContextConfiguration;
 
@@ -78,6 +79,7 @@ public class HttpConnectorHandler extends Assert {
         content = content.replaceAll("executionStartTime=\".*\"", "executionStartTime=\"{STARTTIME}\"");
         content = content.replaceAll("executionStartTimestamp=\".*\"", "executionStartTimestamp=\"{STARTTIMSTAMP}\"");
         content = content.replaceAll("executionHost=\".*\"", "executionHost=\"{EXECUTIONHOST}\"");
+        content = content.replaceAll(NetworkUtils.getHostname(), "{HOSTNAME}");
         return content;
     }
 

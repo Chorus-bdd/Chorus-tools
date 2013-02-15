@@ -32,6 +32,7 @@ package org.chorusbdd.chorus.tools.webagent.jettyhandler;
 import org.chorusbdd.chorus.tools.webagent.filter.TestSuiteFilter;
 import org.chorusbdd.chorus.tools.webagent.WebAgentFeatureCache;
 import org.chorusbdd.chorus.tools.webagent.WebAgentTestSuite;
+import org.chorusbdd.chorus.util.NetworkUtils;
 import org.eclipse.jetty.server.Request;
 
 import javax.servlet.http.HttpServletRequest;
@@ -67,7 +68,7 @@ public class Rss2SuiteListHandler extends AbstractSuiteListHandler {
         writer.writeAttribute("version", "2.0");
         writer.writeStartElement("channel");
         writeSimpleTextElement(writer, "title", title);
-        writeSimpleTextElement(writer, "link", "http://localhost:" + localPort + "/" + getHandledPath() + ".xml");
+        writeSimpleTextElement(writer, "link", "http://" + NetworkUtils.getHostname() + ":" + localPort + "/" + getHandledPath() + ".xml");
         writeSimpleTextElement(writer, "description", description);
         for (WebAgentTestSuite s : suites) {
             writer.writeStartElement("item");
