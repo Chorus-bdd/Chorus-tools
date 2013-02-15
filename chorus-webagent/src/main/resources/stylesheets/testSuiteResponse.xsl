@@ -92,34 +92,14 @@
                 <xsl:number count="feature"/>
             </xsl:variable>
 
-            <xsl:variable name="showHideInitialImage">
-                <xsl:choose>
-                    <xsl:when test="@endState='PASSED'">
-                        <xsl:value-of select="'expand.png'"/>
-                    </xsl:when>
-                    <xsl:otherwise>
-                        <xsl:value-of select="'contract.png'"/>
-                    </xsl:otherwise>
-                </xsl:choose>
-            </xsl:variable>
-
             <div class="featureTitle">
-                <a href="javascript:hideOrShowFeatureBody('featureBody{$featureId}', 'featureShowHide{$featureId}')"><img id="featureShowHide{$featureId}" src="{$showHideInitialImage}" class="expandContractImage"/></a>
+                <a href="javascript:hideOrShowFeatureBody('featureBody{$featureId}', 'featureShowHide{$featureId}')">
+                    <img id="featureShowHide{$featureId}" src="contract.png" class="expandContractImage"/>
+                </a>
                 <xsl:value-of select="@name"/>&#160;<xsl:value-of select="$configuration"/>
             </div>
 
-            <xsl:variable name="featureInitialClass">
-                <xsl:choose>
-                    <xsl:when test="@endState='PASSED'">
-                        <xsl:value-of select="'featureHidden'"/>
-                    </xsl:when>
-                    <xsl:otherwise>
-                        <xsl:value-of select="'featureShown'"/>
-                    </xsl:otherwise>
-                </xsl:choose>
-            </xsl:variable>
-
-            <div id="featureBody{$featureId}" class="{$featureInitialClass}">
+            <div id="featureBody{$featureId}" class="featureShown">
                 <div class="featureDescription">
                 <xsl:value-of select="description"/>
                 </div>
