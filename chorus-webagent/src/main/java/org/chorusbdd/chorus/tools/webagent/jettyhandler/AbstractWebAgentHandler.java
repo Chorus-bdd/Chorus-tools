@@ -29,6 +29,8 @@
  */
 package org.chorusbdd.chorus.tools.webagent.jettyhandler;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.eclipse.jetty.server.Request;
 import org.eclipse.jetty.server.handler.AbstractHandler;
 
@@ -40,7 +42,9 @@ import javax.xml.stream.XMLStreamWriter;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.InetAddress;
 import java.net.URL;
+import java.net.UnknownHostException;
 
 /**
  * User: nick
@@ -49,8 +53,10 @@ import java.net.URL;
  */
 public abstract class AbstractWebAgentHandler extends AbstractHandler {
 
+    private static final Log log = LogFactory.getLog(AbstractWebAgentHandler.class);
 
     protected final String STYLESHEET_RESOURCE_PATH = "/stylesheets/";
+    private static volatile String fullyQualifiedHostname;
 
     public void handle(String target, Request baseRequest, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         if (shouldHandle(target)) {
@@ -91,6 +97,28 @@ public abstract class AbstractWebAgentHandler extends AbstractHandler {
             }
             buffer.flush();
             result = buffer.toByteArray();
+        }
+        return result;
+    }
+
+    public static String getFullyQualifiedHostname() {
+        if ( fullyQualifiedHostname == null ) {
+            fullyQualifiedHostname = calculateFullyQualifiedName();
+        }
+        return fullyQualifiedHostname;
+    }
+
+    private static String calculateFullyQualifiedName() {
+        String result = "localhost";
+        try {
+            result = InetAddress.getLocalHost().getHostAddress();
+        } catch (UnknownHostException e) {
+            log.warn("Failed to fine local host address", e);
+        }
+        try {
+            return InetAddress.getLocalHost().getCanonicalHostName();
+        } catch (UnknownHostException e) {
+            log.warn("Failed to find fully qualified hostname", e);
         }
         return result;
     }

@@ -41,6 +41,8 @@ import org.eclipse.jetty.server.Request;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.xml.stream.XMLStreamWriter;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.List;
 
 /**
@@ -115,6 +117,7 @@ public abstract class AbstractSuiteListHandler extends XmlStreamingHandler {
 
     protected String getLinkToSuite(WebAgentTestSuite s) {
         String suiteHttpName = WebAgentUtil.urlEncode(s.getSuiteId());
-        return "http://" + NetworkUtils.getHostname() + ":" + getLocalPort() + "/" + getCache().getHttpName() + "/testSuite.xml?suiteId=" + suiteHttpName;
+        return "http://" + getFullyQualifiedHostname() + ":" + getLocalPort() + "/" + getCache().getHttpName() + "/testSuite.xml?suiteId=" + suiteHttpName;
     }
+
 }

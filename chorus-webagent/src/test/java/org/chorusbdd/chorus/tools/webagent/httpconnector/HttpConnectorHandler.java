@@ -5,6 +5,7 @@ import org.chorusbdd.chorus.annotations.Handler;
 import org.chorusbdd.chorus.annotations.Step;
 import org.chorusbdd.chorus.handlers.util.PolledAssertion;
 import org.chorusbdd.chorus.tools.webagent.WebAgentFeatureCache;
+import org.chorusbdd.chorus.tools.webagent.jettyhandler.AbstractWebAgentHandler;
 import org.chorusbdd.chorus.tools.webagent.util.FileUtil;
 import org.chorusbdd.chorus.util.NetworkUtils;
 import org.custommonkey.xmlunit.Diff;
@@ -80,6 +81,7 @@ public class HttpConnectorHandler extends Assert {
         content = content.replaceAll("executionStartTimestamp=\".*\"", "executionStartTimestamp=\"{STARTTIMSTAMP}\"");
         content = content.replaceAll("executionHost=\".*\"", "executionHost=\"{EXECUTIONHOST}\"");
         content = content.replaceAll(NetworkUtils.getHostname(), "{HOSTNAME}");
+        content = content.replaceAll(AbstractWebAgentHandler.getFullyQualifiedHostname(), "{HOSTNAME}");
         return content;
     }
 
