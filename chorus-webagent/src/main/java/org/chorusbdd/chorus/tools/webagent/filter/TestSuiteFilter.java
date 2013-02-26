@@ -38,9 +38,16 @@ import org.chorusbdd.chorus.tools.webagent.WebAgentTestSuite;
  */
 public interface TestSuiteFilter {
 
+    public void reset();
+
     public boolean accept(WebAgentTestSuite suite);
 
     public static TestSuiteFilter ALL_SUITES = new TestSuiteFilter() {
+        @Override
+        public void reset() {
+
+        }
+
         @Override
         public boolean accept(WebAgentTestSuite suite) {
             return true;

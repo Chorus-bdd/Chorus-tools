@@ -45,4 +45,8 @@ public class SuiteEndStateFilter extends AbstractSuiteFilter {
         }
         return accept;
     }
+
+    @Override
+    public void reset() {
+    }
 }

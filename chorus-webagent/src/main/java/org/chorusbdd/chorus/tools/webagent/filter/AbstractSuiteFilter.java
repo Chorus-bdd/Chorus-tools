@@ -10,6 +10,7 @@ import org.chorusbdd.chorus.tools.webagent.WebAgentTestSuite;
  * To change this template use File | Settings | File Templates.
  */
 public abstract class AbstractSuiteFilter implements TestSuiteFilter {
+
     protected TestSuiteFilter wrappedFilter;
 
     public AbstractSuiteFilter(TestSuiteFilter wrappedFilter) {
@@ -25,4 +26,8 @@ public abstract class AbstractSuiteFilter implements TestSuiteFilter {
     }
 
     protected abstract boolean applyFilter(WebAgentTestSuite suite);
+
+    public void reset() {
+        wrappedFilter.reset();
+    }
 }
