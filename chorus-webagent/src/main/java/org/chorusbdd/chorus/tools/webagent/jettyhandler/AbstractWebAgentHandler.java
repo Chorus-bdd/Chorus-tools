@@ -88,15 +88,24 @@ public abstract class AbstractWebAgentHandler extends AbstractHandler {
         byte[] result = null;
         URL u = getClass().getResource(classpathResource);
         if ( u != null ) {
-            InputStream is = u.openStream();
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            int nRead;
-            byte[] data = new byte[16384];
-            while ((nRead = is.read(data, 0, data.length)) != -1) {
-                buffer.write(data, 0, nRead);
+            InputStream is = null;
+            try {
+                is = u.openStream();
+                ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+                int nRead;
+                byte[] data = new byte[16384];
+                while ((nRead = is.read(data, 0, data.length)) != -1) {
+                    buffer.write(data, 0, nRead);
+                }
+                buffer.flush();
+                result = buffer.toByteArray();
+            } catch (IOException e) {
+                log.error("Failed to read resource " + classpathResource);
+            } finally {
+                if ( is != null) {
+                    is.close();
+                }
             }
-            buffer.flush();
-            result = buffer.toByteArray();
         }
         return result;
     }
