@@ -2,7 +2,6 @@ package org.chorusbdd.chorus.tools.webagent.filter;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.chorusbdd.chorus.tools.webagent.JmxManagementServerExporter;
 import org.chorusbdd.chorus.tools.webagent.WebAgentTestSuite;
 
 import java.util.*;
@@ -23,6 +22,10 @@ public class SuiteNameFilter extends AbstractSuiteFilter {
 
     public SuiteNameFilter(String[] suiteNames, TestSuiteFilter wrappedFilter) {
         super(wrappedFilter);
+        addSuiteNames(suiteNames);
+    }
+
+    private void addSuiteNames(String... suiteNames) {
         for ( String suiteName : suiteNames) {
             try {
                 Pattern p = Pattern.compile(suiteName, Pattern.CASE_INSENSITIVE);
@@ -47,5 +50,7 @@ public class SuiteNameFilter extends AbstractSuiteFilter {
 
     @Override
     public void reset() {
+        super.reset();
+        suiteNamePatterns.clear();
     }
 }

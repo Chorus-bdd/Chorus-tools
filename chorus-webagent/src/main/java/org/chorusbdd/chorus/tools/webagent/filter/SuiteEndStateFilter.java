@@ -3,7 +3,6 @@ package org.chorusbdd.chorus.tools.webagent.filter;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.chorusbdd.chorus.results.EndState;
-import org.chorusbdd.chorus.tools.webagent.JmxManagementServerExporter;
 import org.chorusbdd.chorus.tools.webagent.WebAgentTestSuite;
 
 import java.util.ArrayList;
@@ -23,6 +22,10 @@ public class SuiteEndStateFilter extends AbstractSuiteFilter {
 
     public SuiteEndStateFilter(String[] endStates, TestSuiteFilter wrappedFilter) {
         super(wrappedFilter);
+        addEndStates(endStates);
+    }
+
+    private void addEndStates(String... endStates) {
         for ( String s : endStates) {
             EndState e = EndState.valueOf(s.toUpperCase());
             if ( e != null ) {
@@ -48,5 +51,7 @@ public class SuiteEndStateFilter extends AbstractSuiteFilter {
 
     @Override
     public void reset() {
+        super.reset();
+        filterEndStates.clear();
     }
 }
