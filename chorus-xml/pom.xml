@@ -9,7 +9,7 @@
     <groupId>org.chorusbdd</groupId>
     <artifactId>chorus-xml</artifactId>
     <packaging>jar</packaging>
-    <version>1.0.3-SNAPSHOT</version>
+    <version>1.0.4-SNAPSHOT</version>
     <name>chorus-xml</name>
     <url>http://www.chorus-bdd.org</url>
     <licenses>
@@ -136,7 +136,7 @@
         <dependency>
             <groupId>org.chorusbdd</groupId>
             <artifactId>chorus</artifactId>
-            <version>1.5.0</version>
+            <version>1.5.1</version>
         </dependency>
         <dependency>
             <groupId>net.java.dev.stax-utils</groupId>  <!-- provides an Intenting XML Writer utility class -->
@@ -164,7 +164,7 @@
         <dependency>
             <groupId>org.chorusbdd</groupId>
             <artifactId>chorus-mocksuite</artifactId>
-            <version>1.0.3-SNAPSHOT</version>
+            <version>1.0.4-SNAPSHOT</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
