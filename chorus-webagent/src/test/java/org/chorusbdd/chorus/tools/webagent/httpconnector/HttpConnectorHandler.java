@@ -82,6 +82,7 @@ public class HttpConnectorHandler extends Assert {
         content = content.replaceAll("executionHost=\".*\"", "executionHost=\"{EXECUTIONHOST}\"");
         content = content.replaceAll(NetworkUtils.getHostname(), "{HOSTNAME}");
         content = content.replaceAll(AbstractWebAgentHandler.getFullyQualifiedHostname(), "{HOSTNAME}");
+        content = content.replaceAll("(?s)stackTrace=\".*?\"", "stackTrace=\"{STACKTRACE}\"");
         return content;
     }
 
