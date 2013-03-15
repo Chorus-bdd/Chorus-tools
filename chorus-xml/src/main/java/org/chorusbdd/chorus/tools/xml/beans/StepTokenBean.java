@@ -30,11 +30,19 @@
 package org.chorusbdd.chorus.tools.xml.beans;
 
 import org.chorusbdd.chorus.results.StepEndState;
+import org.chorusbdd.chorus.results.StepToken;
+import org.chorusbdd.chorus.tools.xml.adapter.StepTokenAdapter;
 
 import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
-@XmlType(propOrder = {"type", "action", "endState", "message", "exception", "stackTrace"})
+@XmlType(propOrder = {"type", "action", "endState", "message", "exception", "stackTrace", "childSteps"})
 public class StepTokenBean {
 	private String type;
     private String action;
@@ -46,6 +54,9 @@ public class StepTokenBean {
     private String timeTakenSeconds;
 
     private long timeTaken;
+
+    private boolean isStepMacro;
+    private List<StepToken> childSteps = new ArrayList<StepToken>();
     
     public StepTokenBean() {}
 
@@ -120,4 +131,13 @@ public class StepTokenBean {
         return this.stackTrace;
     }
 
+    @XmlElement(name = "step")
+    @XmlJavaTypeAdapter(StepTokenAdapter.class)
+    public List<StepToken> getChildSteps() {
+        return childSteps;
+    }
+
+    public void setChildSteps(List<StepToken> childSteps) {
+        this.childSteps = childSteps;
+    }
 }

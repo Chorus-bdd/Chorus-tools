@@ -51,7 +51,8 @@ public class StepTokenAdapter extends XmlAdapter<StepTokenBean, StepToken>{
 	    }
         toRet.setTimeTaken(v.getTimeTaken());
         toRet.setTimeTakenSeconds(FormattingUtils.getTimeTakenAsSecondsString(v.getTimeTaken()));
-		return toRet;
+		toRet.setChildSteps(v.getChildSteps());
+        return toRet;
 	}
 
     @Override
@@ -62,8 +63,10 @@ public class StepTokenAdapter extends XmlAdapter<StepTokenBean, StepToken>{
         stepToken.setException(v.getException());
         stepToken.setStackTrace(v.getStackTrace());
         stepToken.setTimeTaken(v.getTimeTaken());
+        for ( StepToken c : v.getChildSteps()) {
+            stepToken.addChildStep(c);
+        }
         return stepToken;
-
 	}
 
 }

@@ -48,6 +48,11 @@ public class WebAgentSelfTestHandler extends Assert {
     @Step("the scenario passes and the feature passes")
     public void scenarioPasses() {
     }
+
+    @Step("I run step (.*)")
+    public String runAStep(String stepName) {
+        return stepName;
+    }
 }
 
 
