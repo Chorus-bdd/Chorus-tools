@@ -118,7 +118,20 @@
     </xsl:template>
 
     <xsl:template match="step">
-        <div class="step">
+
+        <!-- show the configuration next to feature name when not base configuration -->
+        <xsl:variable name="stepDivClass">
+            <xsl:choose>
+                <xsl:when test="ancestor::step">
+                    <xsl:value-of select="'stepmacro'"/>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:value-of select="'step'"/>
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:variable>
+
+        <div class="{$stepDivClass}">
             <xsl:variable name="stepClass">
                 <xsl:choose>
                     <xsl:when test="@endState='PASSED'">
@@ -144,6 +157,8 @@
                 <span class="stepMessage"><xsl:value-of select="@message"/></span>
                 <span class="timeTaken">(<xsl:value-of select="@timeTakenSeconds"/>s)</span>
             </span>
+
+            <xsl:apply-templates select="step"/>
         </div>
     </xsl:template>
 

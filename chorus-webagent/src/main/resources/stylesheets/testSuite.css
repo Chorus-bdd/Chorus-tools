@@ -124,6 +124,10 @@ th[scope="row"] {
     padding-left: 60px;
 }
 
+.stepmacro {
+    padding-left: 10px;
+}
+
 .stepGREEN {
     font-size: x-small;
     color: #008200;

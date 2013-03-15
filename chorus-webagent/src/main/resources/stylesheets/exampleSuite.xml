@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<?xml-stylesheet type='text/xsl' href='testSuiteResponse.xsl'?>
 <testSuite suiteName="Test Suite">
-    <execution executionHost="samsungs9" executionStartTime="09 Jan 2013 18:06:00 GMT" executionStartTimestamp="1357754760398">
-        <resultsSummary endState="FAILED" featuresFailed="4" featuresPassed="3" featuresPending="1" scenariosFailed="6" scenariosPassed="3" scenariosPending="4" stepsFailed="1" stepsPassed="13" stepsPending="4" stepsSkipped="17" stepsUndefined="5" timeTaken="3969" timeTakenSeconds="4" unavailableHandlers="0"/>
+    <execution executionHost="samsungs9" executionStartTime="15 Mar 2013 16:19:23 GMT" executionStartTimestamp="1363364363562">
+        <resultsSummary endState="FAILED" featuresFailed="5" featuresPassed="3" featuresPending="1" scenariosFailed="7" scenariosPassed="5" scenariosPending="4" stepsFailed="2" stepsPassed="21" stepsPending="4" stepsSkipped="19" stepsUndefined="5" timeTaken="1531" timeTakenSeconds="1.5" unavailableHandlers="0"/>
         <testSuiteName>Test Suite</testSuiteName>
     </execution>
     <features>
@@ -19,8 +18,46 @@
                 </scenario>
                 <scenario endState="FAILED" name="Scenario Which Fails Due To Step Failure">
                     <steps>
-                        <step type="Given" action="I run a scenario with several steps" endState="PASSED" message="" timeTaken="0" timeTakenSeconds="0"/>
-                        <step type="And" action="a step fails an assertion" endState="FAILED" message="(WebAgentSelfTestHandler:23)-Fail an assertion" timeTaken="4" timeTakenSeconds="0">
+                        <step type="Given" action="I run a scenario with several steps" endState="PASSED" message="" timeTaken="1" timeTakenSeconds="0"/>
+                        <step type="And" action="a step fails an assertion" endState="FAILED" message="(WebAgentSelfTestHandler:23)-Fail an assertion" stackTrace="junit.framework.AssertionFailedError: Fail an assertion
+	at junit.framework.Assert.fail(Assert.java:50)
+	at junit.framework.Assert.assertTrue(Assert.java:20)
+	at org.chorusbdd.chorus.tools.mocksuite.mocksuiteone.WebAgentSelfTestHandler.failAnAssertion(WebAgentSelfTestHandler.java:23)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:601)
+	at org.chorusbdd.chorus.core.interpreter.StepProcessor.callStepMethod(StepProcessor.java:154)
+	at org.chorusbdd.chorus.core.interpreter.StepProcessor.processHandlerStep(StepProcessor.java:124)
+	at org.chorusbdd.chorus.core.interpreter.StepProcessor.processStep(StepProcessor.java:99)
+	at org.chorusbdd.chorus.core.interpreter.StepProcessor.runSteps(StepProcessor.java:55)
+	at org.chorusbdd.chorus.core.interpreter.ChorusInterpreter.processScenario(ChorusInterpreter.java:215)
+	at org.chorusbdd.chorus.core.interpreter.ChorusInterpreter.runScenarios(ChorusInterpreter.java:189)
+	at org.chorusbdd.chorus.core.interpreter.ChorusInterpreter.processFeature(ChorusInterpreter.java:156)
+	at org.chorusbdd.chorus.core.interpreter.ChorusInterpreter.processFeatures(ChorusInterpreter.java:101)
+	at org.chorusbdd.chorus.InterpreterRunner.run(InterpreterRunner.java:97)
+	at org.chorusbdd.chorus.Chorus.run(Chorus.java:150)
+	at org.chorusbdd.chorus.Chorus.run(Chorus.java:98)
+	at org.chorusbdd.chorus.tools.xml.writer.SuiteXmlWriterTest.runInterpreter(SuiteXmlWriterTest.java:128)
+	at org.chorusbdd.chorus.tools.xml.writer.SuiteXmlWriterTest.testMarshallSuiteToXml(SuiteXmlWriterTest.java:40)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:601)
+	at junit.framework.TestCase.runTest(TestCase.java:168)
+	at junit.framework.TestCase.runBare(TestCase.java:134)
+	at junit.framework.TestResult$1.protect(TestResult.java:110)
+	at junit.framework.TestResult.runProtected(TestResult.java:128)
+	at junit.framework.TestResult.run(TestResult.java:113)
+	at junit.framework.TestCase.run(TestCase.java:124)
+	at junit.framework.TestSuite.runTest(TestSuite.java:243)
+	at junit.framework.TestSuite.run(TestSuite.java:238)
+	at org.junit.internal.runners.JUnit38ClassRunner.run(JUnit38ClassRunner.java:83)
+	at org.junit.runner.JUnitCore.run(JUnitCore.java:157)
+	at com.intellij.junit4.JUnit4IdeaTestRunner.startRunnerWithArgs(JUnit4IdeaTestRunner.java:76)
+	at com.intellij.rt.execution.junit.JUnitStarter.prepareStreamsAndStart(JUnitStarter.java:195)
+	at com.intellij.rt.execution.junit.JUnitStarter.main(JUnitStarter.java:63)
+" timeTaken="6" timeTakenSeconds="0">
                             <exception>junit.framework.AssertionFailedError: Fail an assertion</exception>
                         </step>
                         <step type="Then" action="the scenario will be failed" endState="SKIPPED" message="" timeTaken="0" timeTakenSeconds="0"/>
@@ -51,25 +88,6 @@
                 </scenario>
             </scenarios>
         </feature>
-        <feature configurationName="base" endState="FAILED" name="Feature With Pending And Passed">
-            <description>This is a test feature a pending and a passed scenario. Feature state should end as Pending</description>
-            <scenarios>
-                <scenario endState="FAILED" name="Scenario Which Passes">
-                    <steps>
-                        <step type="Given" action="I run a scenario with a single test step which passes" endState="UNDEFINED" message="" timeTaken="0" timeTakenSeconds="0"/>
-                    </steps>
-                </scenario>
-                <scenario endState="PENDING" name="Scenario Which Is Pending">
-                    <steps>
-                        <step type="Given" action="I run a scenario with several steps" endState="PASSED" message="" timeTaken="0" timeTakenSeconds="0"/>
-                        <step type="And" action="one of the steps is marked pending" endState="PENDING" message="here be a pending message" timeTaken="0" timeTakenSeconds="0"/>
-                        <step type="Then" action="the subsequent steps are skipped" endState="SKIPPED" message="" timeTaken="0" timeTakenSeconds="0"/>
-                        <step type="And" action="the scenario and feature finish in pending state" endState="SKIPPED" message="" timeTaken="0" timeTakenSeconds="0"/>
-                    </steps>
-                </scenario>
-            </scenarios>
-            <usesHandlers>Timers,Web Agent Self Test</usesHandlers>
-        </feature>
         <feature configurationName="base" endState="FAILED" name="Feature With Pending Passed And Failed Scenario">
             <description>This is a test feature a pending, passed and failed scenario. Feature state should end as Failed</description>
             <scenarios>
@@ -97,13 +115,92 @@
             </scenarios>
             <usesHandlers>Timers,Web Agent Self Test</usesHandlers>
         </feature>
+        <feature configurationName="base" endState="FAILED" name="Feature With Step Macro">
+            <description>Test the behaviour when a scenario references a step macro</description>
+            <scenarios>
+                <scenario endState="PASSED" name="Single Step Macro">
+                    <steps>
+                        <step type="Given" action="I call a step macro with two steps" endState="PASSED" message="" timeTaken="0" timeTakenSeconds="0">
+                            <step type="Given" action="I run step one" endState="PASSED" message="one" timeTaken="0" timeTakenSeconds="0"/>
+                            <step type="And" action="I run step two" endState="PASSED" message="two" timeTaken="0" timeTakenSeconds="0"/>
+                        </step>
+                        <step type="Then" action="I run step three" endState="PASSED" message="three" timeTaken="1" timeTakenSeconds="0"/>
+                    </steps>
+                </scenario>
+                <scenario endState="PASSED" name="Nested Step Macro">
+                    <steps>
+                        <step type="Given" action="I call a step macro with a nested macro call" endState="PASSED" message="" timeTaken="0" timeTakenSeconds="0">
+                            <step type="Given" action="I call a step macro with two steps" endState="PASSED" message="" timeTaken="0" timeTakenSeconds="0">
+                                <step type="Given" action="I run step one" endState="PASSED" message="one" timeTaken="0" timeTakenSeconds="0"/>
+                                <step type="And" action="I run step two" endState="PASSED" message="two" timeTaken="1" timeTakenSeconds="0"/>
+                            </step>
+                            <step type="And" action="I run step three" endState="PASSED" message="three" timeTaken="1" timeTakenSeconds="0"/>
+                        </step>
+                        <step type="Then" action="I run step four" endState="PASSED" message="four" timeTaken="0" timeTakenSeconds="0"/>
+                    </steps>
+                </scenario>
+                <scenario endState="FAILED" name="Step Macro With Failing Step">
+                    <steps>
+                        <step type="Given" action="I call a step macro with a failing step" endState="FAILED" message="" timeTaken="0" timeTakenSeconds="0">
+                            <step type="Given" action="I run step one" endState="PASSED" message="one" timeTaken="1" timeTakenSeconds="0"/>
+                            <step type="And" action="a step fails an assertion" endState="FAILED" message="(WebAgentSelfTestHandler:23)-Fail an assertion" stackTrace="junit.framework.AssertionFailedError: Fail an assertion
+	at junit.framework.Assert.fail(Assert.java:50)
+	at junit.framework.Assert.assertTrue(Assert.java:20)
+	at org.chorusbdd.chorus.tools.mocksuite.mocksuiteone.WebAgentSelfTestHandler.failAnAssertion(WebAgentSelfTestHandler.java:23)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:601)
+	at org.chorusbdd.chorus.core.interpreter.StepProcessor.callStepMethod(StepProcessor.java:154)
+	at org.chorusbdd.chorus.core.interpreter.StepProcessor.processHandlerStep(StepProcessor.java:124)
+	at org.chorusbdd.chorus.core.interpreter.StepProcessor.processStep(StepProcessor.java:99)
+	at org.chorusbdd.chorus.core.interpreter.StepProcessor.runSteps(StepProcessor.java:55)
+	at org.chorusbdd.chorus.core.interpreter.StepProcessor.processStep(StepProcessor.java:97)
+	at org.chorusbdd.chorus.core.interpreter.StepProcessor.runSteps(StepProcessor.java:55)
+	at org.chorusbdd.chorus.core.interpreter.ChorusInterpreter.processScenario(ChorusInterpreter.java:215)
+	at org.chorusbdd.chorus.core.interpreter.ChorusInterpreter.runScenarios(ChorusInterpreter.java:189)
+	at org.chorusbdd.chorus.core.interpreter.ChorusInterpreter.processFeature(ChorusInterpreter.java:156)
+	at org.chorusbdd.chorus.core.interpreter.ChorusInterpreter.processFeatures(ChorusInterpreter.java:101)
+	at org.chorusbdd.chorus.InterpreterRunner.run(InterpreterRunner.java:97)
+	at org.chorusbdd.chorus.Chorus.run(Chorus.java:150)
+	at org.chorusbdd.chorus.Chorus.run(Chorus.java:98)
+	at org.chorusbdd.chorus.tools.xml.writer.SuiteXmlWriterTest.runInterpreter(SuiteXmlWriterTest.java:128)
+	at org.chorusbdd.chorus.tools.xml.writer.SuiteXmlWriterTest.testMarshallSuiteToXml(SuiteXmlWriterTest.java:40)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:601)
+	at junit.framework.TestCase.runTest(TestCase.java:168)
+	at junit.framework.TestCase.runBare(TestCase.java:134)
+	at junit.framework.TestResult$1.protect(TestResult.java:110)
+	at junit.framework.TestResult.runProtected(TestResult.java:128)
+	at junit.framework.TestResult.run(TestResult.java:113)
+	at junit.framework.TestCase.run(TestCase.java:124)
+	at junit.framework.TestSuite.runTest(TestSuite.java:243)
+	at junit.framework.TestSuite.run(TestSuite.java:238)
+	at org.junit.internal.runners.JUnit38ClassRunner.run(JUnit38ClassRunner.java:83)
+	at org.junit.runner.JUnitCore.run(JUnitCore.java:157)
+	at com.intellij.junit4.JUnit4IdeaTestRunner.startRunnerWithArgs(JUnit4IdeaTestRunner.java:76)
+	at com.intellij.rt.execution.junit.JUnitStarter.prepareStreamsAndStart(JUnitStarter.java:195)
+	at com.intellij.rt.execution.junit.JUnitStarter.main(JUnitStarter.java:63)
+" timeTaken="2" timeTakenSeconds="0">
+                                <exception>junit.framework.AssertionFailedError: Fail an assertion</exception>
+                            </step>
+                            <step type="Then" action="the next macro step is skipped" endState="SKIPPED" message="" timeTaken="0" timeTakenSeconds="0"/>
+                        </step>
+                        <step type="Then" action="subsequent steps are skipped" endState="SKIPPED" message="" timeTaken="0" timeTakenSeconds="0"/>
+                    </steps>
+                </scenario>
+            </scenarios>
+            <usesHandlers>Timers,Web Agent Self Test</usesHandlers>
+        </feature>
         <feature configurationName="Config1" endState="PASSED" name="Feature with Configurations">
             <description></description>
             <scenarios>
                 <scenario endState="PASSED" name="Scenario Which Passes">
                     <steps>
-                        <step type="Given" action="I run a feature with a single test scenario which passes" endState="PASSED" message="" timeTaken="0" timeTakenSeconds="0"/>
-                        <step type="Then" action="the scenario passes and the feature passes" endState="PASSED" message="" timeTaken="0" timeTakenSeconds="0"/>
+                        <step type="Given" action="I run a feature with a single test scenario which passes" endState="PASSED" message="" timeTaken="1" timeTakenSeconds="0"/>
+                        <step type="Then" action="the scenario passes and the feature passes" endState="PASSED" message="" timeTaken="2" timeTakenSeconds="0"/>
                     </steps>
                 </scenario>
             </scenarios>
@@ -115,7 +212,7 @@
                 <scenario endState="PASSED" name="Scenario Which Passes">
                     <steps>
                         <step type="Given" action="I run a feature with a single test scenario which passes" endState="PASSED" message="" timeTaken="0" timeTakenSeconds="0"/>
-                        <step type="Then" action="the scenario passes and the feature passes" endState="PASSED" message="" timeTaken="0" timeTakenSeconds="0"/>
+                        <step type="Then" action="the scenario passes and the feature passes" endState="PASSED" message="" timeTaken="1" timeTakenSeconds="0"/>
                     </steps>
                 </scenario>
             </scenarios>
@@ -127,7 +224,7 @@
             <scenarios>
                 <scenario endState="PENDING" name="Scenario Which Has Pending Steps">
                     <steps>
-                        <step type="Given" action="I run a scenario with several steps" endState="PASSED" message="" timeTaken="0" timeTakenSeconds="0"/>
+                        <step type="Given" action="I run a scenario with several steps" endState="PASSED" message="" timeTaken="1" timeTakenSeconds="0"/>
                         <step type="And" action="one of the steps is marked pending" endState="PENDING" message="here be a pending message" timeTaken="0" timeTakenSeconds="0"/>
                         <step type="Then" action="the subsequent steps are skipped" endState="SKIPPED" message="" timeTaken="0" timeTakenSeconds="0"/>
                         <step type="And" action="the scenario and feature finish in pending state" endState="SKIPPED" message="" timeTaken="0" timeTakenSeconds="0"/>
@@ -135,8 +232,44 @@
                 </scenario>
                 <scenario endState="PENDING" name="Scenario Which Throws Pending Exception">
                     <steps>
-                        <step type="Given" action="I run a scenario with several steps" endState="PASSED" message="" timeTaken="0" timeTakenSeconds="0"/>
-                        <step type="And" action="one of the steps throws a pending exception" endState="PENDING" message="This one Pending" timeTaken="0" timeTakenSeconds="0">
+                        <step type="Given" action="I run a scenario with several steps" endState="PASSED" message="" timeTaken="1" timeTakenSeconds="0"/>
+                        <step type="And" action="one of the steps throws a pending exception" endState="PENDING" message="This one Pending" stackTrace="org.chorusbdd.chorus.core.interpreter.StepPendingException: This one Pending
+	at org.chorusbdd.chorus.tools.mocksuite.mocksuiteone.WebAgentSelfTestHandler.stepThrowsPending(WebAgentSelfTestHandler.java:41)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:601)
+	at org.chorusbdd.chorus.core.interpreter.StepProcessor.callStepMethod(StepProcessor.java:154)
+	at org.chorusbdd.chorus.core.interpreter.StepProcessor.processHandlerStep(StepProcessor.java:124)
+	at org.chorusbdd.chorus.core.interpreter.StepProcessor.processStep(StepProcessor.java:99)
+	at org.chorusbdd.chorus.core.interpreter.StepProcessor.runSteps(StepProcessor.java:55)
+	at org.chorusbdd.chorus.core.interpreter.ChorusInterpreter.processScenario(ChorusInterpreter.java:215)
+	at org.chorusbdd.chorus.core.interpreter.ChorusInterpreter.runScenarios(ChorusInterpreter.java:189)
+	at org.chorusbdd.chorus.core.interpreter.ChorusInterpreter.processFeature(ChorusInterpreter.java:156)
+	at org.chorusbdd.chorus.core.interpreter.ChorusInterpreter.processFeatures(ChorusInterpreter.java:101)
+	at org.chorusbdd.chorus.InterpreterRunner.run(InterpreterRunner.java:97)
+	at org.chorusbdd.chorus.Chorus.run(Chorus.java:150)
+	at org.chorusbdd.chorus.Chorus.run(Chorus.java:98)
+	at org.chorusbdd.chorus.tools.xml.writer.SuiteXmlWriterTest.runInterpreter(SuiteXmlWriterTest.java:128)
+	at org.chorusbdd.chorus.tools.xml.writer.SuiteXmlWriterTest.testMarshallSuiteToXml(SuiteXmlWriterTest.java:40)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:601)
+	at junit.framework.TestCase.runTest(TestCase.java:168)
+	at junit.framework.TestCase.runBare(TestCase.java:134)
+	at junit.framework.TestResult$1.protect(TestResult.java:110)
+	at junit.framework.TestResult.runProtected(TestResult.java:128)
+	at junit.framework.TestResult.run(TestResult.java:113)
+	at junit.framework.TestCase.run(TestCase.java:124)
+	at junit.framework.TestSuite.runTest(TestSuite.java:243)
+	at junit.framework.TestSuite.run(TestSuite.java:238)
+	at org.junit.internal.runners.JUnit38ClassRunner.run(JUnit38ClassRunner.java:83)
+	at org.junit.runner.JUnitCore.run(JUnitCore.java:157)
+	at com.intellij.junit4.JUnit4IdeaTestRunner.startRunnerWithArgs(JUnit4IdeaTestRunner.java:76)
+	at com.intellij.rt.execution.junit.JUnitStarter.prepareStreamsAndStart(JUnitStarter.java:195)
+	at com.intellij.rt.execution.junit.JUnitStarter.main(JUnitStarter.java:63)
+" timeTaken="2" timeTakenSeconds="0">
                             <exception>org.chorusbdd.chorus.core.interpreter.StepPendingException: This one Pending</exception>
                         </step>
                         <step type="Then" action="the subsequent steps are skipped" endState="SKIPPED" message="" timeTaken="0" timeTakenSeconds="0"/>
@@ -148,10 +281,29 @@
         <feature configurationName="base" endState="PASSED" name="Feature One">
             <description>This is a first test feature</description>
             <scenarios>
-                <scenario endState="PASSED" name="Scenario Which Passes">
+                <scenario endState="PASSED" name="Scenario Which Passes" tags="@MyTag,@MySecondTag">
                     <steps>
                         <step type="Given" action="I run a feature with a single test scenario which passes" endState="PASSED" message="" timeTaken="0" timeTakenSeconds="0"/>
-                        <step type="Then" action="the scenario passes and the feature passes" endState="PASSED" message="" timeTaken="0" timeTakenSeconds="0"/>
+                        <step type="Then" action="the scenario passes and the feature passes" endState="PASSED" message="" timeTaken="1" timeTakenSeconds="0"/>
+                    </steps>
+                </scenario>
+            </scenarios>
+            <usesHandlers>Timers,Web Agent Self Test</usesHandlers>
+        </feature>
+        <feature configurationName="base" endState="FAILED" name="Feature With Pending And Passed">
+            <description>This is a test feature a pending and a passed scenario. Feature state should end as Pending</description>
+            <scenarios>
+                <scenario endState="FAILED" name="Scenario Which Passes">
+                    <steps>
+                        <step type="Given" action="I run a scenario with a single test step which passes" endState="UNDEFINED" message="" timeTaken="0" timeTakenSeconds="0"/>
+                    </steps>
+                </scenario>
+                <scenario endState="PENDING" name="Scenario Which Is Pending">
+                    <steps>
+                        <step type="Given" action="I run a scenario with several steps" endState="PASSED" message="" timeTaken="0" timeTakenSeconds="0"/>
+                        <step type="And" action="one of the steps is marked pending" endState="PENDING" message="here be a pending message" timeTaken="0" timeTakenSeconds="0"/>
+                        <step type="Then" action="the subsequent steps are skipped" endState="SKIPPED" message="" timeTaken="0" timeTakenSeconds="0"/>
+                        <step type="And" action="the scenario and feature finish in pending state" endState="SKIPPED" message="" timeTaken="0" timeTakenSeconds="0"/>
                     </steps>
                 </scenario>
             </scenarios>
