@@ -116,6 +116,7 @@ public class SuiteXmlWriterTest extends XMLTestCase {
         xml = xml.replaceAll("executionStartTimestamp=\".*\"", "executionStartTimestamp=\"{STARTTIMSTAMP}\"");
         xml = xml.replaceAll("executionHost=\".*\"", "executionHost=\"{EXECUTIONHOST}\"");
         xml = xml.replaceAll("(?s)stackTrace=\".*?\"", "stackTrace=\"{REPLACED}\"");
+        xml = xml.replaceAll("tokenId=\".*\"", "tokenId=\"{REPLACED}\"");
         return xml;
     }
 

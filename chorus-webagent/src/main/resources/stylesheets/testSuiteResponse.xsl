@@ -89,7 +89,7 @@
 
         <div class="feature">
             <xsl:variable name="featureId">
-                <xsl:number count="feature"/>
+                <xsl:value-of select="@tokenId"/>
             </xsl:variable>
 
             <div class="featureTitle">
@@ -131,6 +131,10 @@
             </xsl:choose>
         </xsl:variable>
 
+        <xsl:variable name="stepId">
+            <xsl:value-of select="@tokenId"/>
+        </xsl:variable>
+
         <div class="{$stepDivClass}">
             <xsl:variable name="stepClass">
                 <xsl:choose>
@@ -153,12 +157,22 @@
             </xsl:variable>
             <span class="step{$stepClass}">
                 <span class="stepText"><xsl:value-of select="@type"/>&#160;<xsl:value-of select="@action"/></span>
+                <span class="stepMessage"><xsl:value-of select="@message"/>
+                    <xsl:if test="step">
+                        <a href="javascript:hideOrShowFeatureBody('stepMacroBody{$stepId}', 'stepMacroShowHide{$stepId}')">
+                            <img id="stepMacroShowHide{$stepId}" src="expand.png" class="expandContractImage"/>
+                        </a>
+                    </xsl:if>
+                </span>
                 <span class="endState"><xsl:value-of select="@endState"/></span>
-                <span class="stepMessage"><xsl:value-of select="@message"/></span>
                 <span class="timeTaken">(<xsl:value-of select="@timeTakenSeconds"/>s)</span>
             </span>
 
-            <xsl:apply-templates select="step"/>
+            <xsl:if test="step">
+                <div id="stepMacroBody{$stepId}" class="featureHidden">
+                    <xsl:apply-templates select="step"/>
+                </div>
+            </xsl:if>
         </div>
     </xsl:template>
 

@@ -41,7 +41,8 @@ public class FeatureTokenAdapter  extends XmlAdapter<FeatureTokenBean, FeatureTo
 	@Override
 	public FeatureTokenBean marshal(FeatureToken f) throws Exception {
 		FeatureTokenBean result = new FeatureTokenBean();
-		result.setName(f.getName());
+		result.setTokenId(f.getTokenId());
+        result.setName(f.getName());
 		if (f.getUsesHandlers()!=null && f.getUsesHandlers().length>0) {
             String handlerCsv = FormattingUtils.getAsCsv(f.getUsesHandlers());
             result.setUsesHandlers(handlerCsv);

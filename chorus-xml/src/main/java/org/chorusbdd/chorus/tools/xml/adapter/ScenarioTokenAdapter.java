@@ -34,7 +34,6 @@ import org.chorusbdd.chorus.tools.xml.beans.ScenarioTokenBean;
 import org.chorusbdd.chorus.tools.xml.util.FormattingUtils;
 
 import javax.xml.bind.annotation.adapters.XmlAdapter;
-import java.util.Collections;
 import java.util.List;
 
 public class ScenarioTokenAdapter extends XmlAdapter<ScenarioTokenBean, ScenarioToken> {
@@ -42,6 +41,7 @@ public class ScenarioTokenAdapter extends XmlAdapter<ScenarioTokenBean, Scenario
 	@Override
 	public ScenarioTokenBean marshal(ScenarioToken s) throws Exception {
 		ScenarioTokenBean result = new ScenarioTokenBean();
+        result.setTokenId(s.getTokenId());
 		result.setName(s.getName());
 		result.setSteps(s.getSteps());
         List<String> tags = s.getTags();

@@ -48,11 +48,20 @@ public class FeatureTokenBean {
     private String description;
     private List<ScenarioToken> scenarios ;
     private EndState endState;
+    private long tokenId;
 
     public FeatureTokenBean(){}
 
-	
-	@XmlAttribute
+    @XmlAttribute
+    public long getTokenId() {
+        return tokenId;
+    }
+
+    public void setTokenId(long tokenId) {
+        this.tokenId = tokenId;
+    }
+
+    @XmlAttribute
 	public String getName() {
 		return name;
 	}

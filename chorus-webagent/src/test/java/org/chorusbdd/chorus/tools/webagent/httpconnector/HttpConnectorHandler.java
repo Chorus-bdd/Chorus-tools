@@ -83,6 +83,7 @@ public class HttpConnectorHandler extends Assert {
         content = content.replaceAll(NetworkUtils.getHostname(), "{HOSTNAME}");
         content = content.replaceAll(AbstractWebAgentHandler.getFullyQualifiedHostname(), "{HOSTNAME}");
         content = content.replaceAll("(?s)stackTrace=\".*?\"", "stackTrace=\"{STACKTRACE}\"");
+        content = content.replaceAll("tokenId=\".*\"", "tokenId=\"{TOKENID}\"");
         return content;
     }
 

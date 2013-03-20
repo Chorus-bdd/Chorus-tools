@@ -40,7 +40,8 @@ public class StepTokenAdapter extends XmlAdapter<StepTokenBean, StepToken>{
 	@Override
 	public StepTokenBean marshal(StepToken v) throws Exception {
 		StepTokenBean toRet = new StepTokenBean();
-		
+
+        toRet.setTokenId(v.getTokenId());
 		toRet.setType(v.getType());
 	    toRet.setAction(v.getAction());
 	    toRet.setEndState(v.getEndState());
