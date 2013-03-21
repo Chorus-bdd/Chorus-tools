@@ -155,8 +155,11 @@
                     </xsl:otherwise>
                 </xsl:choose>
             </xsl:variable>
+
+            <xsl:variable name="stepIndent" select="substring('&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;', 1, count(ancestor::step) * 2)"/>
+
             <span class="step{$stepClass}">
-                <span class="stepText"><xsl:value-of select="@type"/>&#160;<xsl:value-of select="@action"/></span>
+                <span class="stepText"><xsl:value-of select="$stepIndent"/><xsl:value-of select="@type"/>&#160;<xsl:value-of select="@action"/></span>
                 <span class="stepMessage"><xsl:value-of select="@message"/>
                     <xsl:if test="step">
                         <a href="javascript:hideOrShowFeatureBody('stepMacroBody{$stepId}', 'stepMacroShowHide{$stepId}')">
