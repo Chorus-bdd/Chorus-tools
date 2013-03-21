@@ -156,6 +156,7 @@
                 </xsl:choose>
             </xsl:variable>
 
+            <!-- calculate space indentation to use for step macro steps, based on the step nesting level, up to 8 levels should be plenty -->
             <xsl:variable name="stepIndent" select="substring('&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;', 1, count(ancestor::step) * 2)"/>
 
             <span class="step{$stepClass}">

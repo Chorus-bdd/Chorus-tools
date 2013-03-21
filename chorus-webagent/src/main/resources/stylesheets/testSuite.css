@@ -151,6 +151,7 @@ th[scope="row"] {
     min-width: 550px;
     max-width: 550px;
     vertical-align: top;
+    overflow: hidden;
 }
 
 .endState {
@@ -166,6 +167,7 @@ th[scope="row"] {
     max-width: 130px;
     text-align: left;
     padding-left: 2px;
+    overflow: hidden;
  }
 
 .timeTaken {
