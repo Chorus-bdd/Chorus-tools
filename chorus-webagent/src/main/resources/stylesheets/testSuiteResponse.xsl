@@ -10,14 +10,14 @@
             </head>
             <body>
               <script language="javascript">
-                  function hideOrShowFeatureBody(featureId, featureShowHideId) {
-                    var featureDiv = document.getElementById(featureId);
-                    var img = document.getElementById(featureShowHideId);
-                    if ( featureDiv.className == "featureShown" ) {
-                        featureDiv.className = "featureHidden";
+                  function hideOrShowDiv(divId, imgId) {
+                    var div = document.getElementById(divId);
+                    var img = document.getElementById(imgId);
+                    if ( div.className == "divShown" ) {
+                        div.className = "divHidden";
                         img.src = "expand.png"
                     } else {
-                        featureDiv.className = "featureShown";
+                        div.className = "divShown";
                         img.src = "contract.png"
                     }
                   }
@@ -93,13 +93,13 @@
             </xsl:variable>
 
             <div class="featureTitle">
-                <a href="javascript:hideOrShowFeatureBody('featureBody{$featureId}', 'featureShowHide{$featureId}')">
+                <a href="javascript:hideOrShowDiv('featureBody{$featureId}', 'featureShowHide{$featureId}')">
                     <img id="featureShowHide{$featureId}" src="contract.png" class="expandContractImage"/>
                 </a>
                 <xsl:value-of select="@name"/>&#160;<xsl:value-of select="$configuration"/>
             </div>
 
-            <div id="featureBody{$featureId}" class="featureShown">
+            <div id="featureBody{$featureId}" class="divShown">
                 <div class="featureDescription">
                 <xsl:value-of select="description"/>
                 </div>
@@ -163,7 +163,7 @@
                 <span class="stepText"><xsl:value-of select="$stepIndent"/><xsl:value-of select="@type"/>&#160;<xsl:value-of select="@action"/></span>
                 <span class="stepMessage"><xsl:value-of select="@message"/>
                     <xsl:if test="step">
-                        <a href="javascript:hideOrShowFeatureBody('stepMacroBody{$stepId}', 'stepMacroShowHide{$stepId}')">
+                        <a href="javascript:hideOrShowDiv('stepMacroBody{$stepId}', 'stepMacroShowHide{$stepId}')">
                             <img id="stepMacroShowHide{$stepId}" src="expand.png" class="expandContractImage"/>
                         </a>
                     </xsl:if>
@@ -173,7 +173,7 @@
             </span>
 
             <xsl:if test="step">
-                <div id="stepMacroBody{$stepId}" class="featureHidden">
+                <div id="stepMacroBody{$stepId}" class="divHidden">
                     <xsl:apply-templates select="step"/>
                 </div>
             </xsl:if>

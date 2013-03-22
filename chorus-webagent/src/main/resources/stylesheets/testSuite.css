@@ -192,11 +192,11 @@ th[scope="row"] {
       to { visibility: hidden; }
 }
 
-.featureShown {
+.divShown {
     display: block;
 }
 
-.featureHidden {
+.divHidden {
     display: none;
 }
 
