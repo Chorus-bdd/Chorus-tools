@@ -14,7 +14,7 @@ public class TestHttpConnector {
         return ChorusJUnitRunner.suite("" +
             "-f src/test/java/org/chorusbdd/chorus/tools/webagent/httpconnector/HttpConnector.feature " +
             "-h org.chorusbdd.chorus.tools.webagent" +
-            " -l warn" //+
+            " -l warn"// +
             //" -t @ThisOne"
         );
     }

@@ -9,6 +9,7 @@ import org.chorusbdd.chorus.tools.webagent.jettyhandler.AbstractWebAgentHandler;
 import org.chorusbdd.chorus.tools.webagent.util.FileUtil;
 import org.chorusbdd.chorus.util.NetworkUtils;
 import org.custommonkey.xmlunit.Diff;
+import org.custommonkey.xmlunit.XMLUnit;
 import org.springframework.test.context.ContextConfiguration;
 
 import javax.annotation.Resource;
@@ -45,6 +46,8 @@ public class HttpConnectorHandler extends Assert {
         InputStream is = getClass().getResource("expected/" + resource).openStream();
         final String expected = FileUtil.readToString(is);
 
+        XMLUnit.setNormalizeWhitespace(true);
+
         new PolledAssertion() {
             @Override
             protected void validate() {
@@ -64,7 +67,7 @@ public class HttpConnectorHandler extends Assert {
                     fail("Failed to connect or download \n" + e);
                 }
             }
-        }.await(60);
+        }.await(20);
     }
 
     @Step(".*reset the cache suite ids using a zero-based index")
@@ -77,13 +80,13 @@ public class HttpConnectorHandler extends Assert {
         content = content.replaceAll("\\d{13}", "{TIMESTAMP}");
         content = content.replaceAll("timeTaken=\"\\d{0,5}\"", "timeTaken=\"{TIMETAKEN}\"");
         content = content.replaceAll("timeTakenSeconds=\"\\d{0,5}\\.?\\d?\"", "timeTakenSeconds=\"{TIMETAKEN_SECONDS}\"");
-        content = content.replaceAll("executionStartTime=\".*\"", "executionStartTime=\"{STARTTIME}\"");
-        content = content.replaceAll("executionStartTimestamp=\".*\"", "executionStartTimestamp=\"{STARTTIMSTAMP}\"");
-        content = content.replaceAll("executionHost=\".*\"", "executionHost=\"{EXECUTIONHOST}\"");
+        content = content.replaceAll("executionStartTime=\".*?\"", "executionStartTime=\"{STARTTIME}\"");
+        content = content.replaceAll("executionStartTimestamp=\".*?\"", "executionStartTimestamp=\"{STARTTIMSTAMP}\"");
+        content = content.replaceAll("executionHost=\".*?\"", "executionHost=\"{EXECUTIONHOST}\"");
         content = content.replaceAll(NetworkUtils.getHostname(), "{HOSTNAME}");
         content = content.replaceAll(AbstractWebAgentHandler.getFullyQualifiedHostname(), "{HOSTNAME}");
         content = content.replaceAll("(?s)stackTrace=\".*?\"", "stackTrace=\"{STACKTRACE}\"");
-        content = content.replaceAll("tokenId=\".*\"", "tokenId=\"{TOKENID}\"");
+        content = content.replaceAll("tokenId=\".*?\"", "tokenId=\"{TOKENID}\"");
         return content;
     }
 
