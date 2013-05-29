@@ -163,13 +163,20 @@ public class WebAgentFeatureCache extends ExecutionListenerAdapter {
      * @return List of TestSuite in cache, most recent first filtered by testSuiteFilter
      */
     public List<WebAgentTestSuite> getSuites(TestSuiteFilter testSuiteFilter) {
-        List<WebAgentTestSuite> l = new LinkedList<>();
-        synchronized (cachedSuites) {
-            for ( WebAgentTestSuite s : cachedSuites.values()) {
-                if ( testSuiteFilter.accept(s)) {
-                    l.add(s);
-                }
+        List<WebAgentTestSuite> l = getSuitesMostRecentFirst();
+        Iterator<WebAgentTestSuite> i = l.iterator();
+        while(i.hasNext()) {
+            if ( ! testSuiteFilter.accept(i.next())) {
+                i.remove();    
             }
+        }
+        return l;
+    }
+
+    private List<WebAgentTestSuite> getSuitesMostRecentFirst() {
+        List<WebAgentTestSuite> l;
+        synchronized (cachedSuites) {
+            l = new LinkedList<WebAgentTestSuite>(cachedSuites.values());
         }
         Collections.reverse(l);
         return l;
