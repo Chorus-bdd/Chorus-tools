@@ -40,8 +40,8 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  *
  * A web agent for chorus which can publish the results of running Chorus test suites in various representations over HTTP
  *
- * This is run as a remote execution listener for Chorus test suites
- * (use command line switch -r host:port when running Chorus to publish such events to the agent)
+ * This is run as a remote jmx execution listener for Chorus test suites
+ * (use command line switch -j host:port when running Chorus to publish such events to the agent)
  *
  * Uses an embedded jetty instance to publish details of executed test suites
  */
