@@ -29,7 +29,7 @@
  */
 package org.chorusbdd.chorus.tools.webagent.jettyhandler;
 
-import org.chorusbdd.chorus.tools.webagent.filter.TestSuiteFilter;
+import org.chorusbdd.chorus.tools.webagent.filter.FilterFactory;
 import org.chorusbdd.chorus.tools.webagent.WebAgentFeatureCache;
 import org.chorusbdd.chorus.tools.webagent.WebAgentTestSuite;
 import org.chorusbdd.chorus.tools.xml.writer.ResultSummaryXmlMarshaller;
@@ -50,8 +50,8 @@ public class XmlSuiteListHandler extends AbstractSuiteListHandler {
 
     private String title;
 
-    public XmlSuiteListHandler(WebAgentFeatureCache cache, TestSuiteFilter testSuiteFilter, String handledPath, String pathSuffix, String title, int localPort) {
-        super(cache, testSuiteFilter, handledPath, pathSuffix, localPort);
+    public XmlSuiteListHandler(WebAgentFeatureCache cache, FilterFactory filterFactory, String handledPath, String pathSuffix, String title, int localPort) {
+        super(cache, filterFactory, handledPath, pathSuffix, localPort);
         this.title = title;
     }
 

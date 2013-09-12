@@ -18,11 +18,6 @@ public class LastNItemsFilter implements TestSuiteFilter {
         this.maxItems = maxItems;
     }
 
-    @Override
-    public void reset() {
-        count = 0;
-    }
-
     public boolean accept(WebAgentTestSuite suite) {
         return ++count <= maxItems;
     }

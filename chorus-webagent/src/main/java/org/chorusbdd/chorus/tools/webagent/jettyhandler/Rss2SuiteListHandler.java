@@ -29,10 +29,9 @@
  */
 package org.chorusbdd.chorus.tools.webagent.jettyhandler;
 
-import org.chorusbdd.chorus.tools.webagent.filter.TestSuiteFilter;
+import org.chorusbdd.chorus.tools.webagent.filter.FilterFactory;
 import org.chorusbdd.chorus.tools.webagent.WebAgentFeatureCache;
 import org.chorusbdd.chorus.tools.webagent.WebAgentTestSuite;
-import org.chorusbdd.chorus.util.NetworkUtils;
 import org.eclipse.jetty.server.Request;
 
 import javax.servlet.http.HttpServletRequest;
@@ -54,8 +53,8 @@ public class Rss2SuiteListHandler extends AbstractSuiteListHandler {
     private final String description;
     private final int localPort;
 
-    public Rss2SuiteListHandler(WebAgentFeatureCache cache, TestSuiteFilter testSuiteFilter, String handledPath, String pathSuffix, String title, String description, int localPort) {
-        super(cache, testSuiteFilter, handledPath, pathSuffix, localPort);
+    public Rss2SuiteListHandler(WebAgentFeatureCache cache, FilterFactory filterFactory, String handledPath, String pathSuffix, String title, String description, int localPort) {
+        super(cache, filterFactory, handledPath, pathSuffix, localPort);
         this.title = title;
         this.description = description;
         this.localPort = localPort;

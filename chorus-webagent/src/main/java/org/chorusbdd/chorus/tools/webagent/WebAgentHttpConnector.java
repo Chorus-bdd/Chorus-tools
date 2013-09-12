@@ -32,6 +32,7 @@ package org.chorusbdd.chorus.tools.webagent;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.chorusbdd.chorus.tools.webagent.filter.LastNItemsFilter;
+import org.chorusbdd.chorus.tools.webagent.filter.SuiteListFilterFactory;
 import org.chorusbdd.chorus.tools.webagent.filter.TestSuiteFilter;
 import org.chorusbdd.chorus.tools.webagent.jettyhandler.*;
 import org.eclipse.jetty.server.Server;
@@ -79,7 +80,7 @@ public class WebAgentHttpConnector {
 
             l.addHandler(new Rss2SuiteListHandler(
                 c,
-                new LastNItemsFilter(maxRssFeedItems), //rss feed should be size limited
+                new SuiteListFilterFactory(new LastNItemsFilter(maxRssFeedItems)), //rss feed should be size limited
                 "/" + c.getHttpName() + "/allTestSuites",
                 ".rss",
                 "All Test Suites in " + c.getName(),
@@ -89,7 +90,7 @@ public class WebAgentHttpConnector {
 
             l.addHandler(new XmlSuiteListHandler(
                 c,
-                TestSuiteFilter.ALL_SUITES,
+                new SuiteListFilterFactory(TestSuiteFilter.ALL_SUITES),
                 "/" + c.getHttpName() + "/allTestSuites",
                 ".xml",
                 "All Test Suites in " + c.getName(),

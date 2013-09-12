@@ -29,6 +29,7 @@
  */
 package org.chorusbdd.chorus.tools.webagent.jettyhandler;
 
+import org.chorusbdd.chorus.tools.webagent.filter.FilterFactory;
 import org.chorusbdd.chorus.tools.webagent.filter.SuiteEndStateFilter;
 import org.chorusbdd.chorus.tools.webagent.filter.SuiteNameFilter;
 import org.chorusbdd.chorus.tools.webagent.filter.TestSuiteFilter;
@@ -53,15 +54,15 @@ import java.util.List;
 public abstract class AbstractSuiteListHandler extends XmlStreamingHandler {
 
     private WebAgentFeatureCache cache;
-    private TestSuiteFilter testSuiteFilter;
+    private FilterFactory filterFactory;
     private String handledPath;
     private String pathSuffix;
     private int localPort;
     private final String handledPathWithSuffix;
 
-    public AbstractSuiteListHandler(WebAgentFeatureCache webAgentFeatureCache, TestSuiteFilter testSuiteFilter, String handledPath, String pathSuffix, int localPort) {
+    public AbstractSuiteListHandler(WebAgentFeatureCache webAgentFeatureCache, FilterFactory filterFactory, String handledPath, String pathSuffix, int localPort) {
         this.cache = webAgentFeatureCache;
-        this.testSuiteFilter = testSuiteFilter;
+        this.filterFactory = filterFactory;
         this.handledPath = handledPath;
         this.pathSuffix = pathSuffix;
         this.localPort = localPort;
@@ -70,31 +71,9 @@ public abstract class AbstractSuiteListHandler extends XmlStreamingHandler {
 
     @Override
     protected void doHandle(String target, Request baseRequest, HttpServletRequest request, HttpServletResponse response, XMLStreamWriter writer) throws Exception {
-        TestSuiteFilter filter = getSuiteFilter(testSuiteFilter, target, request);
-        filter.reset();
+        TestSuiteFilter filter = filterFactory.createFilter(target, request);
         List<WebAgentTestSuite> suites = cache.getSuites(filter);
         doHandle(suites, target, baseRequest, request, response, writer);
-    }
-
-    /**
-     * A subclass may decorate, amend or otherwise change the filter rules
-     * @return The test suite filter to use to generate the suite list
-     */
-    protected TestSuiteFilter getSuiteFilter(TestSuiteFilter testSuiteFilter, String target, HttpServletRequest request) {
-
-        //if parameter set, add the filter rule to the rule chain
-        if ( request.getParameter(SuiteNameFilter.SUITE_NAME_HTTP_PARAMETER) != null ) {
-            String[] suiteNames = request.getParameterValues(SuiteNameFilter.SUITE_NAME_HTTP_PARAMETER);
-            testSuiteFilter = new SuiteNameFilter(suiteNames, testSuiteFilter);
-        }
-
-        //if parameter set, add the filter rule to the rule chain
-        if ( request.getParameter(SuiteEndStateFilter.SUITE_END_STATE_HTTP_PARAMETER) != null) {
-            String[] suiteEndStates = request.getParameterValues(SuiteEndStateFilter.SUITE_END_STATE_HTTP_PARAMETER);
-            //add the filter rule to the rule chain
-            testSuiteFilter = new SuiteEndStateFilter(suiteEndStates, testSuiteFilter);
-        }
-        return testSuiteFilter;
     }
 
     protected abstract void doHandle(List<WebAgentTestSuite> suites, String target, Request baseRequest, HttpServletRequest request, HttpServletResponse response, XMLStreamWriter writer) throws Exception;

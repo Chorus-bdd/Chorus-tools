@@ -48,9 +48,4 @@ public class SuiteNameFilter extends AbstractSuiteFilter {
         return accept;
     }
 
-    @Override
-    public void reset() {
-        super.reset();
-        suiteNamePatterns.clear();
-    }
 }

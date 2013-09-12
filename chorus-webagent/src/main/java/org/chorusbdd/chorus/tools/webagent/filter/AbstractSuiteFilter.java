@@ -27,7 +27,4 @@ public abstract class AbstractSuiteFilter implements TestSuiteFilter {
 
     protected abstract boolean applyFilter(WebAgentTestSuite suite);
 
-    public void reset() {
-        wrappedFilter.reset();
-    }
 }
