@@ -117,6 +117,7 @@ public class SuiteXmlWriterTest extends XMLTestCase {
         xml = xml.replaceAll("executionHost=\".*\"", "executionHost=\"{EXECUTIONHOST}\"");
         xml = xml.replaceAll("(?s)stackTrace=\".*?\"", "stackTrace=\"{REPLACED}\"");
         xml = xml.replaceAll("tokenId=\".*\"", "tokenId=\"{REPLACED}\"");
+        xml = xml.replaceAll("WebAgentSelfTestHandler:\\d+", "WebAgentSelfTestHandler:{LINENUMBER}"); //replace line numbers
         return xml;
     }
 

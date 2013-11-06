@@ -11,7 +11,7 @@ import org.chorusbdd.chorus.core.interpreter.StepPendingException;
  * Time: 08:53
  */
 @Handler("Web Agent Self Test")
-public class WebAgentSelfTestHandler extends Assert {
+public class WebAgentSelfTestHandler {
 
     @Step("I run a scenario with several steps")
     public void runAScenarioWithSeveralSteps() {
@@ -20,7 +20,7 @@ public class WebAgentSelfTestHandler extends Assert {
 
     @Step("a step fails an assertion")
     public void failAnAssertion() {
-        assertTrue("Fail an assertion", false);
+        Assert.assertTrue("Fail an assertion", false);
     }
 
     @Step("chorus scenario timeout is set to 2 seconds")
@@ -35,7 +35,7 @@ public class WebAgentSelfTestHandler extends Assert {
     @Step(value = "one of the steps is marked pending", pending = "here be a pending message")
     public void stepMarkedPending() {
     }
-
+    
     @Step(value = "one of the steps throws a pending exception")
     public void stepThrowsPending() {
         throw new StepPendingException("This one Pending");
