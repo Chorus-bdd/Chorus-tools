@@ -154,12 +154,12 @@
         <dependency>
             <groupId>org.chorusbdd</groupId>
             <artifactId>chorus</artifactId>
-            <version>1.5.4-SNAPSHOT</version>
+            <version>1.5.4</version>
         </dependency>
         <dependency>
             <groupId>org.chorusbdd</groupId>
             <artifactId>chorus-spring</artifactId>
-            <version>1.5.4-SNAPSHOT</version>
+            <version>1.5.4</version>
         </dependency>
 	    <dependency>
             <groupId>org.chorusbdd</groupId>
