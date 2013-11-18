@@ -25,7 +25,7 @@
         <url>git@github.com:Chorus-bdd/Chorus-tools.git</url>
     </scm>
     <build>
-
+             
         <!-- Copy chorus resources from the test/handlers and test/junit subtree, so resource files
         required by a handlers can be local to the .java, rather than residing in
         a separate tree under test/resources, although the default test/resources location
@@ -136,7 +136,43 @@
                     </execution>
                 </executions>
             </plugin>
+
+            <plugin>
+                <artifactId>maven-resources-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>copy-resources</id>
+                        <!-- here the phase you need -->
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${basedir}/target</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>src/etc</directory>
+                                    <filtering>true</filtering>
+                                    <includes>
+                                        <include>start.bat</include>
+                                        <include>start.sh</include>
+                                    </includes>
+                                </resource>
+                                <resource>
+                                    <directory>src/main/resources</directory>
+                                    <filtering>true</filtering>
+                                    <includes>
+                                        <include>*.properties</include>
+                                        <include>*.xml</include>
+                                    </includes>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
+
 
     </build>
 

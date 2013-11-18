@@ -8,9 +8,9 @@
       <directory>${basedir}/target</directory>
       <outputDirectory></outputDirectory>
       <includes>
-        <include>start.bat</include>
-        <include>*.xml</include>
-        <include>counters.txt</include>
+          <include>start.sh</include>
+          <include>start.bat</include>
+          <include>*.xml</include>
       </includes>
     </fileSet>
     <fileSet>

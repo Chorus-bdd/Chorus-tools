@@ -8,7 +8,9 @@
       <directory>target</directory>
       <outputDirectory></outputDirectory>
       <includes>
-        <include>start.sh</include>
+          <include>start.sh</include>
+          <include>start.bat</include>
+          <include>*.xml</include>      
       </includes>
     </fileSet>
     <fileSet>
