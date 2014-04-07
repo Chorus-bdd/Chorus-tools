@@ -136,7 +136,7 @@
         <dependency>
             <groupId>org.chorusbdd</groupId>
             <artifactId>chorus</artifactId>
-            <version>1.6.0</version>
+            <version>1.6.3</version>
         </dependency>
         <dependency>
             <groupId>net.java.dev.stax-utils</groupId>  <!-- provides an Intenting XML Writer utility class -->
