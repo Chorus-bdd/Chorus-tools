@@ -30,11 +30,12 @@
 package org.chorusbdd.chorus.tools.swing.viewer;
 
 import org.chorusbdd.chorus.results.*;
-import org.chorusbdd.chorus.executionlistener.PlainResultsFormatter;
+import org.chorusbdd.chorus.util.logging.PlainOutputFormatter;
 
 import javax.swing.text.*;
 import java.awt.*;
 import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 import java.io.PrintWriter;
 
 import static org.chorusbdd.chorus.results.StepEndState.*;
@@ -149,8 +150,9 @@ public class ExecutionOutputDocument extends DefaultStyledDocument {
 
     private String getResultsSummaryString(ExecutionToken testExecutionToken) {
         ByteArrayOutputStream os = new ByteArrayOutputStream(1024);
-        PrintWriter pw = new PrintWriter(os);
-        PlainResultsFormatter f = new PlainResultsFormatter(pw);
+        PrintStream ps = new PrintStream(os);
+        PlainOutputFormatter f = new PlainOutputFormatter();
+        f.setPrintStream(ps);
         f.printResults(testExecutionToken.getResultsSummary());
         return new String(os.toByteArray());
     }
