@@ -5,7 +5,6 @@ import org.apache.commons.codec.digest.DigestUtils;
 import javax.annotation.concurrent.ThreadSafe;
 import java.nio.charset.Charset;
 import java.nio.file.Path;
-import java.util.function.Supplier;
 
 import static org.apache.commons.lang3.Validate.notNull;
 
