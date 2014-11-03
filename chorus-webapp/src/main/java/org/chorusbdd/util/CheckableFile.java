@@ -32,24 +32,6 @@ public class CheckableFile {
         return md5;
     }
 
-    public Supplier<String> contentsSupplier() {
-        return new Supplier<String>() {
-            @Override
-            public String get() {
-                return contents();
-            }
-        };
-    }
-
-    public Supplier<String> md5Supplier() {
-        return new Supplier<String>() {
-            @Override
-            public String get() {
-                return md5();
-            }
-        };
-    }
-
     private void calculateMd5() {
         if (md5 == null) {
             synchronized (monitor) {

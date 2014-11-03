@@ -106,7 +106,7 @@ public class StructureIOImpl implements StructureIO {
         final String pakageId = toId(path.getParent());
         final String humanName = featureHumanName(path);
         final CheckableFile checkableFile = new CheckableFile(path, Charset.forName("UTF-8"));
-        return new FeatureImpl(id, pakageId, humanName, checkableFile.contentsSupplier(), checkableFile.md5Supplier());
+        return new FeatureImpl(id, pakageId, humanName, checkableFile::contents, checkableFile::md5);
     }
 
     @Override
