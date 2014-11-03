@@ -1,0 +1,18 @@
+<div>
+    <span ng-repeat="parent in feature.parentPackages">
+        <a ng-click="feature.viewPackage(parent.id)" target="_blank">{{parent.name}}/</a></td>
+    </span>
+    <!--<span>{{feature.package.name}}</span>-->
+    <hr/>
+
+    <h3>{{feature.name}}</h3>
+    <br/>
+    <!--<div style="white-space: pre;width:500px;height:500px;border:solid 1px #808080;padding:20px;">-->
+    <!--</div>-->
+    <pre>
+        {{feature.body}}
+    </pre>
+    <input ng-click="feature.edit()" class="btn-primary" type="submit" value="edit"/>
+    <input ng-click="feature.move()" class="btn-primary" type="submit" value="move"/>
+    <input ng-click="feature.delete()" class="btn-primary" type="submit" value="delete"/>
+</div>

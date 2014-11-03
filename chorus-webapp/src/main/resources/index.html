@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Test Page</title>
+    <script src="components/global.js"></script>
+
+    <!-- External -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-rc.5/angular.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-rc.5/angular-resource.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-rc.5/angular-route.js"></script>
+
+    <script type="text/javascript" src="http://underscorejs.org/underscore.js"></script>
+    <script type="text/javascript" src="external/restangular/1.3.1/restangular.js"></script>
+
+    <!-- TODO: replace with GRUNT build -->
+    <!-- Util -->
+    <script src="components/chorus/util/ArgumentUtil.js"></script>
+    <script src="components/chorus/util/Log.js"></script>
+
+    <!-- Structure -->
+    <script src="components/chorus/structure/feature/FeatureRepository.js"></script>
+    <script src="components/chorus/structure/feature/module.js"></script>
+
+    <!-- Gui -->
+    <script src="views/featureutility/formactions.ctrl.js"></script>
+    <script src="views/featureutility/module.js"></script>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="app.css">
+    <link rel="stylesheet" href="external/bootstrap/css/bootstrap.min.css" media="screen">
+</head>
+
+
+<body ng-app="chorus.structure">
+    <div ng-view></div>
+</body>
+</html>
