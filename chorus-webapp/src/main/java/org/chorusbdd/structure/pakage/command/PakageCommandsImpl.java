@@ -12,10 +12,10 @@ import java.nio.file.Path;
 import static org.apache.commons.lang3.Validate.notNull;
 
 @Immutable
-public class PakageCommandsImpl implements PakageCommands {
+class PakageCommandsImpl implements PakageCommands {
     private final StructureIO sio;
 
-    public PakageCommandsImpl(final StructureIO structureIO) {
+    PakageCommandsImpl(final StructureIO structureIO) {
         this.sio = notNull(structureIO);
     }
 

@@ -13,10 +13,10 @@ import java.nio.file.Path;
 import static org.apache.commons.lang3.Validate.notNull;
 
 @Immutable
-public class FeatureCommandsImpl implements FeatureCommands {
+class FeatureCommandsImpl implements FeatureCommands {
     private final StructureIO sio;
 
-    public FeatureCommandsImpl(final StructureIO structureIO) {
+    FeatureCommandsImpl(final StructureIO structureIO) {
         this.sio = notNull(structureIO);
     }
 

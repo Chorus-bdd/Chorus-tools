@@ -4,6 +4,7 @@ import org.chorusbdd.structure.StructureIO;
 import org.chorusbdd.structure.feature.Feature;
 import org.chorusbdd.structure.feature.FeatureRepository;
 
+import javax.annotation.concurrent.Immutable;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.stream.Stream;
@@ -13,10 +14,11 @@ import static org.apache.commons.lang3.Validate.notBlank;
 import static org.apache.commons.lang3.Validate.notNull;
 import static org.chorusbdd.util.FileUtils.listFiles;
 
-public class FeatureRepositoryImpl implements FeatureRepository {
+@Immutable
+class FeatureRepositoryImpl implements FeatureRepository {
     private final StructureIO sio;
 
-    public FeatureRepositoryImpl(final StructureIO structureIo) {
+    FeatureRepositoryImpl(final StructureIO structureIo) {
         this.sio = notNull(structureIo);
     }
 

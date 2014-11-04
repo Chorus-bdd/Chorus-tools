@@ -10,10 +10,10 @@ import java.nio.file.Path;
 import static org.apache.commons.lang3.Validate.notNull;
 
 @Immutable
-public class PakageRepositoryImpl implements PakageRepository {
+class PakageRepositoryImpl implements PakageRepository {
     private final StructureIO sio;
 
-    public PakageRepositoryImpl(final StructureIO sio) {
+    PakageRepositoryImpl(final StructureIO sio) {
         this.sio = notNull(sio);
     }
 

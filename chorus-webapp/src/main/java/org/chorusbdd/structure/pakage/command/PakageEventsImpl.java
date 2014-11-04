@@ -6,9 +6,9 @@ import org.chorusbdd.structure.pakage.PakageEvents;
 import javax.annotation.concurrent.Immutable;
 
 @Immutable
-public class PakageEventsImpl implements PakageEvents {
+class PakageEventsImpl implements PakageEvents {
 
-    public PakageEventsImpl() {
+    PakageEventsImpl() {
         // do nothing
     }
 

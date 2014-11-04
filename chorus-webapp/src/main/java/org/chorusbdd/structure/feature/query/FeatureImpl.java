@@ -9,7 +9,7 @@ import static org.apache.commons.lang3.Validate.notBlank;
 import static org.apache.commons.lang3.Validate.notNull;
 
 @ThreadSafe
-public class FeatureImpl implements Feature {
+class FeatureImpl implements Feature {
 
     private final String id;
     private final String pakageId;
@@ -18,7 +18,7 @@ public class FeatureImpl implements Feature {
     private final Supplier<String> md5Supplier;
     private final String humanName;
 
-    public FeatureImpl(final String id, final String pakageId, final String humanName,
+    FeatureImpl(final String id, final String pakageId, final String humanName,
                         final Supplier<String> textSupplier,
                         final Supplier<String> md5Supplier) {
         this.id = notBlank(id);

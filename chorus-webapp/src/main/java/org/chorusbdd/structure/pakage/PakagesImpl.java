@@ -1,13 +1,16 @@
 package org.chorusbdd.structure.pakage;
 
+import javax.annotation.concurrent.Immutable;
+
 import static org.apache.commons.lang3.Validate.notNull;
 
-public class PakagesImpl implements Pakages {
+@Immutable
+class PakagesImpl implements Pakages {
     private final PakageEvents events;
     private final PakageRepository repository;
     private final PakageCommands commands;
 
-    public PakagesImpl(final PakageEvents events, final PakageRepository repository, final PakageCommands commands) {
+    PakagesImpl(final PakageEvents events, final PakageRepository repository, final PakageCommands commands) {
         this.events = notNull(events);
         this.repository = notNull(repository);
         this.commands = notNull(commands);
