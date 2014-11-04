@@ -7,11 +7,33 @@
 http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
 http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
+    <bean id="applicationProperties" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="location" value="classpath:application.properties"/>
+    </bean>
+
     <context:annotation-config/>
-    <mvc:annotation-driven/>
+    <mvc:annotation-driven>
+    <mvc:message-converters>
+            <bean id="jacksonHttpMessageConverter"
+                class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+                <property name="prettyPrint" value="${json.prettyPrint}" />
+            </bean>
+        </mvc:message-converters>
+        </mvc:annotation-driven>
 
     <!-- For some reason location must be "classpath:<foler>/", intellij rename loses some parts of this -->
     <mvc:resources mapping="/**" location="classpath:client/"/>
     <context:component-scan base-package="org.chorusbdd.web.controller"/>
 
+    <bean name="structureIO" class="org.chorusbdd.structure.StructureIOImpl"/>
+
+    <bean name="featureEvents" class="org.chorusbdd.structure.feature.command.FeatureEventsImpl"/>
+    <bean name="featureRepository" class="org.chorusbdd.structure.feature.query.FeatureRepositoryImpl" autowire="constructor"/>
+    <bean name="featureCommands" class="org.chorusbdd.structure.feature.command.FeatureCommandsImpl" autowire="constructor"/>
+    <bean name="features" class="org.chorusbdd.structure.feature.FeaturesImpl" autowire="constructor"/>
+
+    <bean name="packageEvents" class="org.chorusbdd.structure.pakage.command.PakageEventsImpl"/>
+    <bean name="packageRepository" class="org.chorusbdd.structure.pakage.query.PakageRepositoryImpl" autowire="constructor"/>
+    <bean name="packageCommands" class="org.chorusbdd.structure.pakage.command.PakageCommandsImpl" autowire="constructor"/>
+    <bean name="packages" class="org.chorusbdd.structure.pakage.PakagesImpl" autowire="constructor"/>
 </beans>

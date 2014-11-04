@@ -1,11 +1,5 @@
 package org.chorusbdd.structure.feature;
 
-import org.chorusbdd.structure.StructureIO;
-import org.chorusbdd.structure.StructureIOImpl;
-import org.chorusbdd.structure.feature.command.FeatureCommandsImpl;
-import org.chorusbdd.structure.feature.command.FeatureEventsImpl;
-import org.chorusbdd.structure.feature.query.FeatureRepositoryImpl;
-
 import static org.apache.commons.lang3.Validate.notNull;
 
 public class FeaturesImpl implements Features {
@@ -17,14 +11,6 @@ public class FeaturesImpl implements Features {
         this.events = notNull(events);
         this.repository = notNull(repository);
         this.commands = notNull(commands);
-    }
-
-    @Deprecated // wire up properly
-    public FeaturesImpl() {
-        StructureIO structureIO = new StructureIOImpl();
-        this.events = new FeatureEventsImpl();
-        this.repository = new FeatureRepositoryImpl(structureIO);
-        this.commands = new FeatureCommandsImpl(structureIO);
     }
 
     @Override

@@ -1,11 +1,5 @@
 package org.chorusbdd.structure.pakage;
 
-import org.chorusbdd.structure.StructureIO;
-import org.chorusbdd.structure.StructureIOImpl;
-import org.chorusbdd.structure.pakage.command.PakageCommandsImpl;
-import org.chorusbdd.structure.pakage.command.PakageEventsImpl;
-import org.chorusbdd.structure.pakage.query.PakageRepositoryImpl;
-
 import static org.apache.commons.lang3.Validate.notNull;
 
 public class PakagesImpl implements Pakages {
@@ -17,14 +11,6 @@ public class PakagesImpl implements Pakages {
         this.events = notNull(events);
         this.repository = notNull(repository);
         this.commands = notNull(commands);
-    }
-
-    @Deprecated // wire up properly
-    public PakagesImpl() {
-        StructureIO structureIO = new StructureIOImpl();
-        this.events = new PakageEventsImpl();
-        this.repository = new PakageRepositoryImpl(structureIO);
-        this.commands = new PakageCommandsImpl(structureIO);
     }
 
     @Override
