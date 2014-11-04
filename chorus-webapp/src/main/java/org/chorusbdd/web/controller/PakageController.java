@@ -3,7 +3,6 @@ package org.chorusbdd.web.controller;
 import com.fasterxml.jackson.annotation.JsonView;
 import org.chorusbdd.structure.pakage.Pakage;
 import org.chorusbdd.structure.pakage.Pakages;
-import org.chorusbdd.structure.pakage.PakagesImpl;
 import org.chorusbdd.web.view.BinaryResultView;
 import org.chorusbdd.web.view.structure.FeatureView;
 import org.chorusbdd.web.view.structure.PakageView;

@@ -1,31 +1,21 @@
 package org.chorusbdd.web.controller;
 
 import com.fasterxml.jackson.annotation.JsonView;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.chorusbdd.structure.feature.Feature;
 import org.chorusbdd.structure.feature.Features;
-import org.chorusbdd.structure.feature.FeaturesImpl;
 import org.chorusbdd.structure.feature.command.OptimisticLockFailedException;
-import org.chorusbdd.structure.pakage.Pakage;
-import org.chorusbdd.structure.pakage.Pakages;
-import org.chorusbdd.structure.pakage.PakagesImpl;
 import org.chorusbdd.web.view.BinaryResultView;
 import org.chorusbdd.web.view.structure.FeatureView;
-import org.chorusbdd.web.view.structure.PakageView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 
 import static org.apache.commons.lang3.Validate.notNull;
-import static org.chorusbdd.web.controller.Controllers.createResourceUri;
 import static org.chorusbdd.web.controller.Controllers.redirectToFeature;
 import static org.chorusbdd.web.controller.ViewMapper.asFeatureView;
 
@@ -43,7 +33,7 @@ public class FeatureController {
 
     // -------------------------------------------------------- Control Methods
 
-    @RequestMapping(value = "/features/p/{featureId:.*}", method = RequestMethod.GET) // TODO: change to put, remove p
+    @RequestMapping(value = "/features/{featureId:.*}", method = RequestMethod.PUT)
     public BinaryResultView putFeature(final HttpServletResponse response,
                                        @PathVariable final String featureId,
                                        @RequestParam(value = "current-md5", required = false, defaultValue = "") String optimisticMd5,
@@ -69,7 +59,7 @@ public class FeatureController {
         return asFeatureView(feature);
     }
 
-    @RequestMapping(value = "/features/d/{featureId:.*}", method = RequestMethod.GET) // TODO: change to delete, remove d
+    @RequestMapping(value = "/features/{featureId:.*}", method = RequestMethod.DELETE)
     public BinaryResultView deleteFeature(@PathVariable final String featureId) {
         final BinaryResultView resultView = new BinaryResultView();
         try {
@@ -82,16 +72,11 @@ public class FeatureController {
         return resultView;
     }
 
-    @RequestMapping(value = "/move-feature/p", method = RequestMethod.GET) // TODO: change to put, remove p
+    @RequestMapping(value = "/move-feature", method = RequestMethod.PUT)
     @JsonView(FeatureView.SummaryView.class)
     public FeatureView moveFeature(@RequestParam(value = "target", required = true) String from,
                                    @RequestParam(value = "destination",   required = true) String to) {
         features.commands().apply(features.events().move(from, to));
         return asFeatureView(features.repository().findById(to));
-    }
-
-    @RequestMapping(value = "/echo/{value1:.*}", method = RequestMethod.GET)
-    public String echo(@PathVariable String value1) {
-        return value1;
     }
 }
