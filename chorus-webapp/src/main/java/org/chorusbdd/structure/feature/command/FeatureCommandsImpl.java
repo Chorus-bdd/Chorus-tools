@@ -2,6 +2,7 @@ package org.chorusbdd.structure.feature.command;
 
 import org.chorusbdd.exception.ResourceExistsException;
 import org.chorusbdd.exception.ResourceNotFoundException;
+import org.chorusbdd.history.Svc;
 import org.chorusbdd.structure.StructureIO;
 import org.chorusbdd.structure.feature.Feature;
 import org.chorusbdd.structure.feature.FeatureCommands;
@@ -15,9 +16,11 @@ import static org.apache.commons.lang3.Validate.notNull;
 @Immutable
 class FeatureCommandsImpl implements FeatureCommands {
     private final StructureIO sio;
+    private final Svc svc;
 
-    FeatureCommandsImpl(final StructureIO structureIO) {
+    FeatureCommandsImpl(final StructureIO structureIO, final Svc svc) {
         this.sio = notNull(structureIO);
+        this.svc = notNull(svc);
     }
 
     @Override
@@ -27,6 +30,7 @@ class FeatureCommandsImpl implements FeatureCommands {
         sio.writePakage(path.getParent());
         checkOptimisticLock(path, event.optimisticMd5());
         sio.writeFeature(path, event.text());
+        svc.commitAll("default user", "default@default.default", event.toString());
     }
 
     @Override
@@ -35,6 +39,7 @@ class FeatureCommandsImpl implements FeatureCommands {
         final Path path = toPath(event.featureId());
         checkFeatureExists(path);
         sio.deleteFeature(path);
+        svc.commitAll("default user", "default@default.default", event.toString());
     }
 
     @Override
@@ -46,6 +51,7 @@ class FeatureCommandsImpl implements FeatureCommands {
         checkFeatureDoesNotExist(destination);
         sio.writePakage(destination.getParent());
         sio.moveFeature(target, destination);
+        svc.commitAll("default user", "default@default.default", event.toString());
     }
 
     // -------------------------------------------------------- Private Methods

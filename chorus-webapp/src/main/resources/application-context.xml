@@ -25,7 +25,10 @@ http://www.springframework.org/schema/mvc http://www.springframework.org/schema/
     <mvc:resources mapping="/**" location="classpath:client/"/>
     <context:component-scan base-package="org.chorusbdd.web.controller"/>
 
-    <bean name="structureIO" class="org.chorusbdd.structure.StructureIOImpl"/>
+    <!-- Structure -->
+    <bean name="structureIO" class="org.chorusbdd.structure.StructureIOImpl">
+        <constructor-arg value="${features.rootDirectory}"/>
+    </bean>
 
     <bean name="featureEvents" class="org.chorusbdd.structure.feature.command.FeatureEventsImpl"/>
     <bean name="featureRepository" class="org.chorusbdd.structure.feature.query.FeatureRepositoryImpl" autowire="constructor"/>
@@ -36,4 +39,9 @@ http://www.springframework.org/schema/mvc http://www.springframework.org/schema/
     <bean name="packageRepository" class="org.chorusbdd.structure.pakage.query.PakageRepositoryImpl" autowire="constructor"/>
     <bean name="packageCommands" class="org.chorusbdd.structure.pakage.command.PakageCommandsImpl" autowire="constructor"/>
     <bean name="packages" class="org.chorusbdd.structure.pakage.PakagesImpl" autowire="constructor"/>
+
+    <!-- History -->
+    <bean name="svc" class="org.chorusbdd.history.GitSvc">
+        <constructor-arg value="${features.rootDirectory}"/>
+    </bean>
 </beans>

@@ -12,14 +12,14 @@ import java.util.stream.Stream;
 import static org.apache.commons.lang3.Validate.notNull;
 
 @Immutable
-class PakageImpl implements Pakage {
+public class PakageImpl implements Pakage {
 
     private final String id;
     private final String humanName;
     private final List<Pakage> subpackages;
     private final List<Feature> features;
 
-    PakageImpl(final String id, final String humanName, final Stream<Pakage> subpackages, final Stream<Feature> features) {
+    public PakageImpl(final String id, final String humanName, final Stream<Pakage> subpackages, final Stream<Feature> features) {
         this.id = notNull(id);
         this.humanName = notNull(humanName);
         this.subpackages =  notNull(subpackages).collect(Collectors.<Pakage>toList());

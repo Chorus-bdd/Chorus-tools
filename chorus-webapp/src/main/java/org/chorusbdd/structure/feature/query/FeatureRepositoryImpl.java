@@ -31,4 +31,14 @@ class FeatureRepositoryImpl implements FeatureRepository {
         }
         return sio.readFeature(path);
     }
+
+    //@Override
+    public Feature findLogById(final String id) {
+        notBlank(id);
+        final Path path = sio.featureIdToPath(id);
+        if (!sio.existsAndIsAFeature(path)) {
+            return null;
+        }
+        return sio.readFeature(path);
+    }
 }

@@ -26,27 +26,28 @@ import static java.nio.file.Files.exists;
 import static java.nio.file.Files.isDirectory;
 import static java.util.Objects.requireNonNull;
 import static java.util.stream.Collectors.toList;
+import static org.apache.commons.lang3.Validate.notNull;
 import static org.chorusbdd.util.FileUtils.listFiles;
 import static org.chorusbdd.util.StreamUtils.stream;
 
 @Immutable
 public class StructureIOImpl implements StructureIO {
-    //private static final Path PACKAGE_ROOT = Paths.get("C:\\dev\\ebond\\ebond2\\frameworks\\messagebridge\\msgbridge-mkv\\test\\component\\feature\\");
-    private static final Path PACKAGE_ROOT = Paths.get("C:\\dev\\tmp\\testroot");
+    private static final String FEATURE_EXTENSION = ".feature";
+    private static final String STEPMACRO_EXTENSION = ".stepmacro";
 
     private static final Predicate<Path> EXISTS = (p) -> exists(p);
     private static final Predicate<Path> NOT_A_DIRECTORY = (p) -> !isDirectory(p);
-    public static final String FEATURE_EXTENSION = ".feature";
     private static final Predicate<Path> HAS_FEATURE_EXTENSION = (p) -> String.valueOf(p).endsWith(FEATURE_EXTENSION);
-    public static final String STEPMACRO_EXTENSION = ".stepmacro";
+    private final Path rootPath;
 
-    public StructureIOImpl() {
-        // do nothing
+    public StructureIOImpl(final String packageRoot) {
+        notNull(packageRoot);
+        this.rootPath = Paths.get(packageRoot);
     }
 
     @Override
     public Path rootPath() {
-        return PACKAGE_ROOT;
+        return rootPath;
     }
 
     // ---------------------------------------------------------- ID Conversion

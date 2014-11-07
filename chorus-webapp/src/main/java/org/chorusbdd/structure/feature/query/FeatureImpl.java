@@ -2,14 +2,15 @@ package org.chorusbdd.structure.feature.query;
 
 import org.chorusbdd.structure.feature.Feature;
 
+import javax.annotation.concurrent.Immutable;
 import javax.annotation.concurrent.ThreadSafe;
 import java.util.function.Supplier;
 
 import static org.apache.commons.lang3.Validate.notBlank;
 import static org.apache.commons.lang3.Validate.notNull;
 
-@ThreadSafe
-class FeatureImpl implements Feature {
+@Immutable
+public class FeatureImpl implements Feature {
 
     private final String id;
     private final String pakageId;
@@ -18,7 +19,7 @@ class FeatureImpl implements Feature {
     private final Supplier<String> md5Supplier;
     private final String humanName;
 
-    FeatureImpl(final String id, final String pakageId, final String humanName,
+    public FeatureImpl(final String id, final String pakageId, final String humanName,
                         final Supplier<String> textSupplier,
                         final Supplier<String> md5Supplier) {
         this.id = notBlank(id);
@@ -42,8 +43,6 @@ class FeatureImpl implements Feature {
     public String humanName() {
         return humanName;
     }
-
-    // -------------------------------------------------------- File Properties
 
     @Override
     public String text() {
