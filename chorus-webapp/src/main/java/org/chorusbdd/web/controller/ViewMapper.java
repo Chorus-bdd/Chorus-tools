@@ -1,6 +1,6 @@
 package org.chorusbdd.web.controller;
 
-import org.chorusbdd.history.Modification;
+import org.chorusbdd.history.Revision;
 import org.chorusbdd.structure.feature.Feature;
 import org.chorusbdd.structure.pakage.Pakage;
 import org.chorusbdd.web.view.ModificationView;
@@ -39,7 +39,7 @@ public class ViewMapper {
         return view;
     }
 
-    public static ModificationView asModificationView(final Modification modification) {
+    public static ModificationView asModificationView(final Revision modification) {
         final SimpleDateFormat dateFormat = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy");
         final ModificationView view = new ModificationView();
         view.setAuthorEmailAddress(modification.authorEmailAddress());

@@ -2,7 +2,7 @@ package org.chorusbdd.history;
 
 import java.util.Date;
 
-public interface Modification {
+public interface Revision {
     String id();
 
     String authorName();

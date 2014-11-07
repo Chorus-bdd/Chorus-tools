@@ -1,6 +1,5 @@
 package org.chorusbdd.history;
 
-import org.chorusbdd.history.ModificationImpl;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -18,7 +17,7 @@ public class ModificationImplTest {
 
     @Test
     public void hasPropertiesSetByConstructor() {
-        final ModificationImpl modification = new ModificationImpl("id-prop", "autohor-name-prop", "author-email-prop", mockDate, "comment-prop");
+        final RevisionImpl modification = new RevisionImpl("id-prop", "autohor-name-prop", "author-email-prop", mockDate, "comment-prop");
 
         assertThat(modification.id(), is("id-prop"));
         assertThat(modification.authorName(), is("autohor-name-prop"));

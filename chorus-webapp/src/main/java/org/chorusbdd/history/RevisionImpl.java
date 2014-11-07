@@ -8,14 +8,14 @@ import java.util.Date;
 import static org.apache.commons.lang3.Validate.notNull;
 
 @Immutable
-class ModificationImpl implements Modification {
+class RevisionImpl implements Revision {
     private final String id;
     private final String authorName;
     private final String authorEmailAddress;
     private final Date dateTime;
     private final String comment;
 
-    ModificationImpl(final String id, final String authorName, final String authorEmailAddress, final Date dateTime, final String comment) {
+    RevisionImpl(final String id, final String authorName, final String authorEmailAddress, final Date dateTime, final String comment) {
         this.id = notNull(id);
         this.authorName = notNull(authorName);
         this.authorEmailAddress = notNull(authorEmailAddress);
@@ -47,6 +47,8 @@ class ModificationImpl implements Modification {
     public String comment() {
         return comment;
     }
+
+
 
     @Override
     public String toString() {
