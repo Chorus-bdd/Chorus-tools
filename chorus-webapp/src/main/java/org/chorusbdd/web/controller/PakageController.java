@@ -3,7 +3,7 @@ package org.chorusbdd.web.controller;
 import com.fasterxml.jackson.annotation.JsonView;
 import org.chorusbdd.structure.pakage.Pakage;
 import org.chorusbdd.structure.pakage.Pakages;
-import org.chorusbdd.web.view.BinaryResultView;
+import org.chorusbdd.web.view.ResultView;
 import org.chorusbdd.web.view.structure.FeatureView;
 import org.chorusbdd.web.view.structure.PakageView;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,8 +70,8 @@ public class PakageController {
     }
 
     @RequestMapping(value = "/packages/{pakageId:.*}", method = RequestMethod.DELETE)
-    public BinaryResultView deletePakage(@PathVariable final String pakageId) {
-        final BinaryResultView resultView = new BinaryResultView();
+    public ResultView deletePakage(@PathVariable final String pakageId) {
+        final ResultView resultView = new ResultView();
         try {
             pakages.commands().apply(pakages.events().delete(pakageId));
             resultView.setSucceeded(true);

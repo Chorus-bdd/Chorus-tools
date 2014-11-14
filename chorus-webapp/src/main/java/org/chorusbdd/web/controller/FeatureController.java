@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonView;
 import org.chorusbdd.structure.feature.Feature;
 import org.chorusbdd.structure.feature.Features;
 import org.chorusbdd.structure.feature.command.OptimisticLockFailedException;
-import org.chorusbdd.web.view.BinaryResultView;
+import org.chorusbdd.web.view.ResultView;
 import org.chorusbdd.web.view.structure.FeatureView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -34,7 +34,7 @@ public class FeatureController {
     // -------------------------------------------------------- Control Methods
 
     @RequestMapping(value = "/features/{featureId:.*}", method = RequestMethod.PUT)
-    public BinaryResultView putFeature(final HttpServletResponse response,
+    public ResultView putFeature(final HttpServletResponse response,
                                        @PathVariable final String featureId,
                                        @RequestParam(value = "current-md5", required = false, defaultValue = "") String optimisticMd5,
                                        @RequestParam(value = "text", required = true) String text) {
@@ -42,7 +42,7 @@ public class FeatureController {
             features.commands().apply(features.events().modify(featureId, text, optimisticMd5));
             return redirectToFeature(response, featureId);
         } catch (final OptimisticLockFailedException e) {
-            final BinaryResultView resultView = new BinaryResultView();
+            final ResultView resultView = new ResultView();
             resultView.setSucceeded(false);
             resultView.setMessage(e);
             return resultView;
@@ -51,7 +51,7 @@ public class FeatureController {
 
     @RequestMapping(value = "/features/{featureId:.*}", method = RequestMethod.GET)
     @JsonView(FeatureView.FullDetailView.class)
-    public FeatureView listFeature(@PathVariable final String featureId) {
+    public FeatureView viewFeature(@PathVariable final String featureId) {
         final Feature feature = features.repository().findById(featureId);
         if (feature == null) {
             throw new RuntimeException("feature not found");
@@ -59,9 +59,20 @@ public class FeatureController {
         return asFeatureView(feature);
     }
 
+    @RequestMapping(value = "/features/{featureId}/{revisionId}", method = RequestMethod.GET)
+    @JsonView(FeatureView.FullDetailView.class)
+    public FeatureView viewFeatureAtRevision(@PathVariable final String featureId,
+                                             @PathVariable final String revisionId) {
+        final Feature feature = features.repository().findAtRevision(featureId, revisionId);
+        if (feature == null) {
+            throw new RuntimeException("feature not found");
+        }
+        return asFeatureView(feature);
+    }
+
     @RequestMapping(value = "/features/{featureId:.*}", method = RequestMethod.DELETE)
-    public BinaryResultView deleteFeature(@PathVariable final String featureId) {
-        final BinaryResultView resultView = new BinaryResultView();
+    public ResultView deleteFeature(@PathVariable final String featureId) {
+        final ResultView resultView = new ResultView();
         try {
             features.commands().apply(features.events().delete(featureId));
             resultView.setSucceeded(true);

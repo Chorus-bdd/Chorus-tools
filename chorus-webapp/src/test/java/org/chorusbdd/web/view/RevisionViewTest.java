@@ -11,7 +11,7 @@ import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
 @RunWith(MockitoJUnitRunner.class)
-public class ModificationViewTest {
+public class RevisionViewTest {
 
     @Mock FeatureView featureView1;
     @Mock FeatureView featureView2;
@@ -21,7 +21,7 @@ public class ModificationViewTest {
 
     @Test
     public void defaultsPropertiesToEmpty() {
-        final ModificationView mv = new ModificationView();
+        final RevisionView mv = new RevisionView();
         assertThat(mv.getId(), is(""));
         assertThat(mv.getAuthorName(), is(""));
         assertThat(mv.getComment(), is(""));
@@ -31,7 +31,7 @@ public class ModificationViewTest {
 
     @Test
     public void hasProperties() {
-        final ModificationView mv = new ModificationView();
+        final RevisionView mv = new RevisionView();
         mv.setId("**ID");
         mv.setAuthorName("**authorname");
         mv.setAuthorEmailAddress("**authoremail");

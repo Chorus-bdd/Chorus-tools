@@ -3,14 +3,14 @@ package org.chorusbdd.web.view;
 import javax.annotation.concurrent.NotThreadSafe;
 
 @NotThreadSafe
-public class ModificationView {
-    private String id;
-    private String authorName;
-    private String authorEmailAddress;
-    private String dateTime;
-    private String comment;
+public class RevisionView {
+    private String id = "";
+    private String authorName = "";
+    private String authorEmailAddress = "";
+    private String dateTime = "";
+    private String comment = "";
 
-    public ModificationView() {}
+    public RevisionView() {}
 
     public String getAuthorEmailAddress() {
         return authorEmailAddress;

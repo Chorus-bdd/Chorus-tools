@@ -3,11 +3,11 @@ package org.chorusbdd.web.view;
 import javax.annotation.concurrent.NotThreadSafe;
 
 @NotThreadSafe
-public class BinaryResultView {
+public class ResultView {
     private boolean succeeded;
     private String message;
 
-    public BinaryResultView() {
+    public ResultView() {
         // do nothing
     }
 

@@ -3,7 +3,7 @@ package org.chorusbdd.web.controller;
 import org.chorusbdd.history.Revision;
 import org.chorusbdd.structure.feature.Feature;
 import org.chorusbdd.structure.pakage.Pakage;
-import org.chorusbdd.web.view.ModificationView;
+import org.chorusbdd.web.view.RevisionView;
 import org.chorusbdd.web.view.structure.FeatureView;
 import org.chorusbdd.web.view.structure.PakageView;
 
@@ -39,14 +39,14 @@ public class ViewMapper {
         return view;
     }
 
-    public static ModificationView asModificationView(final Revision modification) {
+    public static RevisionView asRevisionView(final Revision rev) {
         final SimpleDateFormat dateFormat = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy");
-        final ModificationView view = new ModificationView();
-        view.setAuthorEmailAddress(modification.authorEmailAddress());
-        view.setAuthorName(modification.authorName());
-        view.setComment(modification.comment());
-        view.setDateTime(dateFormat.format(modification.dateTime()));
-        view.setId(modification.id());
+        final RevisionView view = new RevisionView();
+        view.setAuthorEmailAddress(rev.authorEmailAddress());
+        view.setAuthorName(rev.authorName());
+        view.setComment(rev.comment());
+        view.setDateTime(dateFormat.format(rev.dateTime()));
+        view.setId(rev.id());
         return view;
     }
 }

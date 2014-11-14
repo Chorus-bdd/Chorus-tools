@@ -1,35 +1,33 @@
 package org.chorusbdd.structure.pakage.query;
 
-import org.chorusbdd.structure.StructureIO;
 import org.chorusbdd.structure.pakage.Pakage;
+import org.chorusbdd.structure.pakage.PakageDao;
 import org.chorusbdd.structure.pakage.PakageRepository;
 
 import javax.annotation.concurrent.Immutable;
-import java.nio.file.Path;
 
 import static org.apache.commons.lang3.Validate.notNull;
 
 @Immutable
 class PakageRepositoryImpl implements PakageRepository {
-    private final StructureIO sio;
+    private final PakageDao dao;
 
-    PakageRepositoryImpl(final StructureIO sio) {
-        this.sio = notNull(sio);
+    PakageRepositoryImpl(final PakageDao dao) {
+        this.dao = notNull(dao);
     }
 
     @Override
     public Pakage findRoot() {
-        return sio.readPakage(sio.rootPath());
+        return dao.readRootPakage();
     }
 
     @Override
     public Pakage findById(final String id) {
         notNull(id);
-        final Path path = sio.pakageIdToPath(id);
-        if (!sio.existsAndIsAPakage(path)) {
+        if (!dao.pakageExists(id)) {
             return null;
         }
-        return sio.readPakage(path);
+        return dao.readPakage(id);
     }
 
 }

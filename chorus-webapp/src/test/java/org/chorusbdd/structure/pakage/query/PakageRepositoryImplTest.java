@@ -1,6 +1,7 @@
 package org.chorusbdd.structure.pakage.query;
 
-import org.chorusbdd.structure.StructureIO;
+import org.chorusbdd.structure.FileSystemDatabase;
+import org.chorusbdd.structure.pakage.PakageDao;
 import org.chorusbdd.structure.pakage.Pakage;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -17,23 +18,22 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class PakageRepositoryImplTest {
 
-    @Mock StructureIO sio;
+    @Mock PakageDao dao;
     @Mock Path mockPath;
     @Mock Pakage mockPakage;
 
     @Test(expected=NullPointerException.class)
-    public void disallowsNullStructureIO() {
+    public void disallowsNullPakageDao() {
         new PakageRepositoryImpl(null);
     }
 
     @Test
     public void findsTheRootPackage() {
         // prepare
-        when(sio.rootPath()).thenReturn(mockPath);
-        when(sio.readPakage(mockPath)).thenReturn(mockPakage);
+        when(dao.readRootPakage()).thenReturn(mockPakage);
 
         // run
-        final Pakage result = new PakageRepositoryImpl(sio).findRoot();
+        final Pakage result = newPakageRepositoryImpl().findRoot();
 
         // verify
         assertThat(result, is(mockPakage));
@@ -42,12 +42,11 @@ public class PakageRepositoryImplTest {
     @Test
     public void findByIdReturnsNullWhenPackageDoesNotExist() {
         // prepare
-        when(sio.pakageIdToPath("p.id")).thenReturn(mockPath);
-        when(sio.existsAndIsAPakage(mockPath)).thenReturn(false);
-        when(sio.readPakage(mockPath)).thenReturn(mockPakage);
+        when(dao.pakageExists("p.id")).thenReturn(false);
+        when(dao.readPakage("p.id")).thenReturn(mockPakage);
 
         // run
-        final Pakage result = new PakageRepositoryImpl(sio).findById("p.id");
+        final Pakage result = newPakageRepositoryImpl().findById("p.id");
 
         // verify
         assertThat(result, is(nullValue()));
@@ -56,14 +55,17 @@ public class PakageRepositoryImplTest {
     @Test
     public void findByIdRetrievesPackageFromStructureIO() {
         // prepare
-        when(sio.pakageIdToPath("p.id")).thenReturn(mockPath);
-        when(sio.existsAndIsAPakage(mockPath)).thenReturn(true);
-        when(sio.readPakage(mockPath)).thenReturn(mockPakage);
+        when(dao.pakageExists("p.id")).thenReturn(true);
+        when(dao.readPakage("p.id")).thenReturn(mockPakage);
 
         // run
-        final Pakage result = new PakageRepositoryImpl(sio).findById("p.id");
+        final Pakage result = newPakageRepositoryImpl().findById("p.id");
 
         // verify
         assertThat(result, is(mockPakage));
+    }
+
+    private PakageRepositoryImpl newPakageRepositoryImpl() {
+        return new PakageRepositoryImpl(dao);
     }
 }

@@ -1,44 +1,37 @@
 package org.chorusbdd.structure.feature.query;
 
-import org.chorusbdd.structure.StructureIO;
 import org.chorusbdd.structure.feature.Feature;
+import org.chorusbdd.structure.feature.FeatureDao;
 import org.chorusbdd.structure.feature.FeatureRepository;
 
 import javax.annotation.concurrent.Immutable;
-import java.io.IOException;
-import java.nio.file.Path;
-import java.util.stream.Stream;
 
-import static java.util.Objects.requireNonNull;
 import static org.apache.commons.lang3.Validate.notBlank;
 import static org.apache.commons.lang3.Validate.notNull;
-import static org.chorusbdd.util.FileUtils.listFiles;
 
 @Immutable
 class FeatureRepositoryImpl implements FeatureRepository {
-    private final StructureIO sio;
+    private final FeatureDao dao;
 
-    FeatureRepositoryImpl(final StructureIO structureIo) {
-        this.sio = notNull(structureIo);
+    FeatureRepositoryImpl(final FeatureDao dao) {
+        this.dao = notNull(dao);
     }
 
     @Override
     public Feature findById(final String id) {
         notBlank(id);
-        final Path path = sio.featureIdToPath(id);
-        if (!sio.existsAndIsAFeature(path)) {
+        if (!dao.featureExists(id)) {
             return null;
         }
-        return sio.readFeature(path);
+        return dao.readFeature(id);
     }
 
-    //@Override
-    public Feature findLogById(final String id) {
+    @Override
+    public Feature findAtRevision(final String id, final String revisionId) {
         notBlank(id);
-        final Path path = sio.featureIdToPath(id);
-        if (!sio.existsAndIsAFeature(path)) {
-            return null;
-        }
-        return sio.readFeature(path);
+        //if (!dao.existsAndIsAFeature(path)) {
+        //    return null;
+        //}
+        return null;//dao.readFeature(id);
     }
 }

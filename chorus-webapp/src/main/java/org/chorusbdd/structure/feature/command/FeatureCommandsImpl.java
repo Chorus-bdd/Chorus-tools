@@ -3,81 +3,80 @@ package org.chorusbdd.structure.feature.command;
 import org.chorusbdd.exception.ResourceExistsException;
 import org.chorusbdd.exception.ResourceNotFoundException;
 import org.chorusbdd.history.Svc;
-import org.chorusbdd.structure.StructureIO;
 import org.chorusbdd.structure.feature.Feature;
 import org.chorusbdd.structure.feature.FeatureCommands;
+import org.chorusbdd.structure.feature.FeatureDao;
 import org.chorusbdd.structure.feature.FeatureEvents;
+import org.chorusbdd.structure.pakage.PakageDao;
 
 import javax.annotation.concurrent.Immutable;
-import java.nio.file.Path;
 
 import static org.apache.commons.lang3.Validate.notNull;
 
 @Immutable
 class FeatureCommandsImpl implements FeatureCommands {
-    private final StructureIO sio;
+    private final FeatureDao featureDao;
+    private final PakageDao pakageDao;
     private final Svc svc;
 
-    FeatureCommandsImpl(final StructureIO structureIO, final Svc svc) {
-        this.sio = notNull(structureIO);
+    FeatureCommandsImpl(final PakageDao pakageDao, final FeatureDao featureDao, final Svc svc) {
+        this.pakageDao = notNull(pakageDao);
+        this.featureDao = notNull(featureDao);
         this.svc = notNull(svc);
     }
 
     @Override
     public void apply(final FeatureEvents.Modify event) throws OptimisticLockFailedException {
         notNull(event);
-        final Path path = toPath(event.featureId());
-        sio.writePakage(path.getParent());
-        checkOptimisticLock(path, event.optimisticMd5());
-        sio.writeFeature(path, event.text());
+        writeParentPakage(event.featureId());
+        checkOptimisticLock(event.featureId(), event.optimisticMd5());
+        featureDao.writeFeature(event.featureId(), event.text());
         svc.commitAll("default user", "default@default.default", event.toString());
     }
 
     @Override
     public void apply(final FeatureEvents.Delete event) {
         notNull(event);
-        final Path path = toPath(event.featureId());
-        checkFeatureExists(path);
-        sio.deleteFeature(path);
+        checkFeatureExists(event.featureId());
+        featureDao.deleteFeature(event.featureId());
         svc.commitAll("default user", "default@default.default", event.toString());
     }
 
     @Override
     public void apply(final FeatureEvents.Move event) {
         notNull(event);
-        final Path target = toPath(event.targetId());
-        final Path destination = toPath(event.destinationId());
-        checkFeatureExists(target);
-        checkFeatureDoesNotExist(destination);
-        sio.writePakage(destination.getParent());
-        sio.moveFeature(target, destination);
+        checkFeatureExists(event.targetId());
+        checkFeatureDoesNotExist(event.destinationId());
+        writeParentPakage(event.destinationId());
+        featureDao.moveFeature(event.targetId(), event.destinationId());
         svc.commitAll("default user", "default@default.default", event.toString());
     }
 
     // -------------------------------------------------------- Private Methods
 
-    private Path toPath(final String featureId) {
-        return sio.featureIdToPath(featureId);
+    private void writeParentPakage(final String featureId) {
+        final String parentPakage = featureDao.pakage(featureId);
+        pakageDao.writePakage(parentPakage);
     }
 
-    private void checkOptimisticLock(final Path path, final String optimisticMd5) throws OptimisticLockFailedException {
-        if (sio.existsAndIsAFeature(path)) {
-            final Feature existing = sio.readFeature(path);
+    private void checkOptimisticLock(final String featureId, final String optimisticMd5) throws OptimisticLockFailedException {
+        if (featureDao.featureExists(featureId)) {
+            final Feature existing = featureDao.readFeature(featureId);
             if (!optimisticMd5.equals(existing.md5())) {
                 throw new OptimisticLockFailedException("File changed on disk since lock creation " + existing.md5() + " " + optimisticMd5);
             }
         }
     }
 
-    private void checkFeatureDoesNotExist(final Path path) {
-        if (sio.existsAndIsAFeature(path)) {
-            throw new ResourceExistsException("Feature at path='" + path + "' already exists");
+    private void checkFeatureDoesNotExist(final String featureId) {
+        if (featureDao.featureExists(featureId)) {
+            throw new ResourceExistsException("Feature '" + featureId + "' already exists");
         }
     }
 
-    private void checkFeatureExists(final Path path) {
-        if (!sio.existsAndIsAFeature(path)) {
-            throw new ResourceNotFoundException("Expected Feature path='" + path + "' does not exist");
+    private void checkFeatureExists(final String featureId) {
+        if (!featureDao.featureExists(featureId)) {
+            throw new ResourceNotFoundException("Expected Feature '" + featureId + "' does not exist");
         }
     }
 }

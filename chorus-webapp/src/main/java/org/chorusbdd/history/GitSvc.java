@@ -39,14 +39,8 @@ public class GitSvc implements Svc {
     private final Git git;
 
     public GitSvc(final String directory) throws IOException {
-        initializeRepository(directory);
-        repository = new FileRepositoryBuilder()
-                .setGitDir(new File(directory + "\\.git"))
-                .setMustExist(true)
-                .readEnvironment() // scan environment GIT_* variables
-                .findGitDir() // scan up the file system tree
-                .build();
-        git = new Git(repository);
+        git = initializeRepository(directory);
+        repository = git.getRepository();
     }
 
     @Override

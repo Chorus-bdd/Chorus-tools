@@ -2,58 +2,57 @@ package org.chorusbdd.structure.pakage.command;
 
 import org.chorusbdd.exception.ResourceExistsException;
 import org.chorusbdd.exception.ResourceNotFoundException;
-import org.chorusbdd.structure.StructureIO;
 import org.chorusbdd.structure.pakage.PakageCommands;
+import org.chorusbdd.structure.pakage.PakageDao;
 import org.chorusbdd.structure.pakage.PakageEvents;
 
 import javax.annotation.concurrent.Immutable;
-import java.nio.file.Path;
 
 import static org.apache.commons.lang3.Validate.notNull;
 
 @Immutable
 class PakageCommandsImpl implements PakageCommands {
-    private final StructureIO sio;
+    private final PakageDao dao;
 
-    PakageCommandsImpl(final StructureIO structureIO) {
-        this.sio = notNull(structureIO);
+    PakageCommandsImpl(final PakageDao dao) {
+        this.dao = notNull(dao);
     }
 
     @Override
     public void apply(final PakageEvents.Store event) {
         notNull(event);
-        final Path path = sio.pakageIdToPath(event.pakageId());
-        sio.writePakage(path);
+        dao.writePakage(event.pakageId());
     }
 
     @Override
     public void apply(final PakageEvents.Move event) {
         notNull(event);
-        final Path target = sio.pakageIdToPath(event.targetId());
-        final Path destination = sio.pakageIdToPath(event.destinationId());
-        checkPakageExists(target);
-        checkPakageDoesNotExist(destination);
-        sio.writePakage(destination.getParent());
-        sio.movePakage(target, destination);
+        checkPakageExists(event.targetId());
+        checkPakageDoesNotExist(event.destinationId());
+        writeParentPakage(event);
+        dao.movePakage(event.targetId(), event.destinationId());
     }
 
     @Override
     public void apply(final PakageEvents.Delete event) {
         notNull(event);
-        final Path path = sio.pakageIdToPath(event.pakageId());
-        checkPakageExists(path);
-        sio.deletePakage(path);
+        checkPakageExists(event.pakageId());
+        dao.deletePakage(event.pakageId());
     }
 
-    private void checkPakageDoesNotExist(final Path path) {
-        if (sio.existsAndIsAPakage(path)) {
-            throw new ResourceExistsException("Package at path='" + path + "' already exists");
+    private void writeParentPakage(final PakageEvents.Move event) {
+        dao.writePakage(dao.parent(event.destinationId()));
+    }
+
+    private void checkPakageDoesNotExist(final String id) {
+        if (dao.pakageExists(id)) {
+            throw new ResourceExistsException("Package '" + id + "' already exists");
         }
     }
 
-    private void checkPakageExists(final Path path) {
-        if (!sio.existsAndIsAPakage(path)) {
-            throw new ResourceNotFoundException("Expected Package path='" + path + "' does not exist");
+    private void checkPakageExists(final String id) {
+        if (!dao.pakageExists(id)) {
+            throw new ResourceNotFoundException("Expected Package '" + id + "' does not exist");
         }
     }
 }

@@ -1,7 +1,7 @@
 package org.chorusbdd.structure.feature.query;
 
-import org.chorusbdd.structure.StructureIO;
 import org.chorusbdd.structure.feature.Feature;
+import org.chorusbdd.structure.feature.FeatureDao;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -16,24 +16,23 @@ import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class FeatureRepositoryImplTest {
-    @Mock StructureIO sio;
+    @Mock FeatureDao dao;
     @Mock Path mockPath;
     @Mock Feature mockFeature;
 
     @Test(expected=NullPointerException.class)
-    public void disallowsNullStructureIO() {
+    public void disallowsNullFeatureDao() {
         new FeatureRepositoryImpl(null);
     }
 
     @Test
     public void findByIdReturnsNullWhenPackageDoesNotExist() {
         // prepare
-        when(sio.featureIdToPath("f.id")).thenReturn(mockPath);
-        when(sio.existsAndIsAFeature(mockPath)).thenReturn(false);
-        when(sio.readFeature(mockPath)).thenReturn(mockFeature);
+        when(dao.featureExists("f.id")).thenReturn(false);
+        when(dao.readFeature("f.id")).thenReturn(mockFeature);
 
         // run
-        final Feature result = new FeatureRepositoryImpl(sio).findById("f.id");
+        final Feature result = newFeatureRepositoryImpl().findById("f.id");
 
         // verify
         assertThat(result, is(nullValue()));
@@ -42,14 +41,17 @@ public class FeatureRepositoryImplTest {
     @Test
     public void findByIdRetrievesPackageFromStructureIO() {
         // prepare
-        when(sio.featureIdToPath("f.id")).thenReturn(mockPath);
-        when(sio.existsAndIsAFeature(mockPath)).thenReturn(true);
-        when(sio.readFeature(mockPath)).thenReturn(mockFeature);
+        when(dao.featureExists("f.id")).thenReturn(true);
+        when(dao.readFeature("f.id")).thenReturn(mockFeature);
 
         // run
-        final Feature result = new FeatureRepositoryImpl(sio).findById("f.id");
+        final Feature result = newFeatureRepositoryImpl().findById("f.id");
 
         // verify
         assertThat(result, is(mockFeature));
+    }
+
+    private FeatureRepositoryImpl newFeatureRepositoryImpl() {
+        return new FeatureRepositoryImpl(dao);
     }
 }
