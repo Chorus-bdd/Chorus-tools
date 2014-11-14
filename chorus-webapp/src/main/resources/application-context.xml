@@ -26,9 +26,12 @@ http://www.springframework.org/schema/mvc http://www.springframework.org/schema/
     <context:component-scan base-package="org.chorusbdd.web.controller"/>
 
     <!-- Structure -->
-    <bean name="structureIO" class="org.chorusbdd.structure.StructureIOImpl">
+    <bean name="paths" class="org.chorusbdd.structure.FileSystemDatabaseImpl">
         <constructor-arg value="${features.rootDirectory}"/>
     </bean>
+    <bean name="featureDao" class="org.chorusbdd.structure.feature.FeatureDaoImpl" autowire="constructor"/>
+    <bean name="packageDao" class="org.chorusbdd.structure.pakage.PakageDaoImpl" autowire="constructor"/>
+
 
     <bean name="featureEvents" class="org.chorusbdd.structure.feature.command.FeatureEventsImpl"/>
     <bean name="featureRepository" class="org.chorusbdd.structure.feature.query.FeatureRepositoryImpl" autowire="constructor"/>
