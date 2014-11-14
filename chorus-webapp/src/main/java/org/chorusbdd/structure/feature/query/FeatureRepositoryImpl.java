@@ -29,9 +29,6 @@ class FeatureRepositoryImpl implements FeatureRepository {
     @Override
     public Feature findAtRevision(final String id, final String revisionId) {
         notBlank(id);
-        //if (!dao.existsAndIsAFeature(path)) {
-        //    return null;
-        //}
-        return null;//dao.readFeature(id);
+        return dao.readFeatureAtRevision(id, revisionId);
     }
 }

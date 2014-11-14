@@ -17,6 +17,8 @@ public interface FeatureDao {
     void deleteFeature(String id);
 
     Stream<Feature> readFeaturesInPakage(String pakageId);
+    Feature readFeatureAtRevision(String id, String revisionId);
 
     String pakage(String featureId);
+
 }

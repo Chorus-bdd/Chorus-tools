@@ -39,13 +39,25 @@ public class FeatureRepositoryImplTest {
     }
 
     @Test
-    public void findByIdRetrievesPackageFromStructureIO() {
+    public void findByIdRetrievesFeatureFromDao() {
         // prepare
         when(dao.featureExists("f.id")).thenReturn(true);
         when(dao.readFeature("f.id")).thenReturn(mockFeature);
 
         // run
         final Feature result = newFeatureRepositoryImpl().findById("f.id");
+
+        // verify
+        assertThat(result, is(mockFeature));
+    }
+
+    @Test
+    public void findByIdAtRevisionRetrievesFeatureFromDao() {
+        // prepare
+        when(dao.readFeatureAtRevision("f.id", "REV1234")).thenReturn(mockFeature);
+
+        // run
+        final Feature result = newFeatureRepositoryImpl().findAtRevision("f.id", "REV1234");
 
         // verify
         assertThat(result, is(mockFeature));

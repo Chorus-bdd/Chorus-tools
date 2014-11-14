@@ -1,6 +1,7 @@
 package org.chorusbdd.structure.feature;
 
 
+import org.apache.commons.codec.digest.DigestUtils;
 import org.chorusbdd.history.Svc;
 import org.chorusbdd.structure.FileSystemDatabase;
 import org.chorusbdd.structure.feature.command.OptimisticLockFailedException;
@@ -59,6 +60,13 @@ class FeatureDaoImpl implements FeatureDao {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    public Feature readFeatureAtRevision(final String id, final String revisionId) {
+        final Path path = fsdb.idToFeaturePath(id);
+        final String contents = svc.retrieve(revisionId, path);
+        return newFeature(path, ()->contents, ()->DigestUtils.md5Hex(contents));
     }
 
     @Override
