@@ -72,7 +72,7 @@ class FeatureDaoImpl implements FeatureDao {
     @Override
     public void writeFeature(final String id, final String text) throws OptimisticLockFailedException {
         try {
-            final Path path = fsdb.idToPakagePath(id);
+            final Path path = fsdb.idToFeaturePath(id);
             LOG.info("Writing feature '{}'", path);
             Files.write(path, text.getBytes(Charset.forName("UTF-8")));
         } catch (final IOException e) {
