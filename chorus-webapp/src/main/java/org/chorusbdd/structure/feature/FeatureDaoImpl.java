@@ -83,7 +83,7 @@ class FeatureDaoImpl implements FeatureDao {
     @Override
     public void deleteFeature(final String id) {
         try {
-            final Path path = fsdb.idToPakagePath(id);
+            final Path path = fsdb.idToFeaturePath(id);
             LOG.info("Deleting feature '{}'", path);
             Files.delete(path);
         } catch (final IOException e) {
@@ -94,8 +94,8 @@ class FeatureDaoImpl implements FeatureDao {
     @Override
     public void moveFeature(final String targetId, final String destinationId)  {
         try {
-            final Path target = fsdb.idToPakagePath(targetId);
-            final Path destination = fsdb.idToPakagePath(destinationId);
+            final Path target = fsdb.idToFeaturePath(targetId);
+            final Path destination = fsdb.idToFeaturePath(destinationId);
             LOG.info("Moving feature '{}' to '{}'", target, destination);
             Files.move(target, destination);
         } catch (final IOException e) {
