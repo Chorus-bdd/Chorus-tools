@@ -32,11 +32,6 @@ public class FeatureImplTest {
         new FeatureImpl("feature-id-123", null, "human name", mockTextSupplier, mockMd5Supplier);
     }
 
-    @Test(expected=IllegalArgumentException.class)
-    public void disallowsEmptyPakageId() {
-        new FeatureImpl("feature-id-123", "", "human name", mockTextSupplier, mockMd5Supplier);
-    }
-
     @Test(expected=NullPointerException.class)
     public void disallowsNullHumanName() {
         new FeatureImpl("feature-id-123", "package-id-123", null, mockTextSupplier, mockMd5Supplier);

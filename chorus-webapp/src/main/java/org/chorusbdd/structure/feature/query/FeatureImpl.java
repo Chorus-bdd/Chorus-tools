@@ -23,7 +23,7 @@ public class FeatureImpl implements Feature {
                         final Supplier<String> textSupplier,
                         final Supplier<String> md5Supplier) {
         this.id = notBlank(id);
-        this.pakageId = notBlank(pakageId);
+        this.pakageId = notNull(pakageId);
         this.humanName = notBlank(humanName);
         this.textSupplier = notNull(textSupplier);
         this.md5Supplier = notNull(md5Supplier);
