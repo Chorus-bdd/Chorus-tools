@@ -11,6 +11,7 @@ import org.chorusbdd.structure.pakage.PakageDao;
 
 import javax.annotation.concurrent.Immutable;
 
+import static com.google.common.base.Strings.nullToEmpty;
 import static org.apache.commons.lang3.Validate.notNull;
 
 @Immutable
@@ -29,7 +30,7 @@ class FeatureCommandsImpl implements FeatureCommands {
     public void apply(final FeatureEvents.Modify event) throws OptimisticLockFailedException {
         notNull(event);
         writeParentPakage(event.featureId());
-        checkOptimisticLock(event.featureId(), event.optimisticMd5());
+        checkOptimisticLock(event.featureId(), nullToEmpty(event.optimisticMd5()));
         featureDao.writeFeature(event.featureId(), event.text());
         svc.commitAll("default user", "default@default.default", event.toString());
     }
@@ -64,6 +65,10 @@ class FeatureCommandsImpl implements FeatureCommands {
             final Feature existing = featureDao.readFeature(featureId);
             if (!optimisticMd5.equals(existing.md5())) {
                 throw new OptimisticLockFailedException("File changed on disk since lock creation " + existing.md5() + " " + optimisticMd5);
+            }
+        } else {
+            if (!optimisticMd5.isEmpty()) {
+                throw new OptimisticLockFailedException("File deleted on disk since lock creation " + optimisticMd5);
             }
         }
     }

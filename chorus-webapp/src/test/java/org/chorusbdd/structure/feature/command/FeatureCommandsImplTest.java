@@ -73,6 +73,12 @@ public class FeatureCommandsImplTest {
         newFeatureCommandsImpl().apply(mockModifyEventWithTextAndOptimisticMd5("foo.bar.far", "feature text", "98734711"));
     }
 
+    @Test(expected = OptimisticLockFailedException.class)
+    public void modifyThrowsWhenDestinationDoesNotExistAndMd5OptimisticLockIsSet() throws OptimisticLockFailedException {
+        // run
+        newFeatureCommandsImpl().apply(mockModifyEventWithTextAndOptimisticMd5("foo.bar.far", "feature text", "98734711"));
+    }
+
     @Test
     public void modifiesFeatureWhenWhenDestinationExistsAndMd5OptimisticLockSucceeds() throws OptimisticLockFailedException {
         // prepare
@@ -184,6 +190,7 @@ public class FeatureCommandsImplTest {
     private Feature mockExistingFeatureWithMd5(String id, String md5) {
         Feature mockFeature = mock(Feature.class);
         when(featureDao.readFeature(id)).thenReturn(mockFeature);
+        when(featureDao.featureExists(id)).thenReturn(true);
         when(mockFeature.md5()).thenReturn(md5);
         return mockFeature;
     }
