@@ -39,4 +39,10 @@ public class MoveFeatureEventTest {
         assertThat(event.targetId(), is(FROM_ID));
         assertThat(event.destinationId(), is(TO_ID));
     }
+
+    @Test
+    public void logMessageReportsFromAndToFeature() {
+        final MoveFeatureEvent event = new MoveFeatureEvent("FOO.BAR", "TOO.FAR.MAH");
+        assertThat(event.logMessage(), is("Moved feature 'FOO.BAR' to 'TOO.FAR.MAH'"));
+    }
 }

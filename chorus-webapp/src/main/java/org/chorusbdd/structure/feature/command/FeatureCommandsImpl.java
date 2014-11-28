@@ -16,6 +16,8 @@ import static org.apache.commons.lang3.Validate.notNull;
 
 @Immutable
 class FeatureCommandsImpl implements FeatureCommands {
+    public static final String UNKNOWN_USER_NAME = "Unknown User";
+    public static final String UNKNOWN_USER_EMAIL = "";
     private final FeatureDao featureDao;
     private final PakageDao pakageDao;
     private final Svc svc;
@@ -32,7 +34,7 @@ class FeatureCommandsImpl implements FeatureCommands {
         writeParentPakage(event.featureId());
         checkOptimisticLock(event.featureId(), nullToEmpty(event.optimisticMd5()));
         featureDao.writeFeature(event.featureId(), event.text());
-        svc.commitAll("default user", "default@default.default", event.toString());
+        svc.commitAll(UNKNOWN_USER_NAME, UNKNOWN_USER_EMAIL, event.logMessage());
     }
 
     @Override
@@ -40,7 +42,7 @@ class FeatureCommandsImpl implements FeatureCommands {
         notNull(event);
         checkFeatureExists(event.featureId());
         featureDao.deleteFeature(event.featureId());
-        svc.commitAll("default user", "default@default.default", event.toString());
+        svc.commitAll(UNKNOWN_USER_NAME, UNKNOWN_USER_EMAIL, event.logMessage());
     }
 
     @Override
@@ -50,7 +52,7 @@ class FeatureCommandsImpl implements FeatureCommands {
         checkFeatureDoesNotExist(event.destinationId());
         writeParentPakage(event.destinationId());
         featureDao.moveFeature(event.targetId(), event.destinationId());
-        svc.commitAll("default user", "default@default.default", event.toString());
+        svc.commitAll(UNKNOWN_USER_NAME, UNKNOWN_USER_EMAIL, event.logMessage());
     }
 
     // -------------------------------------------------------- Private Methods

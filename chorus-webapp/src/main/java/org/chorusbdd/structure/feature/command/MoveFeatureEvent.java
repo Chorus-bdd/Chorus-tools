@@ -29,6 +29,17 @@ class MoveFeatureEvent implements FeatureEvents.Move {
     }
 
     @Override
+    public String logMessage() {
+        return new StringBuilder()
+            .append("Moved feature '")
+            .append(fromId)
+            .append("' to '")
+            .append(toId)
+            .append("'")
+            .toString();
+    }
+
+    @Override
     public String toString() {
         return MoreObjects.toStringHelper(this)
                 .add("fromId", fromId)

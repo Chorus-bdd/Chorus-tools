@@ -25,4 +25,10 @@ public class DeleteFeatureEventTest {
         // verify
         assertThat(event.featureId(), is("feature-id-123"));
     }
+
+    @Test
+    public void logMessageReportsDeletedFeature() {
+        final DeleteFeatureEvent event = new DeleteFeatureEvent("FOO.BAR");
+        assertThat(event.logMessage(), is("Deleted feature 'FOO.BAR'"));
+    }
 }

@@ -6,15 +6,18 @@ public interface FeatureEvents {
         String featureId();
         String text();
         String optimisticMd5();
+        String logMessage();
     }
 
     interface Move {
         String targetId();
         String destinationId();
+        String logMessage();
     }
 
     interface Delete {
         String featureId();
+        String logMessage();
     }
 
     Modify modify(String featureId, String text, String optimisticMd5);

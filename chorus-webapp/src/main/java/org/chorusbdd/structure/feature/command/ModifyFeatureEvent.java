@@ -36,11 +36,25 @@ class ModifyFeatureEvent implements FeatureEvents.Modify {
     }
 
     @Override
+    public String logMessage() {
+        return new StringBuilder()
+            .append(isCreateEvent() ? "Created" : "Modified")
+            .append(" feature '")
+            .append(featureId)
+            .append("'")
+            .toString();
+    }
+
+    @Override
     public String toString() {
         return MoreObjects.toStringHelper(this)
                 .add("featureId", featureId)
                 .add("text", text)
                 .add("optimisticMd5", optimisticMd5)
                 .toString();
+    }
+
+    private boolean isCreateEvent() {
+        return optimisticMd5.isEmpty();
     }
 }

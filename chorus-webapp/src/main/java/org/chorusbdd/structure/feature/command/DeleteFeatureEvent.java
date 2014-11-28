@@ -22,6 +22,15 @@ class DeleteFeatureEvent implements FeatureEvents.Delete {
     }
 
     @Override
+    public String logMessage() {
+        return new StringBuilder()
+            .append("Deleted feature '")
+            .append(featureId)
+            .append("'")
+            .toString();
+    }
+
+    @Override
     public String toString() {
         return MoreObjects.toStringHelper(this)
                 .add("featureId", featureId)

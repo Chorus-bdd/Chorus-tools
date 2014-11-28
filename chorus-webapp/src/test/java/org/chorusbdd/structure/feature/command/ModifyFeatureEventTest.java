@@ -53,5 +53,17 @@ public class ModifyFeatureEventTest {
         assertThat(event.text(), is(TEXT));
         assertThat(event.optimisticMd5(), is(OPTIMISTIC_MD5));
     }
+
+    @Test
+    public void logMessageIsCreateFeatureEtcWhenLockIsBlank() {
+        final ModifyFeatureEvent event = new ModifyFeatureEvent("FOO.BAR", "I like chickens", "");
+        assertThat(event.logMessage(), is("Created feature 'FOO.BAR'"));
+    }
+
+    @Test
+    public void logMessageIsModifiedFeatureEtcWhenLockIsBlank() {
+        final ModifyFeatureEvent event = new ModifyFeatureEvent("FOO.BAR", "otters are cool", "123LOCK456");
+        assertThat(event.logMessage(), is("Modified feature 'FOO.BAR'"));
+    }
 }
 

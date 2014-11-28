@@ -100,6 +100,17 @@ public class FeatureCommandsImplTest {
         verify(featureDao).writeFeature("foo.bar.far", "feature text");
     }
 
+    @Test
+    public void commitsModificationWithLogMessage() throws OptimisticLockFailedException {
+        final FeatureEvents.Modify mockEvent = mockModifyEventWithTextAndOptimisticMd5("foo.bar.far", "feature text", "");
+        when(featureDao.featureExists("foo.bar.far")).thenReturn(false);
+        when(mockEvent.logMessage()).thenReturn("my log message");
+
+        newFeatureCommandsImpl().apply(mockEvent);
+
+        verify(svc).commitAll("Unknown User", "", "my log message");
+    }
+
     // ------------------------------------------------------------------- Move
 
     @Test(expected=ResourceNotFoundException.class)
