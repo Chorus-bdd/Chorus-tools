@@ -153,6 +153,7 @@ public class GitSvc implements Svc {
         return commit.getId();
     }
 
+    @SuppressWarnings("UnusedDeclaration") // debugging
     private void printLog() {
         try {
             printAll(repository, git.log().call());

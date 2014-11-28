@@ -91,7 +91,7 @@ public class GitUtils {
         final RevWalk revWalk = new RevWalk(repository);
         try {
             revWalk.markStart(revWalk.parseCommit(head(repository)));
-            revWalk.setTreeFilter(followFilter(repository, path));
+            revWalk.setTreeFilter(followFilter(repository, path.replace("\\", "/")));
             return commitList(revWalk);
         } finally {
             revWalk.release();
