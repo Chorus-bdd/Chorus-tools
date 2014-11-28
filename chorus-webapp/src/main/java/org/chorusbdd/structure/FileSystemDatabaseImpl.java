@@ -1,6 +1,7 @@
 package org.chorusbdd.structure;
 
 import org.apache.commons.lang3.StringUtils;
+import org.chorusbdd.util.FileUtils;
 
 import javax.annotation.concurrent.Immutable;
 import java.nio.file.Path;
@@ -13,6 +14,8 @@ import static java.util.Objects.requireNonNull;
 import static java.util.stream.Collectors.toList;
 import static org.apache.commons.lang3.Validate.isTrue;
 import static org.apache.commons.lang3.Validate.notNull;
+import static org.chorusbdd.util.FileUtils.isSubpath;
+import static org.chorusbdd.util.FileUtils.tokenize;
 import static org.chorusbdd.util.StreamUtils.stream;
 
 
@@ -111,14 +114,10 @@ class FileSystemDatabaseImpl implements FileSystemDatabase {
     // --------------------------------------------------------- Private Methods
 
     private Path relativizeToRoot(final Path p) {
-        if (!isSubpathToRoot(p)) {
+        if (!isSubpath(rootPath(), p)) {
             throw new IllegalArgumentException("path is not subpath of root");
         }
         return rootPath().relativize(p);
-    }
-
-    private boolean isSubpathToRoot(final Path p) {
-        return !tokenize(rootPath().relativize(p)).contains("..");
     }
 
     private void replaceLastItem(final List<String> tokens, final String value) {
@@ -153,10 +152,6 @@ class FileSystemDatabaseImpl implements FileSystemDatabase {
             return StringUtils.removeEnd(fileName, STEPMACRO_EXTENSION);
         }
         return fileName;*/
-    }
-
-    private List<String> tokenize(final Path path) {
-        return stream(path.iterator()).map(Path::toString).collect(toList());
     }
 
     private String fileName(final Path path) {
