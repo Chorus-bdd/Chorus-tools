@@ -130,6 +130,24 @@ public class GitSvcTest {
         assertThat(log.get(2).comment(), is("comment: file two created"));
     }
 
+
+    @Test
+    public void logFollowsSingleFileWhenAbsolutePathUsed() throws IOException {
+        // prepare
+        createAndCommitFile("FileName1", "file 1 contents", "comment: file one created", BEAR);
+        createAndCommitFile("FileName2", "file 2 contents", "comment: file two created", BEAR);
+        modifyAndCommitFile("FileName1", "modified file 1 contents", "comment: file one modified", BEAR);
+        modifyAndCommitFile("FileName2", "modified file 2 contents", "comment: file two modified", BEAR);
+
+        // run
+        final List<Revision> log = gitSvc.log(absolutePath("FileName1")).collect(Collectors.toList());
+
+        // verify
+        assertThat(log.size(), is(2));
+        assertThat(log.get(0).comment(), is("comment: file one modified"));
+        assertThat(log.get(1).comment(), is("comment: file one created"));
+    }
+
     @Test
     public void retrievesFileInRevision() throws IOException {
          // prepare

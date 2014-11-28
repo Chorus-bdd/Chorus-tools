@@ -9,7 +9,6 @@ import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.PersonIdent;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
-import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,16 +18,14 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Set;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.toSet;
-import static org.chorusbdd.history.GitUtils.asCommit;
 import static org.chorusbdd.history.GitUtils.changeset;
 import static org.chorusbdd.history.GitUtils.fileAtRevision;
-import static org.chorusbdd.history.GitUtils.headCommit;
 import static org.chorusbdd.history.GitUtils.logWithFollow;
 import static org.chorusbdd.history.GitUtils.printAll;
+import static org.chorusbdd.util.FileUtils.isSubpath;
 import static org.chorusbdd.util.StreamUtils.stream;
 
 @NotThreadSafe
@@ -37,10 +34,12 @@ public class GitSvc implements Svc {
 
     private final Repository repository;
     private final Git git;
+    private final Path repositoryPath;
 
     public GitSvc(final String directory) throws IOException {
         git = initializeRepository(directory);
         repository = git.getRepository();
+        repositoryPath = repository.getDirectory().toPath().getParent();
     }
 
     @Override
@@ -55,6 +54,16 @@ public class GitSvc implements Svc {
 
     @Override
     public Stream<Revision> log(final Path path) {
+        if (path.isAbsolute()) {
+            if (isSubpath(repositoryPath, path)) {
+                return logPath(repositoryPath.relativize(path));
+            }
+            throw new RuntimeException("Path must be relative to the git repository base path");
+        }
+        return logPath(path);
+    }
+
+    private Stream<Revision> logPath(final Path path) {
         try {
             return stream(logWithFollow(repository, path.toString())).map(this::asModification);
         } catch (IOException e) {
