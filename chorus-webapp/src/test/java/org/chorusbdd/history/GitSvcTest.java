@@ -150,7 +150,7 @@ public class GitSvcTest {
     public void logFollowsAllFilesInAFolder() throws IOException {
         // prepare
         createAndCommitFile("foo/FileName1", "file 1 contents", "comment: file one created", BEAR);
-        createAndCommitFile("foo/FileName2", "file 2 contents", "comment: file two created", BEAR);
+        createAndCommitFile("foo/far/FileName2", "file 2 contents", "comment: file two created", BEAR);
         createAndCommitFile("bar/FileName3", "file 3 contents", "comment: file three created", BEAR);
         createAndCommitFile("FileName4", "file 4 contents", "comment: file four created", BEAR);
         modifyAndCommitFile("foo/FileName1", "modified file 1 contents", "comment: file one modified", BEAR);
