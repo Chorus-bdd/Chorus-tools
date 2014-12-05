@@ -39,4 +39,10 @@ public class MovePakageEventTest {
         assertThat(event.targetId(), is(FROM_ID));
         assertThat(event.destinationId(), is(TO_ID));
     }
+
+    @Test
+    public void logMessageReportsFromAndToPackage() {
+        final MovePakageEvent event = new MovePakageEvent("FOO.BAR", "TOO.FAR.MAH");
+        assertThat(event.logMessage(), is("Moved package 'FOO.BAR' to 'TOO.FAR.MAH'"));
+    }
 }

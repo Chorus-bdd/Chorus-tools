@@ -12,7 +12,7 @@ public class FeatureViewTest {
         final FeatureView fv = new FeatureView();
         assertThat(fv.getId(), is(""));
         assertThat(fv.getName(), is(""));
-        assertThat(fv.getBody(), is(""));
+        assertThat(fv.getText(), is(""));
         assertThat(fv.getLink(), is(""));
         assertThat(fv.getMd5(), is(""));
     }
@@ -22,13 +22,13 @@ public class FeatureViewTest {
         final FeatureView fv = new FeatureView();
         fv.setId("**ID");
         fv.setName("**NAME");
-        fv.setBody("**BODY");
+        fv.setText("**BODY");
         fv.setLink("**LINK");
         fv.setMd5("**MD5");
 
         assertThat(fv.getId(), is("**ID"));
         assertThat(fv.getName(), is("**NAME"));
-        assertThat(fv.getBody(), is("**BODY"));
+        assertThat(fv.getText(), is("**BODY"));
         assertThat(fv.getLink(), is("**LINK"));
         assertThat(fv.getMd5(), is("**MD5"));
     }

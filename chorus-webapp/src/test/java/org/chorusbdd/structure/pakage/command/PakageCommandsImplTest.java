@@ -2,6 +2,7 @@ package org.chorusbdd.structure.pakage.command;
 
 import org.chorusbdd.exception.ResourceExistsException;
 import org.chorusbdd.exception.ResourceNotFoundException;
+import org.chorusbdd.history.Svc;
 import org.chorusbdd.structure.pakage.PakageDao;
 import org.chorusbdd.structure.pakage.PakageEvents;
 import org.junit.Test;
@@ -19,12 +20,19 @@ import static org.mockito.Mockito.when;
 public class PakageCommandsImplTest {
 
     @Mock PakageDao dao;
+    @Mock Svc svc;
+
 
     // ------------------------------------------------------------ Composition
 
     @Test(expected=NullPointerException.class)
     public void disallowsNullPakageDao() {
-        new PakageCommandsImpl(null);
+        new PakageCommandsImpl(null, svc);
+    }
+
+    @Test(expected=NullPointerException.class)
+    public void disallowsNullSvc() {
+        new PakageCommandsImpl(dao, null);
     }
 
     // ------------------------------------------------------------------ Store
@@ -102,7 +110,7 @@ public class PakageCommandsImplTest {
     // ---------------------------------------------------------------- Helpers
 
     private PakageCommandsImpl newPakageCommandsImpl() {
-        return new PakageCommandsImpl(dao);
+        return new PakageCommandsImpl(dao, svc);
     }
 
     private PakageEvents.Move mockMoveEvent(final String targetId, final String destinationId) {
