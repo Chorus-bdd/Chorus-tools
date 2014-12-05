@@ -5,6 +5,7 @@ import org.eclipse.jgit.api.InitCommand;
 import org.eclipse.jgit.api.LogCommand;
 import org.eclipse.jgit.api.Status;
 import org.eclipse.jgit.api.errors.GitAPIException;
+import org.eclipse.jgit.diff.DiffEntry;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.PersonIdent;
 import org.eclipse.jgit.lib.Repository;
@@ -17,16 +18,17 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Set;
+import java.util.List;
 import java.util.stream.Stream;
 
-import static java.util.stream.Collectors.toSet;
+import static java.util.stream.Collectors.toList;
 import static org.chorusbdd.history.GitUtils.changeset;
 import static org.chorusbdd.history.GitUtils.fileAtRevision;
 import static org.chorusbdd.history.GitUtils.logWithFollow;
 import static org.chorusbdd.history.GitUtils.printAll;
 import static org.chorusbdd.util.FileUtils.isSubpath;
 import static org.chorusbdd.util.StreamUtils.stream;
+import static org.eclipse.jgit.diff.DiffEntry.ChangeType;
 
 @NotThreadSafe
 public class GitSvc implements Svc {
@@ -46,7 +48,7 @@ public class GitSvc implements Svc {
     public Stream<Revision> log() {
         try {
             final LogCommand logCommand = git.log();
-            return stream(logCommand.call()).map(this::asModification);
+            return stream(logCommand.call()).map(this::asRevision);
         } catch (GitAPIException e) {
             throw new SvcFailedException(e);
         }
@@ -54,27 +56,17 @@ public class GitSvc implements Svc {
 
     @Override
     public Stream<Revision> log(final Path path) {
-        if (path.isAbsolute()) {
-            if (isSubpath(repositoryPath, path)) {
-                return logPath(repositoryPath.relativize(path));
-            }
-            throw new RuntimeException("Path must be relative to the git repository base path");
-        }
-        return logPath(path);
-    }
-
-    private Stream<Revision> logPath(final Path path) {
         try {
-            return stream(logWithFollow(repository, path.toString())).map(this::asModification);
-        } catch (IOException e) {
+            return stream(logWithFollow(repository, toRelativePath(path).toString())).map(this::asRevision);
+        } catch (final IOException e) {
             throw new SvcFailedException(e);
         }
     }
 
     @Override
-    public String retrieve(final String revision, final Path file) {
+    public String retrieve(final String revision, final Path path) {
         try {
-            return fileAtRevision(repository, revision, file.toString());
+            return fileAtRevision(repository, revision, toRelativePath(path).toString());
         } catch (IOException e) {
             throw new SvcFailedException(e);
         }
@@ -94,10 +86,11 @@ public class GitSvc implements Svc {
 
     @Override
     @SuppressWarnings("Convert2MethodRef")
-    public Set<Path> changesetForRevision(final String revisionName) {
+    public List<FileChange> changesetForRevision(final String revisionName) {
         try {
             return changeset(repository, revisionName).stream()
-                .map(s -> Paths.get(s)).collect(toSet());
+                    .map(d -> new FileChange(d.getChangeType(), path(d)))
+                    .collect(toList());
         } catch (final IOException e) {
             throw new SvcFailedException(e);
         }
@@ -114,7 +107,7 @@ public class GitSvc implements Svc {
         if (!status.getMissing().isEmpty()) { LOG.info("Missing files {}", status.getMissing()); }
     }
 
-    private Revision asModification(final RevCommit commit) {
+    private Revision asRevision(final RevCommit commit) {
         final PersonIdent author = commit.getAuthorIdent();
         return new RevisionImpl(commit.name(), author.getName(), author.getEmailAddress(),
                 author.getWhen(), commit.getFullMessage());
@@ -151,6 +144,29 @@ public class GitSvc implements Svc {
                 .setAuthor(authorName, authorEmail)
                 .call();
         return commit.getId();
+    }
+
+    private Path path(final DiffEntry s) {
+        final ChangeType changeType = s.getChangeType();
+        switch (changeType) {
+        		case DELETE: return Paths.get(s.getOldPath());
+        		case ADD:    return Paths.get(s.getNewPath());
+        		case COPY:   return Paths.get(s.getNewPath());
+        		case MODIFY: return Paths.get(s.getNewPath());
+        		case RENAME: return Paths.get(s.getNewPath());
+                default:
+                    throw new RuntimeException("Unrecognized change type: " + changeType);
+        }
+    }
+
+    private Path toRelativePath(final Path path) {
+        if (path.isAbsolute()) {
+            if (isSubpath(repositoryPath, path)) {
+                return repositoryPath.relativize(path);
+            }
+            throw new RuntimeException("Path must be relative to the git repository base path");
+        }
+        return path;
     }
 
     @SuppressWarnings("UnusedDeclaration") // debugging

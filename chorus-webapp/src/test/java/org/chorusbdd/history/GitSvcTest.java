@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import static org.eclipse.jgit.diff.DiffEntry.ChangeType.*;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
@@ -157,7 +158,6 @@ public class GitSvcTest {
 
         // run
         final List<Revision> log = gitSvc.log(relativePath("foo")).collect(Collectors.toList());
-        log.forEach(System.out::println);
 
         // verify
         assertThat(log.size(), is(3));
@@ -203,6 +203,44 @@ public class GitSvcTest {
     }
 
     @Test
+    public void retrievesSubFileInRevision() throws IOException {
+         // prepare
+        createAndCommitFile("Boo/FileName1", "file 1 contents", "comment: created", BEAR);
+        modifyAndCommitFile("Boo/FileName1", "modified file 1 contents", "comment: modified", BEAR);
+        modifyAndCommitFile("Boo/FileName1", "modified again contents", "comment:  modified again", FOX);
+
+        // run
+        final List<Revision> log = gitSvc.log(relativePath("Boo/FileName1")).collect(Collectors.toList());
+        final String contents_rev0 = gitSvc.retrieve(log.get(0).id(), relativePath("Boo/FileName1"));
+        final String contents_rev1 = gitSvc.retrieve(log.get(1).id(), relativePath("Boo/FileName1"));
+        final String contents_rev2 = gitSvc.retrieve(log.get(2).id(), relativePath("Boo/FileName1"));
+
+        // verify
+        assertThat(contents_rev0, is("modified again contents"));
+        assertThat(contents_rev1, is("modified file 1 contents"));
+        assertThat(contents_rev2, is("file 1 contents"));
+    }
+
+    @Test
+    public void retrievesFileInRevisionWhenAbsolutePathUsed() throws IOException {
+         // prepare
+        createAndCommitFile("Far/FileName1", "file 1 contents", "comment: created", BEAR);
+        modifyAndCommitFile("Far/FileName1", "modified file 1 contents", "comment: modified", BEAR);
+        modifyAndCommitFile("Far/FileName1", "modified again contents", "comment:  modified again", FOX);
+
+        // run
+        final List<Revision> log = gitSvc.log(relativePath("Far/FileName1")).collect(Collectors.toList());
+        final String contents_rev0 = gitSvc.retrieve(log.get(0).id(), absolutePath("Far/FileName1"));
+        final String contents_rev1 = gitSvc.retrieve(log.get(1).id(), absolutePath("Far/FileName1"));
+        final String contents_rev2 = gitSvc.retrieve(log.get(2).id(), absolutePath("Far/FileName1"));
+
+        // verify
+        assertThat(contents_rev0, is("modified again contents"));
+        assertThat(contents_rev1, is("modified file 1 contents"));
+        assertThat(contents_rev2, is("file 1 contents"));
+    }
+
+    @Test
     public void revisionChangesetIncludesAllFilesChanged() throws IOException {
         // prepare
         createAndCommitFile("FileName1", "file1 contents", "comment: file one created", BEAR);
@@ -215,27 +253,36 @@ public class GitSvcTest {
 
         // run
         final List<Revision> log = gitSvc.log().collect(Collectors.toList());
-        final Set<Path> changeset_rev0 = gitSvc.changesetForRevision(log.get(0).id());
-        final Set<Path> changeset_rev1 = gitSvc.changesetForRevision(log.get(1).id());
-        final Set<Path> changeset_rev2 = gitSvc.changesetForRevision(log.get(2).id());
-        final Set<Path> changeset_rev3 = gitSvc.changesetForRevision(log.get(3).id());
-        final Set<Path> changeset_rev4 = gitSvc.changesetForRevision(log.get(4).id());
+        final List<FileChange> changeset_rev0 = gitSvc.changesetForRevision(log.get(0).id());
+        final List<FileChange> changeset_rev1 = gitSvc.changesetForRevision(log.get(1).id());
+        final List<FileChange> changeset_rev2 = gitSvc.changesetForRevision(log.get(2).id());
+        final List<FileChange> changeset_rev3 = gitSvc.changesetForRevision(log.get(3).id());
+        final List<FileChange> changeset_rev4 = gitSvc.changesetForRevision(log.get(4).id());
 
         // verify
         assertThat(changeset_rev0, hasSize(1));
-        assertThat(changeset_rev0, containsInAnyOrder(Paths.get("FileName1")));
+        assertThat(changeset_rev0.get(0).path(), is(Paths.get("FileName1")));
+        assertThat(changeset_rev0.get(0).event(), is(DELETE));
 
         assertThat(changeset_rev1, hasSize(2));
-        assertThat(changeset_rev1, containsInAnyOrder(Paths.get("FileName1"), Paths.get("FileName3")));
+        assertThat(changeset_rev1.get(0).path(), is(Paths.get("FileName1")));
+        assertThat(changeset_rev1.get(0).event(), is(MODIFY));
+        assertThat(changeset_rev1.get(1).path(), is(Paths.get("FileName3")));
+        assertThat(changeset_rev1.get(1).event(), is(ADD));
 
         assertThat(changeset_rev2, hasSize(2));
-        assertThat(changeset_rev2, containsInAnyOrder(Paths.get("FileName2a"), Paths.get("FileName2b")));
+        assertThat(changeset_rev2.get(0).path(), is(Paths.get("FileName2a")));
+        assertThat(changeset_rev2.get(0).event(), is(DELETE));
+        assertThat(changeset_rev2.get(1).path(), is(Paths.get("FileName2b")));
+        assertThat(changeset_rev2.get(1).event(), is(ADD));
 
         assertThat(changeset_rev3, hasSize(1));
-        assertThat(changeset_rev3, containsInAnyOrder(Paths.get("FileName2a")));
+        assertThat(changeset_rev3.get(0).path(), is(Paths.get("FileName2a")));
+        assertThat(changeset_rev3.get(0).event(), is(ADD));
 
         assertThat(changeset_rev4, hasSize(1));
-        assertThat(changeset_rev4, containsInAnyOrder(Paths.get("FileName1")));
+        assertThat(changeset_rev4.get(0).path(), is(Paths.get("FileName1")));
+        assertThat(changeset_rev4.get(0).event(), is(ADD));
     }
 
 

@@ -1,6 +1,9 @@
 package org.chorusbdd.history;
 
+import org.eclipse.jgit.api.Git;
+import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.diff.DiffConfig;
+import org.eclipse.jgit.diff.DiffEntry;
 import org.eclipse.jgit.lib.Config;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.ObjectReader;
@@ -10,56 +13,35 @@ import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevCommitList;
 import org.eclipse.jgit.revwalk.RevTree;
 import org.eclipse.jgit.revwalk.RevWalk;
+import org.eclipse.jgit.treewalk.AbstractTreeIterator;
+import org.eclipse.jgit.treewalk.CanonicalTreeParser;
 import org.eclipse.jgit.treewalk.TreeWalk;
-import org.eclipse.jgit.treewalk.filter.TreeFilter;
 
 import java.io.IOException;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 
 public class GitUtils {
 
-    //
-    //public static void main(String ... args) throws IOException, GitAPIException {
-    //    FileRepositoryBuilder builder = new FileRepositoryBuilder();
-    //    Repository repository = builder.setGitDir(new File("c:\\dev\\tmp\\testroot"+"\\.git"))
-    //            .setMustExist(true)
-    //            .readEnvironment() // scan environment GIT_* variables
-    //            .findGitDir() // scan up the file system tree
-    //            .build();
-    //    System.out.println(repository.toString());
-    //
-    //    Git git = new Git(repository);
-    //    //commitAllChanges(repository);
-    //    try {
-    //        final LogCommand logCommand = git.log();
-    //        //new LogFollowCommand();
-    //        //logCommand.addPath("MessageBridge/MV/Record/PublishesAndSubscribesPartialRecords.feature");
-    //        //logCommand.addPath("MessageBridge/PublishesAndSubscribes.feature");
-    //        //logCommand.
-    //        for(RevCommit commit : logCommand.call()) {
-    //            printCommitInformation(repository, commit);
-    //        }
-    //    } catch (NoHeadException e) {
-    //        System.out.println("no head exception : " + e);
-    //    }
-    //}
-
-    public static Set<String> changeset(final Repository repository, final String revision) throws IOException {
+    public static List<DiffEntry> changeset(final Repository repository, final String revision) throws IOException {
         final RevCommit commit = asCommit(repository, revision);
-        final TreeWalk treeWalk = new TreeWalk(repository);
-        treeWalk.reset();
+        final AbstractTreeIterator parentTreeParser;
+        if (commit.getParentCount() == 0) {
+            parentTreeParser = new CanonicalTreeParser();
+        } else {
+            final RevCommit parent = asCommit(repository, commit.getParent(0).getId());
+            parentTreeParser = treeParser(repository, parent);
+        }
+        final AbstractTreeIterator newTreeParser = treeParser(repository, commit);
         try {
-            treeWalk.addTree(commit.getTree());
-            if (commit.getParentCount() != 0) {
-                RevCommit parent = asCommit(repository, commit.getParent(0).getId());
-                treeWalk.addTree(parent.getTree());
-            }
-            treeWalk.setFilter(TreeFilter.ANY_DIFF);
-            treeWalk.setRecursive(true);
-            return asSet(treeWalk);
-        } finally {
-            treeWalk.release();
+            final List<DiffEntry> result = new Git(repository).diff()
+                    .setOldTree(parentTreeParser)
+                    .setNewTree(newTreeParser)
+                    .call();
+            return result;
+        } catch (GitAPIException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -81,7 +63,7 @@ public class GitUtils {
         try {
             final RevWalk revisionWalker = new RevWalk(reader);
             final RevTree tree = revisionWalker.parseCommit(revisionId).getTree();
-            return readFile(path, reader, tree);
+            return readFile(toUnixSlashes(path), reader, tree);
         } finally {
             reader.release();
         }
@@ -91,12 +73,14 @@ public class GitUtils {
         final RevWalk revWalk = new RevWalk(repository);
         try {
             revWalk.markStart(revWalk.parseCommit(head(repository)));
-            revWalk.setTreeFilter(followFilter(repository, path.replace("\\", "/")));
+            revWalk.setTreeFilter(followFilter(repository, toUnixSlashes(path)));
             return commitList(revWalk);
         } finally {
             revWalk.release();
         }
     }
+
+    // -------------------------------------------------------- Private Methods
 
     private static Set<String> asSet(final TreeWalk treeWalk) throws IOException {
         final Set<String> changeset = new LinkedHashSet<>();
@@ -108,10 +92,10 @@ public class GitUtils {
 
     private static String readFile(final String path, final ObjectReader reader, final RevTree tree) throws IOException {
         final TreeWalk treeWalker = TreeWalk.forPath(reader, path, tree);
+        if (treeWalker == null) {
+            return null;
+        }
         try {
-            if (treeWalker == null) {
-                return "";
-            }
             byte[] data = reader.open(treeWalker.getObjectId(0)).getBytes();
             return new String(data, "utf-8");
         } finally {
@@ -131,7 +115,7 @@ public class GitUtils {
         return repository.resolve("HEAD");
     }
 
-    public static RevCommit headCommit(final Repository repository) throws IOException {
+    private static RevCommit headCommit(final Repository repository) throws IOException {
         final RevWalk walk = new RevWalk(repository);
         try {
             return walk.parseCommit(head(repository));
@@ -140,11 +124,11 @@ public class GitUtils {
         }
     }
 
-    public static RevCommit asCommit(final Repository repository, final String revision) throws IOException {
+    private static RevCommit asCommit(final Repository repository, final String revision) throws IOException {
         return asCommit(repository, repository.resolve(revision));
     }
 
-    public static RevCommit asCommit(final Repository repository, final ObjectId revisionId) throws IOException {
+    private static RevCommit asCommit(final Repository repository, final ObjectId revisionId) throws IOException {
         final RevWalk walk = new RevWalk(repository);
         try {
             return walk.parseCommit(revisionId);
@@ -158,6 +142,20 @@ public class GitUtils {
         list.source(revWalk);
         list.fillTo(Integer.MAX_VALUE);
         return list;
+    }
+
+    private static AbstractTreeIterator treeParser(final Repository repository, final RevCommit commit) throws IOException {
+        final RevWalk walk = new RevWalk(repository);
+        final RevTree tree = walk.parseTree(commit.getTree().getId());
+        final CanonicalTreeParser treeParser = new CanonicalTreeParser();
+        final ObjectReader repositoryReader = repository.newObjectReader();
+        try {
+            treeParser.reset(repositoryReader, tree.getId());
+        } finally {
+            repositoryReader.release();
+        }
+        walk.dispose();
+        return treeParser;
     }
 
     // ------------------------------------------------------- Printing helpers
@@ -196,6 +194,10 @@ public class GitUtils {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private static String toUnixSlashes(final String path) {
+        return path.replace("\\", "/");
     }
 
     //public static void printDiffForFile(final Repository repository, final RevCommit commit) throws IOException {

@@ -1,7 +1,7 @@
 package org.chorusbdd.history;
 
 import java.nio.file.Path;
-import java.util.Set;
+import java.util.List;
 import java.util.stream.Stream;
 
 public interface Svc {
@@ -13,5 +13,5 @@ public interface Svc {
 
     void commitAll(String authorName, String authorEmail, String comment);
 
-    Set<Path> changesetForRevision(String revisionName);
+    List<FileChange> changesetForRevision(String revisionName);
 }
