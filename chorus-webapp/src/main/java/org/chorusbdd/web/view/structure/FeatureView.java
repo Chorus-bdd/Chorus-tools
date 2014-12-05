@@ -1,6 +1,7 @@
 package org.chorusbdd.web.view.structure;
 
 import com.fasterxml.jackson.annotation.JsonView;
+import org.chorusbdd.web.view.BaseView;
 
 import javax.annotation.concurrent.NotThreadSafe;
 
@@ -9,7 +10,6 @@ public class FeatureView {
 
     // ------------------------------------------------------------------ Views
 
-    public interface BaseView {}
     public interface SummaryView extends BaseView {}
     public interface FullDetailView extends BaseView {}
 
@@ -70,11 +70,11 @@ public class FeatureView {
     }
 
     @JsonView(FullDetailView.class)
-    public String getBody() {
+    public String getText() {
         return text;
     }
 
-    public void setBody(final String text) {
+    public void setText(final String text) {
         this.text = text;
     }
 

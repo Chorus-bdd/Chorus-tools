@@ -28,6 +28,17 @@ class MovePakageEvent implements PakageEvents.Move {
     }
 
     @Override
+    public String logMessage() {
+        return new StringBuilder()
+            .append("Moved package '")
+            .append(fromId)
+            .append("' to '")
+            .append(toId)
+            .append("'")
+            .toString();
+    }
+
+    @Override
     public String toString() {
         return MoreObjects.toStringHelper(this)
                 .add("fromId", fromId)

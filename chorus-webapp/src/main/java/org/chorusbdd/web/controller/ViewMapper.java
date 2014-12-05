@@ -35,7 +35,7 @@ public class ViewMapper {
 
     public static FeatureView asFeatureView(final Feature feature) {
         final FeatureView view = asFeatureSummaryView(feature);
-        view.setBody(feature.text());
+        view.setText(feature.text());
         return view;
     }
 

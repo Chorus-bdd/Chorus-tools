@@ -1,6 +1,7 @@
 package org.chorusbdd.web.view.structure;
 
 import com.fasterxml.jackson.annotation.JsonView;
+import org.chorusbdd.web.view.BaseView;
 
 import javax.annotation.concurrent.NotThreadSafe;
 import java.util.Arrays;
@@ -11,7 +12,6 @@ public class PakageView {
 
     // ------------------------------------------------------------------ Views
 
-    public interface BaseView {}
     public interface FullDetailView extends BaseView {}
 
     public PakageView() { /* do nothing */ }

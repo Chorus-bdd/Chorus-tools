@@ -22,6 +22,15 @@ class DeletePakageEvent implements PakageEvents.Delete {
     }
 
     @Override
+    public String logMessage() {
+        return new StringBuilder()
+            .append("Deleted package '")
+            .append(pakageId)
+            .append("'")
+            .toString();
+    }
+
+    @Override
     public String toString() {
         return MoreObjects.toStringHelper(this)
                 .add("pakageId", pakageId)

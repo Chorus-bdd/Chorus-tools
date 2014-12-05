@@ -9,10 +9,12 @@ public interface PakageEvents {
     interface Move {
         String targetId();
         String destinationId();
+        String logMessage();
     }
 
     interface Delete {
         String pakageId();
+        String logMessage();
     }
 
     Store store(String pakageId);

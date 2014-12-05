@@ -12,14 +12,28 @@ http://www.springframework.org/schema/mvc http://www.springframework.org/schema/
     </bean>
 
     <context:annotation-config/>
+
     <mvc:annotation-driven>
-    <mvc:message-converters>
+        <mvc:path-matching
+                trailing-slash="true"
+                suffix-pattern="false"/>
+        <mvc:message-converters>
             <bean id="jacksonHttpMessageConverter"
-                class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+                  class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
                 <property name="prettyPrint" value="${json.prettyPrint}" />
             </bean>
         </mvc:message-converters>
-        </mvc:annotation-driven>
+    </mvc:annotation-driven>
+
+    <!--<mvc:annotation-driven>-->
+        <!--<mvc:path-matching-->
+            <!--suffix-pattern="true"-->
+            <!--trailing-slash="false"-->
+            <!--registered-suffixes-only="true"-->
+            <!--path-helper="pathHelper"-->
+            <!--path-matcher="pathMatcher"-->
+        <!--/>-->
+    <!--</mvc:annotation-driven>-->
 
     <!-- For some reason location must be "classpath:<foler>/", intellij rename loses some parts of this -->
     <mvc:resources mapping="/**" location="classpath:client/"/>

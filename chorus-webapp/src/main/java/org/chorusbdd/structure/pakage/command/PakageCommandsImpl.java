@@ -2,6 +2,7 @@ package org.chorusbdd.structure.pakage.command;
 
 import org.chorusbdd.exception.ResourceExistsException;
 import org.chorusbdd.exception.ResourceNotFoundException;
+import org.chorusbdd.history.Svc;
 import org.chorusbdd.structure.pakage.PakageCommands;
 import org.chorusbdd.structure.pakage.PakageDao;
 import org.chorusbdd.structure.pakage.PakageEvents;
@@ -12,10 +13,14 @@ import static org.apache.commons.lang3.Validate.notNull;
 
 @Immutable
 class PakageCommandsImpl implements PakageCommands {
+    public static final String UNKNOWN_USER_NAME = "Unknown User";
+    public static final String UNKNOWN_USER_EMAIL = "";
     private final PakageDao dao;
+    private final Svc svc;
 
-    PakageCommandsImpl(final PakageDao dao) {
+    PakageCommandsImpl(final PakageDao dao, final Svc svc) {
         this.dao = notNull(dao);
+        this.svc = notNull(svc);
     }
 
     @Override
@@ -31,6 +36,7 @@ class PakageCommandsImpl implements PakageCommands {
         checkPakageDoesNotExist(event.destinationId());
         writeParentPakage(event);
         dao.movePakage(event.targetId(), event.destinationId());
+        svc.commitAll(UNKNOWN_USER_NAME, UNKNOWN_USER_EMAIL, event.logMessage());
     }
 
     @Override
@@ -38,6 +44,7 @@ class PakageCommandsImpl implements PakageCommands {
         notNull(event);
         checkPakageExists(event.pakageId());
         dao.deletePakage(event.pakageId());
+        svc.commitAll(UNKNOWN_USER_NAME, UNKNOWN_USER_EMAIL, event.logMessage());
     }
 
     private void writeParentPakage(final PakageEvents.Move event) {

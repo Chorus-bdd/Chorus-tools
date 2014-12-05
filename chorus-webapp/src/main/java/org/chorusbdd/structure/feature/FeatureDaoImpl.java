@@ -66,6 +66,11 @@ class FeatureDaoImpl implements FeatureDao {
     public Feature readFeatureAtRevision(final String id, final String revisionId) {
         final Path path = fsdb.idToFeaturePath(id);
         final String contents = svc.retrieve(revisionId, path);
+        if (contents == null) {
+            LOG.warn("Unable to retrieve feature '{}' at path '{} for revision {}",
+                    new Object[]{id, path, revisionId});
+            return null;
+        }
         return newFeature(path, ()->contents, ()->DigestUtils.md5Hex(contents));
     }
 
@@ -129,7 +134,8 @@ class FeatureDaoImpl implements FeatureDao {
 
 
     private String humanName(final String id) {
-        return camelToLowerSentenceCase(lastItem(fsdb.idComponents(id)));
+        //return camelToLowerSentenceCase(lastItem(fsdb.idComponents(id)));
+        return underscoresToSpaces(lastItem(fsdb.idComponents(id)));
     }
 
     private <T> T lastItem(final List<T> list) {
@@ -140,5 +146,9 @@ class FeatureDaoImpl implements FeatureDao {
         return value
                 .replaceAll("\\W+", " ")
                 .replaceAll("([a-z\\d])([A-Z])", "$1 $2");
+    }
+
+    private String underscoresToSpaces(final String value) {
+        return value.replace("_", " ");
     }
 }
