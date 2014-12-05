@@ -1,0 +1,5 @@
+
+Step-Macro: chorus-web is running with no features
+  As create an empty test root
+   And I start a chorus-web process named foo
+   And wait for chorus-web to start
