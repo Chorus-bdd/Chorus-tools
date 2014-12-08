@@ -3,7 +3,6 @@ Uses: Chorus Feature
 Uses: Chorus Package
 Uses: Processes
 
-@InProcess
 Feature: As a user, I want to move features
          So that the documentation continuously reflects the evolving system
 

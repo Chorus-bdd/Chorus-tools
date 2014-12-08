@@ -3,7 +3,6 @@ Uses: Chorus Feature
 Uses: Chorus Package
 Uses: Processes
 
-@InProcess
 Feature: As a user, I want to delete features
          So that the documentation continuously reflects the evolving system
 
@@ -15,7 +14,6 @@ Feature: As a user, I want to delete features
       When a user deletes the feature
       Then the feature Delete.Hello_World must not exist
 
-  @RunMe
   Scenario: User deletes a package
      Given the feature DeletePackage.Feature_1 exists
       When a user deletes the package DeletePackage
