@@ -9,6 +9,7 @@ import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.ObjectReader;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.FollowFilter;
+import org.eclipse.jgit.revwalk.RenameCallback;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevCommitList;
 import org.eclipse.jgit.revwalk.RevTree;
@@ -18,8 +19,12 @@ import org.eclipse.jgit.treewalk.CanonicalTreeParser;
 import org.eclipse.jgit.treewalk.TreeWalk;
 
 import java.io.IOException;
+import java.util.ArrayDeque;
+import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Queue;
 import java.util.Set;
 
 public class GitUtils {
@@ -45,6 +50,7 @@ public class GitUtils {
         }
     }
 
+    @Deprecated
     public static Set<String> filesAtRevision(final Repository repository, final String revision) throws IOException {
         final RevCommit commit = asCommit(repository, revision);
         final TreeWalk treeWalk = new TreeWalk(repository);
@@ -58,12 +64,16 @@ public class GitUtils {
     }
 
     public static String fileAtRevision(final Repository repository, final String revision, final String path) throws IOException {
+        final Map<String, String> filesNameAtRevision = filesNamesAtRevision(repository, toUnixSlashes(path));
         final ObjectId revisionId = repository.resolve(revision);
         final ObjectReader reader = repository.newObjectReader();
         try {
             final RevWalk revisionWalker = new RevWalk(reader);
             final RevTree tree = revisionWalker.parseCommit(revisionId).getTree();
-            return readFile(toUnixSlashes(path), reader, tree);
+            if (!filesNameAtRevision.containsKey(revision)) {
+                return null;
+            }
+            return readFile(toUnixSlashes(filesNameAtRevision.get(revision)), reader, tree);
         } finally {
             reader.release();
         }
@@ -157,6 +167,86 @@ public class GitUtils {
         walk.dispose();
         return treeParser;
     }
+
+    private static Map<String, String> filesNamesAtRevision(final Repository repository, final String path) throws IOException {
+        final Queue<String> names = filesPreviousNames(repository, toUnixSlashes(path));
+        final Queue<String> commits = commitLog(repository, toUnixSlashes(path));
+        final Map<String, String> commitName = new HashMap<>();
+
+        String filename = names.poll();
+        for (final String commit : commits) {
+            if (fileExistsInRevision(repository, commit, filename)) {
+                commitName.put(commit, filename);
+            } else {
+                final List<DiffEntry> changeset = changeset(repository, commit);
+                if (!isFileDeleted(filename, changeset)) {
+                    filename = names.poll();
+                    if (fileExistsInRevision(repository, commit, filename)) {
+                        commitName.put(commit, filename);
+                    }
+                }
+            }
+        }
+        return commitName;
+    }
+
+    private static boolean isFileDeleted(final String filename, final List<DiffEntry> changeset) {
+        for (DiffEntry diffEntry : changeset) {
+            if (diffEntry.getChangeType() == DiffEntry.ChangeType.DELETE && filename.equals(diffEntry.getOldPath())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private static Queue<String> commitLog(final Repository repository, final String path) throws IOException {
+        final Queue<String> fileCommits = new ArrayDeque<>();
+        final RevWalk revWalk = new RevWalk(repository);
+        try {
+            revWalk.markStart(revWalk.parseCommit(head(repository)));
+            revWalk.setTreeFilter(followFilter(repository, toUnixSlashes(path)));
+            for (final RevCommit commit : revWalk) {
+                fileCommits.add(commit.getId().getName());
+            }
+            return fileCommits;
+        } finally {
+            revWalk.release();
+        }
+    }
+
+    private static Queue<String> filesPreviousNames(final Repository repository, final String path) throws IOException {
+        final Queue<String> filePreviousNames = new ArrayDeque<>();
+        filePreviousNames.add(toUnixSlashes(path));
+        final RevWalk revWalk = new RevWalk(repository);
+        try {
+            revWalk.markStart(revWalk.parseCommit(head(repository)));
+            final FollowFilter filter = followFilter(repository, toUnixSlashes(path));
+            filter.setRenameCallback(new RenameCallback() {
+                @Override
+                public void renamed(final DiffEntry entry) {
+                    filePreviousNames.add(entry.getOldPath());
+                }
+            });
+            revWalk.setTreeFilter(filter);
+            revWalk.iterator();
+            return filePreviousNames;
+        } finally {
+            revWalk.release();
+        }
+    }
+
+    private static boolean fileExistsInRevision(final Repository repository, final String revision, final String path) throws IOException {
+        final ObjectId revisionId = repository.resolve(revision);
+        final ObjectReader reader = repository.newObjectReader();
+        try {
+            final RevWalk revisionWalker = new RevWalk(reader);
+            final RevTree tree = revisionWalker.parseCommit(revisionId).getTree();
+            return TreeWalk.forPath(reader, path, tree) != null;
+        } finally {
+            reader.release();
+        }
+    }
+
 
     // ------------------------------------------------------- Printing helpers
 

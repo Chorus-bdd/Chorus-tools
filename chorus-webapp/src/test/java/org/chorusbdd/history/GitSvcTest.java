@@ -222,6 +222,31 @@ public class GitSvcTest {
     }
 
     @Test
+    public void retrievesFileInRevisionFollowingRename() throws IOException {
+         // prepare
+        createAndCommitFile("Boo/FileName1", "file 1 contents", "comment: created", BEAR);
+        modifyAndCommitFile("Boo/FileName1", "modified file 1 contents", "comment: modified", BEAR);
+        renameAndCommitFile("Boo/FileName1", "Boo/FileName2", "comment: renamed file", FOX);
+        modifyAndCommitFile("Boo/FileName2", "modified again contents", "comment:  modified again", FOX);
+        renameAndCommitFile("Boo/FileName2", "Boo/FileName3", "comment: renamed file again", FOX);
+
+        // run
+        final List<Revision> log = gitSvc.log(relativePath("Boo/FileName3")).collect(Collectors.toList());
+        final String contents_rev0 = gitSvc.retrieve(log.get(0).id(), relativePath("Boo/FileName3"));
+        final String contents_rev1 = gitSvc.retrieve(log.get(1).id(), relativePath("Boo/FileName3"));
+        final String contents_rev2 = gitSvc.retrieve(log.get(2).id(), relativePath("Boo/FileName3"));
+        final String contents_rev3 = gitSvc.retrieve(log.get(3).id(), relativePath("Boo/FileName3"));
+        final String contents_rev4 = gitSvc.retrieve(log.get(4).id(), relativePath("Boo/FileName3"));
+
+        // verify
+        assertThat(contents_rev0, is("modified again contents"));
+        assertThat(contents_rev1, is("modified again contents"));
+        assertThat(contents_rev2, is("modified file 1 contents"));
+        assertThat(contents_rev3, is("modified file 1 contents"));
+        assertThat(contents_rev4, is("file 1 contents"));
+    }
+
+    @Test
     public void retrievesFileInRevisionWhenAbsolutePathUsed() throws IOException {
          // prepare
         createAndCommitFile("Far/FileName1", "file 1 contents", "comment: created", BEAR);
@@ -341,7 +366,7 @@ public class GitSvcTest {
     private void renameFile(final String fromFilename, final String toFilename) throws IOException {
         final Path target = new File(rootFolder, fromFilename).toPath();
         final Path destination = new File(rootFolder, toFilename).toPath();
-           Files.move(target, destination);
+        Files.move(target, destination);
     }
 
     private void deleteFile(final String filename) throws IOException {

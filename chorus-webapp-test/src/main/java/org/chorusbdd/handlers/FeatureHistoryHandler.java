@@ -2,6 +2,7 @@ package org.chorusbdd.handlers;
 
 import jdk.nashorn.api.scripting.ScriptObjectMirror;
 import org.chorusbdd.FeatureService;
+import org.chorusbdd.HttpUtil;
 import org.chorusbdd.chorus.annotations.Handler;
 import org.chorusbdd.chorus.annotations.Step;
 import org.chorusbdd.chorus.util.assertion.ChorusAssert;
@@ -14,6 +15,8 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static java.lang.Math.*;
+import static org.chorusbdd.HttpUtil.NOT_FOUND;
 import static org.chorusbdd.JsonUtil.asList;
 import static org.chorusbdd.JsonUtil.asString;
 import static org.chorusbdd.JsonUtil.asStringList;
@@ -38,18 +41,20 @@ public class FeatureHistoryHandler {
 
     // ------------------------------------------------------------------- When
 
-
     @Step("^a user views the previous version of feature (.+)$")
     public void userViewsPreviousVersionOfFeature(final String featureId) {
+        userViewsNVersionOfFeature(-1, featureId);
+    }
+
+    @Step("^a user views the -(\\d+) version of feature (.+)$")
+    public void userViewsNVersionOfFeature(final int version, final String featureId) {
         setContextFeatureId(featureId);
         userViewsFeaturesLog(featureId);
-        final ScriptObjectMirror revision = revisions().get(1);
+        final ScriptObjectMirror revision = revisions().get(abs(version));
         final String id = (String) revision.get("id");
-        final ScriptObjectMirror featureJson = featureService.getFeatureAtVersion(featureId, id).jsonBody();
+        contextResponse = featureService.getFeatureAtVersion(featureId, id);
+        final ScriptObjectMirror featureJson = contextResponse.jsonBody();
         context.featureJson(featureJson);
-
-        contextResponse = featureService.getFeatureHistory(context.featureId());
-        contextLogJson = contextResponse.jsonBody();
     }
 
     @Step("^a user views the log for feature (.+)$")
@@ -149,6 +154,12 @@ public class FeatureHistoryHandler {
         }
         ChorusAssert.fail("No event for feature id matched");
     }
+
+    @Step("^the user is notified that \"the feature does not exist in this version\"$")
+    public void userNotifiedThatFeatureDoesNotExistInThisVersion() {
+        assertEquals(NOT_FOUND, contextResponse.statusLine());
+    }
+
     //
     //@Step("^(?:the )?changeset contains \\{(.+)\\}$")
     //public void changesetContains(final String expectedChangesetStr) {

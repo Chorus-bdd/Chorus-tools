@@ -56,7 +56,6 @@ public class FeatureHandler {
         retrieveContextFeature();
     }
 
-
     @Step("^the feature (.+) was deleted$")
     public void featureWasDeleted(final String featureId) {
         setContextFeatureId(featureId);
@@ -70,9 +69,14 @@ public class FeatureHandler {
     }
 
     @Step("^the feature was moved to (.+)$")
-    public void featureWasMovedTo(final String destinationId) {
+    public void contextFeatureWasMovedTo(final String destinationId) {
         requiresContextFeatureId();
         moveFeature(context.featureId(), destinationId);
+    }
+
+    @Step("^the feature (.+) was moved to (.+)$")
+    public void featureWasMovedTo(final String targetId, final String destinationId) {
+        moveFeature(targetId, destinationId);
     }
 
     // ------------------------------------------------------------------- When
