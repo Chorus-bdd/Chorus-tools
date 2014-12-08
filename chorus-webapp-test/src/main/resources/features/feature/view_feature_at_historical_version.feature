@@ -42,6 +42,10 @@ Feature: As a user, I want to view features previous versions
     When a user views the -1 version of feature SomePackage.FeatureRetrieval5.Foo
     Then the user is notified that "the feature does not exist in this version"
 
+#  This could be fixed by adding a modal 'follow-moves' flag, by default 'follow' is currently on, we could allow
+#  the user to turn this off in the web-interface which in this scenario would expose the lost file
+#  We could keep this option hidden by default and only display it if there is a difference in the 'follow' and
+# 'non-follow' log.
   Scenario: A deleted feature which is replaced with a 'move' is lost :-(
    Given the feature SomePackage.FeatureRetrieval6.Foo has the text "i like dinosaurs"
      And the feature SomePackage.FeatureRetrieval6.Bar has the text "i don't like dinosaurs"
