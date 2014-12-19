@@ -11,5 +11,7 @@
       <module>chorus-xml</module>
 	  <module>chorus-swingrunner</module>
 	  <module>chorus-webagent</module>
+	  <module>chorus-webapp</module>
+	  <module>chorus-webapp-test</module>
     </modules>
 </project>

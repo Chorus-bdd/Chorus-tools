@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+    <bean id="applicationProperties" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="location" value="classpath:application.properties"/>
+    </bean>
+
+    <context:annotation-config/>
+
+    <mvc:annotation-driven>
+        <mvc:path-matching
+                trailing-slash="true"
+                suffix-pattern="false"/>
+        <mvc:message-converters>
+            <bean id="jacksonHttpMessageConverter"
+                  class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+                <property name="prettyPrint" value="${json.prettyPrint}" />
+            </bean>
+        </mvc:message-converters>
+    </mvc:annotation-driven>
+
+    <!--<mvc:annotation-driven>-->
+        <!--<mvc:path-matching-->
+            <!--suffix-pattern="true"-->
+            <!--trailing-slash="false"-->
+            <!--registered-suffixes-only="true"-->
+            <!--path-helper="pathHelper"-->
+            <!--path-matcher="pathMatcher"-->
+        <!--/>-->
+    <!--</mvc:annotation-driven>-->
+
+    <!-- For some reason location must be "classpath:<foler>/", intellij rename loses some parts of this -->
+    <mvc:resources mapping="/**" location="classpath:client/"/>
+    <context:component-scan base-package="org.chorusbdd.web.controller"/>
+
+    <!-- Structure -->
+    <bean name="paths" class="org.chorusbdd.structure.FileSystemDatabaseImpl">
+        <constructor-arg value="${features.rootDirectory}"/>
+    </bean>
+    <bean name="featureDao" class="org.chorusbdd.structure.feature.FeatureDaoImpl" autowire="constructor"/>
+    <bean name="packageDao" class="org.chorusbdd.structure.pakage.PakageDaoImpl" autowire="constructor"/>
+
+
+    <bean name="featureEvents" class="org.chorusbdd.structure.feature.command.FeatureEventsImpl"/>
+    <bean name="featureRepository" class="org.chorusbdd.structure.feature.query.FeatureRepositoryImpl" autowire="constructor"/>
+    <bean name="featureCommands" class="org.chorusbdd.structure.feature.command.FeatureCommandsImpl" autowire="constructor"/>
+    <bean name="features" class="org.chorusbdd.structure.feature.FeaturesImpl" autowire="constructor"/>
+
+    <bean name="packageEvents" class="org.chorusbdd.structure.pakage.command.PakageEventsImpl"/>
+    <bean name="packageRepository" class="org.chorusbdd.structure.pakage.query.PakageRepositoryImpl" autowire="constructor"/>
+    <bean name="packageCommands" class="org.chorusbdd.structure.pakage.command.PakageCommandsImpl" autowire="constructor"/>
+    <bean name="packages" class="org.chorusbdd.structure.pakage.PakagesImpl" autowire="constructor"/>
+
+    <!-- History -->
+    <bean name="svc" class="org.chorusbdd.history.GitSvc">
+        <constructor-arg value="${features.rootDirectory}"/>
+    </bean>
+</beans>

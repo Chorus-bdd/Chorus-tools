@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Test Page</title>
+    <script src="app/common/global.js"></script>
+
+    <!-- External -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-rc.5/angular.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-rc.5/angular-resource.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-rc.5/angular-route.js"></script>
+
+    <script type="text/javascript" src="http://underscorejs.org/underscore.js"></script>
+    <script type="text/javascript" src="lib/restangular/1.3.1/restangular.js"></script>
+
+    <!-- TODO: replace with GRUNT build -->
+    <!-- Util -->
+    <script src="app/common/Preconditions.js"></script>
+    <script src="app/common/Log.js"></script>
+
+    <!-- Structure -->
+    <script src="app/features/FeatureService.js"></script>
+    <script src="app/features/PackageService.js"></script>
+    <script src="app/features/module.js"></script>
+
+    <!-- Gui -->
+    <script src="app/views/featureUtility/MoveFeatureController.js"></script>
+    <script src="app/views/featureUtility/ViewFeatureController.js"></script>
+    <script src="app/views/featureUtility/CreateFeatureController.js"></script>
+    <script src="app/views/featureUtility/EditFeatureController.js"></script>
+    <script src="app/views/featureUtility/FeatureRedirector.js"></script>
+
+    <script src="app/views/featureUtility/CreatePackageController.js"></script>
+    <script src="app/views/featureUtility/ViewPackageController.js"></script>
+    <script src="app/views/featureUtility/MovePackageController.js"></script>
+    <script src="app/views/featureUtility/module.js"></script>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="app.css">
+    <link rel="stylesheet" href="lib/bootstrap/css/bootstrap.min.css" media="screen">
+</head>
+
+
+<body ng-app="views.featureUtility">
+    <div style="margin-left:200px">
+        <div ng-view></div>
+    </div>
+</body>
+</html>

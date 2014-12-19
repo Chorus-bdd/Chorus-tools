@@ -1,0 +1,24 @@
+<div>
+    <span ng-repeat="parent in package.parentPackages">
+        <a ng-click="package.viewPackage(parent.id)" target="_blank">{{parent.name}}/</a></td>
+    </span>
+    <span>{{package.name}}</span>
+    <hr/>
+
+    <div>
+        <h5>Packages</h5>
+        <div style="margin-left:20px;" ng-repeat="subpackage in package.package.subpackages | orderBy:'name'">
+            <a  ng-click="package.viewPackage(subpackage.id)" target="_blank">{{subpackage.name}}</a></td>
+        </div>
+        <hr/>
+        <h5>Features</h5>
+        <div ng-repeat="feature in package.package.features | orderBy:'name'">
+            <a ng-click="package.viewFeature(feature.id)" target="_blank">{{feature.name}}</a></td>
+        </div>
+    </div>
+    <br/>
+    <input ng-click="package.newPackage()" class="btn-primary" type="submit" value="new package"/>
+    <input ng-click="package.newFeature()" class="btn-primary" type="submit" value="new feature"/>
+    <input ng-click="package.move()" class="btn-primary" type="submit" value="move"/>
+    <input ng-click="package.delete()" class="btn-primary" type="submit" value="delete"/>
+</div>

@@ -1,0 +1,24 @@
+<div>
+    <form>
+        <input type="text" size="30"  ng-model="featureId" placeholder="feature id here"/>
+        <input ng-click="feature.view(featureId);" class="btn-primary" type="submit" value="view"/>
+    </form>
+    <hr/>
+    <form>
+        <input type="text" size="30"  placeholder="feature id here"/>
+        <input ng-click="delete()" class="btn-primary" type="submit" value="delete"/>
+    </form>
+    <br/>
+    <form>
+        <input type="text" size="30"  placeholder="target feature id here"/>
+        <input type="text" size="30"  placeholder="destination feature id here"/>
+        <input ng-click="feature.move()" class="btn-primary" type="submit" value="move"/>
+    </form>
+</div>
+<div>
+    <pre>{{feature.obj.text}}</pre>
+    <pre>{{feature.text}}</pre>
+    <pre>{{feature.text()}}</pre>
+    <pre>{{feature}}</pre>
+    <pre>{{feature.obj}}</pre>
+</div>

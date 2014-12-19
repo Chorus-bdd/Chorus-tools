@@ -1,0 +1,10 @@
+<div>
+    <form>
+        <input type="text" ng-model="feature.name" size="150"/><br/>
+        <textarea ng-model="feature.body" name="body" rows="8" cols="150"
+                  class="input-no-width rounded shaded left clearboth" id="msg" required>
+        </textarea><br/>
+        <input type="submit" ng-click="feature.save(featureId);" class="btn-primary" value="save"/>
+        <input type="submit" ng-click="feature.cancel(featureId);" class="btn-primary" value="cancel"/>
+    </form>
+</div>
